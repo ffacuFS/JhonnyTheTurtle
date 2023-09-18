@@ -1,0 +1,41 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "file.lastUsedOpenFilter": "Todos los archivos (*)",
+    "fileStates": {
+        "": {
+            "scaleInEditor": 1
+        },
+        "#plataforma": {
+            "scaleInDock": 0.33
+        },
+        "level1.json": {
+            "scale": 0.6214583333333333,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 481.12638283607106,
+                "y": 481.12638283607106
+            }
+        },
+        "level1.json#Plataformas": {
+            "scaleInDock": 1
+        }
+    },
+    "last.exportedFilePath": "C:/Users/Facu/Desktop/JhonnyTheTurtle/public/assets/tilemaps",
+    "last.imagePath": "C:/Users/Facu/Desktop/JhonnyTheTurtle/public/assets/sprites",
+    "map.lastUsedExportFilter": "Todos los archivos (*)",
+    "openFiles": [
+    ],
+    "project": "lv1.tiled-project",
+    "property.type": "bool",
+    "recentFiles": [
+        "level1.json"
+    ],
+    "tileset.embedInMap": true
+}
