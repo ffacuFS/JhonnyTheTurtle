@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import events from "./EventCenter";
+import Turtle from "../componentes/Turtle";
 
 // Manejador de eventos centralizados para comunicacion de componentes
 
@@ -40,38 +40,61 @@ export default class Game extends Phaser.Scene {
     super("game");
   }
 
+  init(data){
+    this.level=data.nivel || 1;
+    this.fruits=data.fruits || 0;
+    this.shell=data.shell || 0;
+    this.health= data.health || 3;
+    this.velocityTurtle= data.velocityTurtle || 350;
+  }
+
   preload() {
-    this.load.image("plataforma","../public/assets/sprites/plataforma.jpg");
+    /*this.load.image("pisos","../public/assets/sprites/plataforma.jpg");
 
     this.load.tilemapTiledJSON("level1","../public/assets/tilemaps/level1.json");
 
-    this.load.image("turtle","../public/assets/sprites/turtle.png");
+    this.load.image("turtle","../public/assets/sprites/turtle.png");*/
+
+    //this.load.image("turtle","../public/assets/sprites/plataforma.jpg");
+
   }
 
   create() {
-    const map = this.make.tilemap({key:"level1" });
+    /*var map = this.make.tilemap({key: "level1" });
 
-    const capaPlataforma = map.addTilesetImage("plataforma","plataforma");
+    var capaPlataforma = map.addTilesetImage("lataforma","pisos");
 
-    const platLayer = map.createLayer("Plataforma", capaPlataforma);
+    var platLayer = map.createLayer("Plataforma", capaPlataforma);
 
     platLayer.setCollisionByProperty({colision: true});
 
-    const objectsLayer = map.getObjectLayer ("Objetos");
+    var objectsLayer = map.getObjectLayer ("Objetos");
 
-    let turtle = map.findObject ("Objetos",(obj) => obj.name === "personaje");
+    let turtle = map.findObject ("Objetos",(obj) => obj.name === "personaje");*/
 
+    this.scene.launch("ui", {
+      level: this.level,
 
+      health: this.health,
 
+      fruits: this.fruits,
 
+      shell: this.shell,
+    });
 
+    this.base = this.physics.add.image(200,600,"plataforma").setScale(2).setImmovable(true);
+    this.base.body.setAllowGravity(false);
+    
+    this.turtle= new Turtle(
+      this,400,400,"turtle",this.velocityTurtle
+    );
 
+    this.physics.add.collider(
+      this.base,this.turtle,null);
+    
 
-
-    this.player = this.physics.add.sprite(turtle.x,turtle.y,"turtle");
-    this.player.setCollideWorldBounds(true);
-
-    this.collider.add(this.player,platLayer);
-
+  }
+  update(){
+    this.turtle.actualizar();
   }
 }
