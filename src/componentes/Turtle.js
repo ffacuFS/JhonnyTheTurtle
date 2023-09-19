@@ -20,10 +20,13 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
   actualizar() {
     if (this.cursors.left.isDown) {
       this.body.setVelocityX(-250);
+      this.anims.play('left', true);
     } else if (this.cursors.right.isDown) {
       this.body.setVelocityX(250);
+      this.anims.play('right', true);
     } else {
       this.body.setVelocityX(0);
+      this.anims.play('turn', true);
     }
 
     // Verificar si la tecla "Up" está presionada y el personaje puede saltar.
