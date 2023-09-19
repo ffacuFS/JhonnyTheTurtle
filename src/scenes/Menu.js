@@ -14,32 +14,42 @@ import events from "./EventCenter";
 // Recibe el nombre del mensaje y una funcion callback a ejecutar
 // events.on('health-changed', this.handleHealthChanged, this)
 
-export default class UI extends Phaser.Scene {
+export default class Menu extends Phaser.Scene {
+
   constructor() {
-    super("ui");
+    super("menu");
   }
-  init(data){
-    this.level= data.level || 1;
-    this.fruits = data.fruits || 0;
-    this.shell = data.shell || 0;
-    this.health = data.healt || 3;
-  }
-  create() {
-        this.health = this.add.text(10, 20, `Vidas: ${this.health}`, {
-      font: "16px",
-    });
-        
-    this.shell= this.add.text(620,10,`Caparazones: ${this.shell}`,{
-      font: '16px',
-    });
 
-    this.fruits= this.add.text(10,50,`Frutas: ${this.fruits}`,{
-      font: '16px',
+  preload() {
+
     
+  }
+
+  create() {
+  
+this.selecLevel=this.add.text(280,300,"Seleccion de nivel",{
+        fontSize: "24px",
+
+        fill: '#fff',
+        
+    })
+    .setInteractive();
+
+    this.selecLevel.on("pointerdown", ()=> {
+        this.scene.start("selectlevel")
     });
 
-    this.level=this.add.text(330,10,`Level: ${this.level}`, {
-      font: '24px',
+this.options=this.add.text(280,350,"Opciones" ,{
+
+    fontSize:'24px',
+    fill: '#fff',
+
+})
+.setInteractive();
+
+    this.options.on("pointerdown", ()=> {
+        this.scene.start("option")
     });
+
   }
 }
