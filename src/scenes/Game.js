@@ -48,16 +48,6 @@ export default class Game extends Phaser.Scene {
     this.velocityTurtle= data.velocityTurtle || 350;
   }
 
-  preload() {
-    //this.load.image("pisos","../assets/sprites/plataforma.jpg");
-
-    //this.load.tilemapTiledJSON("level1","../assets/tilemaps/level1.json");
-
-    
-
-
-  }
-
   create() {
     const map = this.make.tilemap({key: "level1" });
 
@@ -70,6 +60,10 @@ export default class Game extends Phaser.Scene {
     const objectsLayer = map.getObjectLayer ("Objetos");
 
     const player = map.findObject ("Objetos",(obj) => obj.name === "personaje");
+    
+    this.physics.world.setBounds(0,0,map.widthInPixels,map.heightInPixels);
+    this.cameras.main.setBounds(0,0,map.widthInPixels,map.heightInPixels);
+    this.cameras.main.startFollow(player);
 
     this.scene.launch("ui", {
       level: this.level,
