@@ -1,5 +1,7 @@
 import Phaser from "phaser";
 import Turtle from "../componentes/Turtle";
+import Enemies from "../componentes/Enemies";
+import events from "./EventCenter";
 
 // Manejador de eventos centralizados para comunicacion de componentes
 
@@ -44,8 +46,9 @@ export default class Game extends Phaser.Scene {
     this.level=data.nivel || 1;
     this.fruits=data.fruits || 0;
     this.shell=data.shell || 0;
-    this.health= data.health || 3;
+    this.health= data.health || 5;
     this.velocityTurtle= data.velocityTurtle || 350;
+    this.velocityEnemigo= data.velocityEnemigo || 2;
   }
 
   create() {
@@ -63,7 +66,6 @@ export default class Game extends Phaser.Scene {
     
     this.physics.world.setBounds(0,0,map.widthInPixels,map.heightInPixels);
     this.cameras.main.setBounds(0,0,map.widthInPixels,map.heightInPixels);
-    this.cameras.main.startFollow(player);
 
     this.scene.launch("ui", {
       level: this.level,
@@ -74,18 +76,29 @@ export default class Game extends Phaser.Scene {
 
       shell: this.shell,
     });
-
-    //this.base = this.physics.add.image(200,600,"plataforma").setScale(2).setImmovable(true);
-    //this.base.body.setAllowGravity(false);
     
     this.turtle= new Turtle(
       this,player.x,player.y,"turtle",this.velocityTurtle
     );
-      //this.physics.world.setBounds(0, 0, 800, 600);
-      this.physics.add.collider(this.turtle,platLayer)
+    this.cameras.main.startFollow(this.turtle, true, 0.1, 0.1);
 
+    this.physics.add.collider(this.turtle,platLayer);
+    
+    //Enemigos
+    this.enemigo= new Enemies (this,950,450,"buho",this.velocityEnemigo);
+
+    this.physics.add.collider(this.enemigo,platLayer);
+    this.physics.add.collider(this.turtle,this.enemigo,this.restVida);
   }
   update(){
     this.turtle.actualizar();
+    this.enemigo.update();
+  }
+
+  restVida(turtle,enemigo){
+    this.health-=1;
+    events.emit("actualizarDatos",{
+      health: this.health,
+    })
   }
 }
