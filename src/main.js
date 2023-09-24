@@ -5,6 +5,7 @@ import Option from "./scenes/Option";
 import SelectLevel from "./scenes/SelectLevel";
 import UI from "./scenes/UI";
 import Preload from "./scenes/Preload";
+
 const config = {
   type: Phaser.AUTO,
   width: 800,

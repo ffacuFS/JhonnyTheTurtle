@@ -17,6 +17,7 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
     this.canJump=true;
     this.body.setCollideWorldBounds(true);
     this.keyA = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+  
   }
   
 

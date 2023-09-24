@@ -40,6 +40,7 @@ export default class Game extends Phaser.Scene {
 
   constructor() {
     super("game");
+    this.restVida = this.restVida.bind(this);
   }
 
   init(data){
@@ -89,6 +90,7 @@ export default class Game extends Phaser.Scene {
 
     this.physics.add.collider(this.enemigo,platLayer);
     this.physics.add.collider(this.turtle,this.enemigo,this.restVida);
+
   }
   update(){
     this.turtle.actualizar();
@@ -97,6 +99,7 @@ export default class Game extends Phaser.Scene {
 
   restVida(turtle,enemigo){
     this.health-=1;
+    
     events.emit("actualizarDatos",{
       health: this.health,
     })

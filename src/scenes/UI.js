@@ -22,7 +22,7 @@ export default class UI extends Phaser.Scene {
     this.level= data.level || 1;
     this.fruits = data.fruits || 0;
     this.shell = data.shell || 0;
-    this.health = data.healt || 5;
+    this.health = data.health || 5;
   }
   create() {
         this.healthText = this.add.text(10, 20, `Vidas: ${this.health}`, {
@@ -38,9 +38,9 @@ export default class UI extends Phaser.Scene {
     
     });
 
-    this.levelText = this.add.text(330,10,`Level: ${this.level}`, {
+    this.levelText = this.add.text(330, 10, `Level: ${this.level}`, {
       font: '24px',
-    });
+  });
 
     events.on("actualizarDatos", this.actualizarDatos, this);
   }
@@ -49,7 +49,9 @@ export default class UI extends Phaser.Scene {
     console.log("actualizar datos", data);
     this.level = data.level; 
     this.health = data.healt;
-    //this.levelText.setText(`Level: ${this.level}`)
-    //this.healthText.setText(`Vidas: ${this.health}`); 
+
+    events.on("actualizarDatos", (data) => {
+      this.healthText.setText(`Vidas: ${data.health}`);
+    });
   }
 }
