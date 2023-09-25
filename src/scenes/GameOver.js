@@ -1,25 +1,28 @@
 import Phaser from "phaser";
 import events from "./EventCenter";
+import UI from "./UI";
 
 export default class GameOver extends Phaser.Scene {
   constructor() {
-    super("gameover");
+    super("perdiste");
   }
   init(){
     
   }
   create() {
-       this.add.text(400,300,"PERDISTE",{
-        fontSize: "42px",
-       })
+    const restartButton = this.add.text(400, 300, "Volver a Jugar", {
+      fontFamily: "Arial",
+      fontSize: 24,
+      color: "#ffffff",
+    });
 
-       this.volverMenu= this.add.text(600,300,"Volver",{
-        fontSize: "24px",
-       }).setInteractive(true);
-    
-       this.volverMenu.on("pointerdown", ()=>{
-        this.scene.start("selectlevel")
-       });
+    // Configura el botón para que sea interactivo
+    restartButton.setInteractive();
 
+    // Agrega un evento para manejar el clic en el botón
+    restartButton.on("pointerdown", () => {
+      // Reinicia la escena principal
+      this.scene.start("game");
+    });
   }
 }

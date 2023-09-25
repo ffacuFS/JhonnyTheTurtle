@@ -5,6 +5,7 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
   cursor;
   keyA;
   canJump;
+  keySpace;
 
   constructor(scene, x, y,texture,velocity ) {
     super(scene,x,y,texture);
@@ -17,7 +18,7 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
     this.canJump=true;
     this.body.setCollideWorldBounds(true);
     this.keyA = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-  
+    this.keySpace = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
   }
   
 
@@ -40,12 +41,15 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
     }
 
     // Verificar si la tecla "Up" está presionada y el personaje puede saltar.
-    if (this.cursors.up.isDown && this.canJump) {
-      this.body.setVelocityY(-150); // Configurar la velocidad vertical para saltar.
-      this.canJump = false; // Deshabilitar la capacidad de saltar.
-    } else if (!this.cursors.up.isDown && !this.canJump) {
-      // Habilitar la capacidad de saltar nuevamente cuando se suelta la tecla "Up".
+    if (this.keySpace.isDown && this.canJump) {
+      // Verificar si el personaje está en el suelo (puedes ajustar el valor en función de tu juego).
+      if (this.body.onFloor()) {
+        this.body.setVelocityY(-200); // Configurar la velocidad vertical para saltar.
+        this.canJump = false; // Deshabilitar la capacidad de saltar.
+      }
+    } else if (!this.keySpace.isDown && !this.canJump) {
+      // Habilitar la capacidad de saltar nuevamente cuando se suelta la tecla ESPACIO.
       this.canJump = true;
+    }
     }   
-}
 }
