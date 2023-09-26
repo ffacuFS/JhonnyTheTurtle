@@ -17,56 +17,53 @@ import events from "./EventCenter";
 // events.on('health-changed', this.handleHealthChanged, this)
 
 export default class Game extends Phaser.Scene {
-    level;
+  level;
 
-    shell;
+  shell;
 
-    fruits;
-    
-    chekpoint;
+  fruits;
 
-    health;
+  chekpoint;
 
-    enemies;
+  health;
 
-    boss;
+  enemies;
 
-    objects;
+  boss;
 
-    obstacles;
+  objects;
 
-    inmunity;
+  obstacles;
 
+  inmunity;
 
   constructor() {
     super("game");
-    this.restVida = this.restVida.bind(this);
   }
 
-  init(data){
-    this.level=data.nivel || 1;
-    this.fruits=data.fruits || 0;
-    this.shell=data.shell || 0;
-    this.health= data.health || 5;
-    this.velocityTurtle= data.velocityTurtle || 350;
-    this.velocityEnemigo= data.velocityEnemigo || 2;
+  init(data) {
+    this.level = data.nivel || 1;
+    this.fruits = data.fruits || 0;
+    this.shell = data.shell || 0;
+    this.health = data.health || 5;
+    this.velocityEnemigo = data.velocityEnemigo || 2;
   }
 
   create() {
-    const map = this.make.tilemap({key: "level1" });
+    const map = this.make.tilemap({ key: "level1" });
 
-    const capaPlataforma = map.addTilesetImage("plataforma","pisos");
+    const capaPlataforma = map.addTilesetImage("plataforma", "pisos");
 
     const platLayer = map.createLayer("Pisos", capaPlataforma);
 
-    platLayer.setCollisionByProperty({colision: true});
+    platLayer.setCollisionByProperty({ colision: true });
 
-    const objectsLayer = map.getObjectLayer ("Objetos");
+    const objectsLayer = map.getObjectLayer("Objetos");
 
-    const player = map.findObject ("Objetos",(obj) => obj.name === "personaje");
-    
-    this.physics.world.setBounds(0,0,map.widthInPixels,map.heightInPixels);
-    this.cameras.main.setBounds(0,0,map.widthInPixels,map.heightInPixels);
+    const player = map.findObject("Objetos", (obj) => obj.name === "personaje");
+
+    this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
     this.scene.launch("ui", {
       level: this.level,
@@ -77,31 +74,41 @@ export default class Game extends Phaser.Scene {
 
       shell: this.shell,
     });
-    
-    this.turtle= new Turtle(
-      this,player.x,player.y,"turtle",this.velocityTurtle
-    );
+
+    this.turtle = new Turtle(this, player.x, player.y, "turtle", 350);
+
     this.cameras.main.startFollow(this.turtle, true, 0.1, 0.1);
 
-    this.physics.add.collider(this.turtle,platLayer);
-    
+    this.physics.add.collider(this.turtle, platLayer);
+
     //Enemigos
-    this.enemigo= new Enemies (this,950,450,"buho",this.velocityEnemigo);
+    this.enemigo = new Enemies(this, 950, 450, "buho", this.velocityEnemigo);
 
-    this.physics.add.collider(this.enemigo,platLayer);
-    this.physics.add.collider(this.turtle,this.enemigo,this.restVida);
+    this.physics.add.collider(this.enemigo, platLayer);
+    this.physics.add.collider(
+      this.turtle,
+      this.enemigo,
+      this.restarVida,
+      null,
+      this
+    );
 
+    events.emit("actualizarDatos", {
+      health: this.health,
+    });
   }
-  update(){
+  update() {
     this.turtle.actualizar();
     this.enemigo.update();
+
+    if (this.isInmune) {
+      this.turtle.setAlpha(0.5);
+    } else {
+      this.turtle.setAlpha(1);
+    }
   }
 
-  restVida(turtle,enemigo){
-    this.health-=1;
-    
-    events.emit("actualizarDatos",{
-      health: this.health,
-    })
+  restarVida() {
+    this.turtle.restVida();
   }
 }

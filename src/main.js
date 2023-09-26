@@ -26,10 +26,10 @@ const config = {
     default: "arcade",
     arcade: {
       gravity: { y: 200 },
-      debug: false,
+      debug: true,
     },
   },
-  scene: [Preload, Menu, Game, UI, SelectLevel, Option, GameOver]
+  scene: [Preload, Menu, Game, UI, SelectLevel, Option, GameOver],
 };
 
 export default new Phaser.Game(config);

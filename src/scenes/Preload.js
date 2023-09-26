@@ -3,7 +3,6 @@ import events from "./EventCenter";
 import Turtle from "../componentes/Turtle";
 
 export default class Preload extends Phaser.Scene {
-
   constructor() {
     super("preload");
   }
@@ -20,7 +19,7 @@ export default class Preload extends Phaser.Scene {
     this.load.spritesheet("turtleJump", "./assets/sprites/turtle-jump.png", {
       frameWidth: 96,
       frameHeight: 180,
-    })
+    });
     this.load.image("buho", "../assets/sprites/buho.png");
     this.load.image("pisos", "../assets/sprites/plataforma.jpg");
     this.load.tilemapTiledJSON("level1", "../assets/tilemaps/lv1.json");
@@ -29,8 +28,7 @@ export default class Preload extends Phaser.Scene {
   create() {
     this.scene.start("menu");
 
-
-    //Animación 
+    //Animación
     this.anims.create({
       key: "left",
       frames: this.anims.generateFrameNumbers("turtle", { start: 0, end: 4 }),
@@ -50,15 +48,21 @@ export default class Preload extends Phaser.Scene {
     });
     this.anims.create({
       key: "attack",
-      frames: this.anims.generateFrameNumbers("turtleAttack", { start: 0, end: 12 }),
+      frames: this.anims.generateFrameNumbers("turtleAttack", {
+        start: 0,
+        end: 12,
+      }),
       frameRate: 10,
       repeat: -1,
     });
     this.anims.create({
       key: "jumpD",
-      frames: this.anims.generateFrameNumbers("turtleJump", { start: 11, end: 21 }),
+      frames: this.anims.generateFrameNumbers("turtleJump", {
+        start: 11,
+        end: 21,
+      }),
       frameRate: 10,
       repeat: -1,
-    })
+    });
   }
 }
