@@ -17,7 +17,11 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 316,
       frameHeight: 296,
     });
-    this.load.image("buho","../assets/sprites/buho.png");
+    this.load.spritesheet("turtleJump", "./assets/sprites/turtle-jump.png", {
+      frameWidth: 96,
+      frameHeight: 180,
+    })
+    this.load.image("buho", "../assets/sprites/buho.png");
     this.load.image("pisos", "../assets/sprites/plataforma.jpg");
     this.load.tilemapTiledJSON("level1", "../assets/tilemaps/lv1.json");
   }
@@ -50,5 +54,11 @@ export default class Preload extends Phaser.Scene {
       frameRate: 10,
       repeat: -1,
     });
+    this.anims.create({
+      key: "jumpD",
+      frames: this.anims.generateFrameNumbers("turtleJump", { start: 11, end: 21 }),
+      frameRate: 10,
+      repeat: -1,
+    })
   }
 }
