@@ -83,7 +83,10 @@ export default class Game extends Phaser.Scene {
 
     //Enemigos
     this.enemigo = new Enemies(this, 950, 450, "buho", this.velocityEnemigo);
-
+    const cangrejos = this.physics.add.group({
+      classType: Enemies,
+      runChildUpdate: true
+    });
     this.physics.add.collider(this.enemigo, platLayer);
     this.physics.add.collider(
       this.turtle,

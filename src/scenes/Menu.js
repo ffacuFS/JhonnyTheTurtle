@@ -22,33 +22,49 @@ export default class Menu extends Phaser.Scene {
 
   preload() {
 
-    
+
   }
 
   create() {
-  
-this.selecLevel=this.add.text(280,300,"Seleccion de nivel",{
-        fontSize: "24px",
 
-        fill: '#fff',
-        
+    this.selectLevel = this.add.text(100, 600, "SELECCIÓN DE NIVEL", {
+      fontSize: "100px",
+      fontFamily: 'DM Serif Display',
+
+      fill: '#ffd557',
+
     })
-    .setInteractive();
-
-    this.selecLevel.on("pointerdown", ()=> {
-        this.scene.start("selectlevel")
+      .setInteractive();
+    this.selectLevel.on('pointerover', () => {
+      this.selectLevel.setStyle({ fill: '#ffa615', fontSize: '105px' });
+    });
+    this.selectLevel.on('pointerout', () => {
+      this.selectLevel.setStyle({ fill: '#ffd557', fontSize: '100px' });
     });
 
-this.options=this.add.text(280,350,"Opciones" ,{
+    this.selectLevel.on("pointerdown", () => {
+      this.scene.start("selectlevel")
+    });
 
-    fontSize:'24px',
-    fill: '#fff',
+    this.options = this.add.text(100, 700, "OPCIONES", {
+      fontSize: "100px",
+      fontFamily: 'DM Serif Display',
 
-})
-.setInteractive();
+      fill: '#ffd557',
 
-    this.options.on("pointerdown", ()=> {
-        this.scene.start("option")
+    })
+      .setInteractive();
+    this.options.on('pointerover', () => {
+      this.options.setStyle({ fill: '#ffa615', fontSize: '105px' });
+    });
+    this.options.on('pointerout', () => {
+      this.options.setStyle({ fill: '#ffd557', fontSize: '100px' });
+    });
+
+
+
+    this.options.on("pointerdown", () => {
+      this.scene.start("option")
     });
 
   }

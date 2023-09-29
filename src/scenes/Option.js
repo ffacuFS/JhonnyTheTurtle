@@ -22,25 +22,38 @@ export default class Option extends Phaser.Scene {
 
   preload() {
 
-    
+
   }
 
   create() {
-    this.back=this.add.text(20,15,"Volver",{
-        fontSize: '24px', 
+    this.back = this.add.text(20, 15, "Volver", {
+      fontSize: "50px",
+      fontFamily: 'DM Serif Display',
+      fill: '#ffd557',
     })
-   .setInteractive();
+      .setInteractive();
+    this.back.on('pointerover', () => {
+      this.back.setStyle({ fill: '#ffa615', fontSize: "53px" });
+    });
+    this.back.on('pointerout', () => {
+      this.back.setStyle({ fill: '#ffd557', fontSize: "50px" });
+    });
 
-   this.back.on("pointerdown", ()=> {
-    this.scene.start("menu")
-   });
+    this.back.on("pointerdown", () => {
+      this.scene.start("menu")
+    });
 
-   this.add.text(300,300,"Barra volumen",{
-    fontSize: '24px',
-   });
+    this.add.text(550, 300, "Barra volumen", {
+      fontSize: "100px",
+      fontFamily: 'DM Serif Display',
+      fill: '#ffd557',
+    });
 
-   this.add.text(300,400,"Idioma",{
-    fontSize:'24px'
-   });
+    this.add.text(550, 400, "Idioma", {
+      fontSize: "100px",
+      fontFamily: 'DM Serif Display',
+      fill: '#ffd557',
+    })
+      ;
   }
-}
+} 

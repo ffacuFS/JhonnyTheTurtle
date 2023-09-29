@@ -26,21 +26,29 @@ export default class UI extends Phaser.Scene {
     this.health = data.health || 5;
   }
   create() {
-    this.healthText = this.add.text(10, 20, `Vidas: ${this.health}`, {
-      font: "16px",
+    this.healthText = this.add.text(10, 80, `Vidas: ${this.health}`, {
+      fontSize: "50px",
+      fontFamily: 'DM Serif Display',
+      fill: '#ffd557',
     });
 
-    this.shellText = this.add.text(620, 10, `Caparazones: ${this.shell}`, {
-      font: "16px",
+    this.shellText = this.add.text(500, 80, `Caparazones: ${this.shell}`, {
+      fontSize: "50px",
+      fontFamily: 'DM Serif Display',
+      fill: '#ffd557',
     });
 
-    this.fruitsText = this.add.text(10, 50, `Frutas: ${this.fruits}`, {
-      font: "16px",
+    this.fruitsText = this.add.text(200, 80, `Frutas: ${this.fruits}`, {
+      fontSize: "50px",
+      fontFamily: 'DM Serif Display',
+      fill: '#ffd557',
     });
 
-    this.levelText = this.add.text(330, 10, `Level: ${this.level}`, {
-      font: "24px",
-    });
+    this.levelText = this.add.text(960, 10, `Nivel ${this.level}`, {
+      fontSize: "80px",
+      fontFamily: 'DM Serif Display',
+      fill: '#ffd557',
+    }).setOrigin(0.5, 0)
 
     events.on("actualizarDatos", (data) => {
       console.log("actualizar datos", data);
