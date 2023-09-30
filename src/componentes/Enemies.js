@@ -18,13 +18,17 @@ export default class Enemies extends Phaser.GameObjects.Sprite {
     update (){
         this.x += this.velocityEnemigo
    
-// Si el enemigo alcanza un límite en el escenario, cambia la dirección
-if (this.x < this.minX) {
-    this.x = this.minX; // Establece la posición en el límite mínimo
-    this.velocityEnemigo *= -1; // Invierte la dirección vertical
-  } else if (this.x > this.maxX) {
-    this.x = this.maxX; // Establece la posición en el límite máximo
-    this.velocityEnemigo *= -1; // Invierte la dirección vertical
-  }
+        this.scene.tweens.add({
+          targets: this,
+          x: `+=200`, 
+          ease: 'Linear', 
+          duration: 2000, 
+          yoyo: true, 
+          repeat: -1, 
+          onStart: () => {
+              
+              this.velocityEnemigo *= -1;
+          },
+      });
     }
   }
