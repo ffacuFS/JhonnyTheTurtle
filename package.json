@@ -28,9 +28,11 @@
     "parcel": "^2.9.3",
     "parcel-plugin-clean-easy": "^1.0.2",
     "parcel-plugin-static-files-copy": "^2.6.0",
-    "parcel-reporter-static-files-copy": "^1.5.2"
+    "parcel-reporter-static-files-copy": "^1.5.2",
+    "process": "^0.11.10"
   },
   "dependencies": {
+    "caniuse-lite": "^1.0.30001541",
     "eslint-config-prettier": "^9.0.0",
     "phaser": "^3.60.0"
   },

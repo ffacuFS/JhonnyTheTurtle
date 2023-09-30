@@ -8,17 +8,17 @@ export default class Preload extends Phaser.Scene {
   }
 
   preload() {
-    this.load.spritesheet("turtle", "./assets/sprites/turtle.png", {
-      frameWidth: 335,
-      frameHeight: 343,
+    this.load.spritesheet("turtle", "./assets/sprites/turtle1.png", {
+      frameWidth: 114.6,
+      frameHeight: 156,
     });
-    this.load.spritesheet("turtleAttack", "./assets/sprites/turtleattack.png", {
-      frameWidth: 316,
-      frameHeight: 296,
+    this.load.spritesheet("turtleAttack", "./assets/sprites/turtle-attack1.png", {
+      frameWidth: 147.8,
+      frameHeight: 147,
     });
-    this.load.spritesheet("turtleJump", "./assets/sprites/turtle-jump.png", {
-      frameWidth: 96,
-      frameHeight: 180,
+    this.load.spritesheet("turtleJump", "./assets/sprites/turtle-jump1.png", {
+      frameWidth: 133.5,
+      frameHeight: 162,
     });
     this.load.image("buho", "../assets/sprites/buho.png");
     this.load.image("pisos", "../assets/sprites/plataforma.jpg");
@@ -58,8 +58,8 @@ export default class Preload extends Phaser.Scene {
     this.anims.create({
       key: "jumpD",
       frames: this.anims.generateFrameNumbers("turtleJump", {
-        start: 11,
-        end: 21,
+        start: 9,
+        end: 18,
       }),
       frameRate: 10,
       repeat: -1,
