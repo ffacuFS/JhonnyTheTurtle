@@ -69,6 +69,21 @@ export default class Game extends Phaser.Scene {
     events.emit("actualizarDatos", {
       health: this.health,
     });
+
+    //Colision de ataque para eliminar
+    events.on("ataqueRealizado", (data) => {
+      const attacker = data.attacker;
+  
+      const attackingEnemies = this.enemies.getChildren().filter(enemy => {
+        return Phaser.Geom.Intersects.RectangleToRectangle(attacker.getBounds(), enemy.getBounds());
+      });
+  
+      attackingEnemies.forEach(enemy => {
+        // Aquí puedes realizar acciones con el enemigo atacado, como eliminarlo, restarle vida, etc.
+        enemy.destroy();
+      });
+    });
+
   }
 
   update() {

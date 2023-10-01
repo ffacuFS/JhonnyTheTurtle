@@ -32,12 +32,14 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
     if (this.cursors.left.isDown && this.keyA.isDown) {
       this.body.setVelocityX(-400);
       this.anims.play("attack", true);
+      events.emit("ataqueRealizado", { attacker: this });
     } else if (this.cursors.left.isDown) {
       this.body.setVelocityX(-400);
       this.anims.play("left", true);
     } else if (this.cursors.right.isDown && this.keyA.isDown) {
       this.body.setVelocityX(400);
       this.anims.play("attack", true);
+      events.emit("ataqueRealizado", { attacker: this });
     } else if (this.cursors.right.isDown) {
       this.body.setVelocityX(400);
       this.anims.play("right", true);

@@ -7,9 +7,7 @@ export default class Enemies extends Phaser.Physics.Arcade.Sprite {
     this.velocityEnemigo = velocity;
     this.setScale(0.2);
     this.setCollideWorldBounds(true); 
-    this.minX = 900;
-    this.maxX = 1200;
-  }
+      }
 
   update() {
     //this.x += this.velocityEnemigo;
