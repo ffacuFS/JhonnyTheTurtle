@@ -1,41 +1,21 @@
-import Phaser from "phaser";
+import Phaser, { LEFT } from "phaser";
 import Turtle from "../componentes/Turtle";
 import Enemies from "../componentes/Enemies";
 import events from "./EventCenter";
 
-// Manejador de eventos centralizados para comunicacion de componentes
-
-// Importacion
-// import events from './EventCenter'
-
-// Emisor de mensaje de difusion
-// Recibe el nombre del mensaje y los valores de parametro
-// events.emit('health-changed', this.health)
-
-// Receptor de mensaje, por ejemplo escena de UI
-// Recibe el nombre del mensaje y una funcion callback a ejecutar
-// events.on('health-changed', this.handleHealthChanged, this)
-
 export default class Game extends Phaser.Scene {
   level;
-
   shell;
-
   fruits;
-
   chekpoint;
-
   health;
-
   enemies;
-
   boss;
-
   objects;
-
   obstacles;
-
   inmunity;
+  isInmune = false;
+
 
   constructor() {
     super("game");
@@ -51,15 +31,10 @@ export default class Game extends Phaser.Scene {
 
   create() {
     const map = this.make.tilemap({ key: "level1" });
-
     const capaPlataforma = map.addTilesetImage("plataforma", "pisos");
-
     const platLayer = map.createLayer("Pisos", capaPlataforma);
-
     platLayer.setCollisionByProperty({ colision: true });
-
     const objectsLayer = map.getObjectLayer("Objetos");
-
     const player = map.findObject("Objetos", (obj) => obj.name === "personaje");
 
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
@@ -67,42 +42,40 @@ export default class Game extends Phaser.Scene {
 
     this.scene.launch("ui", {
       level: this.level,
-
       health: this.health,
-
       fruits: this.fruits,
-
       shell: this.shell,
     });
 
     this.turtle = new Turtle(this, player.x, player.y, "turtle", 350);
-
     this.cameras.main.startFollow(this.turtle, true, 0.1, 0.1);
-
     this.physics.add.collider(this.turtle, platLayer);
 
-    //Enemigos
-    this.enemigo = new Enemies(this, 950, 450, "buho", this.velocityEnemigo);
-    const cangrejos = this.physics.add.group({
-      classType: Enemies,
-      runChildUpdate: true
+    // Crear grupo para los enemigos
+    this.enemies = this.physics.add.group();
+
+    // Obtener objetos de enemigo desde el mapa y crear sprites
+    const enemyObjects = map.filterObjects("Objetos", (obj) => obj.name === "enemy");
+    enemyObjects.forEach((obj) => {
+      //const enemy = new Enemies(this, obj.x, obj.y, "buho", this.velocityEnemigo);
+      const enemy = new Enemies(this, obj.x, obj.y, "buho", this.velocityEnemigo);
+      this.enemies.add(enemy);
     });
-    this.physics.add.collider(this.enemigo, platLayer);
-    this.physics.add.collider(
-      this.turtle,
-      this.enemigo,
-      this.restarVida,
-      null,
-      this
-    );
+
+    // Configurar colisiones
+    this.physics.add.collider(this.enemies, platLayer);
+    this.physics.add.collider(this.turtle, this.enemies, this.restarVida, null, this);
 
     events.emit("actualizarDatos", {
       health: this.health,
     });
   }
+
   update() {
     this.turtle.actualizar();
-    this.enemigo.update();
+    this.enemies.getChildren().forEach((enemy) => {
+      enemy.update();
+    });
 
     if (this.isInmune) {
       this.turtle.setAlpha(0.5);

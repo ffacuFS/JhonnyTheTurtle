@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "lv1.json",
     "expandedProjectPaths": [
         "."
     ],
@@ -15,6 +15,20 @@
         "#plataforma": {
             "scaleInDock": 0.33
         },
+        "C:/Users/solro/SombrasAcechantes/public/tilemaps/nivel1.json": {
+            "scale": 0.872198275862069,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 816.328144304423,
+                "y": 464.9172226340499
+            }
+        },
+        "C:/Users/solro/SombrasAcechantes/public/tilemaps/nivel1.json#fondo": {
+            "scaleInDock": 1
+        },
+        "C:/Users/solro/SombrasAcechantes/public/tilemaps/nivel1.json#platform": {
+            "scaleInDock": 1
+        },
         "level1.json": {
             "scale": 0.6214583333333333,
             "selectedLayer": 0,
@@ -25,16 +39,30 @@
         },
         "level1.json#Plataformas": {
             "scaleInDock": 1
+        },
+        "lv1.json": {
+            "scale": 0.37381510416666663,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 1110.174509735623,
+                "y": 849.3503779302657
+            }
+        },
+        "lv1.json#plataforma": {
+            "scaleInDock": 1
         }
     },
     "last.exportedFilePath": "C:/Users/Facu/Desktop/JhonnyTheTurtle/public/assets/tilemaps",
     "last.imagePath": "C:/Users/Facu/Desktop/JhonnyTheTurtle/public/assets/sprites",
     "map.lastUsedExportFilter": "Todos los archivos (*)",
     "openFiles": [
+        "lv1.json"
     ],
     "project": "lv1.tiled-project",
     "property.type": "bool",
     "recentFiles": [
+        "lv1.json",
+        "C:/Users/solro/SombrasAcechantes/public/tilemaps/nivel1.json",
         "level1.json"
     ],
     "tileset.embedInMap": true
