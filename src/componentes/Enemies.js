@@ -6,14 +6,11 @@ export default class Enemies extends Phaser.Physics.Arcade.Sprite {
     scene.physics.add.existing(this);
     this.velocityEnemigo = velocity;
     this.setScale(0.2);
-    this.setCollideWorldBounds(true); 
-      }
+    this.setCollideWorldBounds(true);
+    this.setupTween();
+  }
 
-  update() {
-    //this.x += this.velocityEnemigo;
-    this.x += this.velocityEnemigo * 0.1; // Mover en incrementos más pequeños
-
-    
+  setupTween() {
     this.scene.tweens.add({
       targets: this,
       x: `+=200`,
@@ -25,5 +22,10 @@ export default class Enemies extends Phaser.Physics.Arcade.Sprite {
         this.velocityEnemigo *= -1;
       },
     });
+  }
+
+  update() {
+    // Mover horizontalmente a los enemigos en cada fotograma
+    this.x += this.velocityEnemigo;
   }
 }
