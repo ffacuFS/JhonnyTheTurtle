@@ -22,6 +22,7 @@ export default class Preload extends Phaser.Scene {
     });
     this.load.image("buho", "../assets/sprites/buho.png");
     this.load.image("pisos", "../assets/sprites/plataforma.jpg");
+    this.load.image("backgroundMenu", "../assets/sprites/Captura-01.png");
     this.load.tilemapTiledJSON("level1", "../assets/tilemaps/lv1.json");
   }
 

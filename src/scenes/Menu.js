@@ -26,12 +26,13 @@ export default class Menu extends Phaser.Scene {
   }
 
   create() {
+    this.add.image(0,0, "backgroundMenu").setOrigin(0,0)
 
-    this.selectLevel = this.add.text(100, 600, "SELECCIÓN DE NIVEL", {
+    this.selectLevel = this.add.text(950, 700, "NUEVO JUEGO", {
       fontSize: "100px",
       fontFamily: 'DM Serif Display',
 
-      fill: '#ffd557',
+      fill: '#A85214',
 
     })
       .setInteractive();
@@ -39,18 +40,18 @@ export default class Menu extends Phaser.Scene {
       this.selectLevel.setStyle({ fill: '#ffa615', fontSize: '105px' });
     });
     this.selectLevel.on('pointerout', () => {
-      this.selectLevel.setStyle({ fill: '#ffd557', fontSize: '100px' });
+      this.selectLevel.setStyle({ fill: '#A85214', fontSize: '100px' });
     });
 
     this.selectLevel.on("pointerdown", () => {
       this.scene.start("selectlevel")
     });
 
-    this.options = this.add.text(100, 700, "OPCIONES", {
+    this.options = this.add.text(950, 800, "OPCIONES", {
       fontSize: "100px",
       fontFamily: 'DM Serif Display',
 
-      fill: '#ffd557',
+      fill: '#A85214',
 
     })
       .setInteractive();
@@ -58,7 +59,7 @@ export default class Menu extends Phaser.Scene {
       this.options.setStyle({ fill: '#ffa615', fontSize: '105px' });
     });
     this.options.on('pointerout', () => {
-      this.options.setStyle({ fill: '#ffd557', fontSize: '100px' });
+      this.options.setStyle({ fill: '#A85214', fontSize: '100px' });
     });
 
 
