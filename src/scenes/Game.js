@@ -31,6 +31,8 @@ export default class Game extends Phaser.Scene {
 
   create() {
     const map = this.make.tilemap({ key: "level1" });
+    const capaBackground =map.addTilesetImage("laboratory", "backgroundBoss");
+    const BGlayer=map.createLayer("Background", capaBackground);
     const capaPlataforma = map.addTilesetImage("plataforma", "pisos");
     const platLayer = map.createLayer("Pisos", capaPlataforma);
     platLayer.setCollisionByProperty({ colision: true });
