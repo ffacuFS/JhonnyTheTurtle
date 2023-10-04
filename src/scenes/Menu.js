@@ -22,33 +22,50 @@ export default class Menu extends Phaser.Scene {
 
   preload() {
 
-    
+
   }
 
   create() {
-  
-this.selecLevel=this.add.text(280,300,"Seleccion de nivel",{
-        fontSize: "24px",
+    this.add.image(0,0, "backgroundMenu").setOrigin(0,0)
 
-        fill: '#fff',
-        
+    this.selectLevel = this.add.text(950, 700, "NUEVO JUEGO", {
+      fontSize: "100px",
+      fontFamily: 'DM Serif Display',
+
+      fill: '#A85214',
+
     })
-    .setInteractive();
-
-    this.selecLevel.on("pointerdown", ()=> {
-        this.scene.start("selectlevel")
+      .setInteractive();
+    this.selectLevel.on('pointerover', () => {
+      this.selectLevel.setStyle({ fill: '#ffa615', fontSize: '105px' });
+    });
+    this.selectLevel.on('pointerout', () => {
+      this.selectLevel.setStyle({ fill: '#A85214', fontSize: '100px' });
     });
 
-this.options=this.add.text(280,350,"Opciones" ,{
+    this.selectLevel.on("pointerdown", () => {
+      this.scene.start("selectlevel")
+    });
 
-    fontSize:'24px',
-    fill: '#fff',
+    this.options = this.add.text(950, 800, "OPCIONES", {
+      fontSize: "100px",
+      fontFamily: 'DM Serif Display',
 
-})
-.setInteractive();
+      fill: '#A85214',
 
-    this.options.on("pointerdown", ()=> {
-        this.scene.start("option")
+    })
+      .setInteractive();
+    this.options.on('pointerover', () => {
+      this.options.setStyle({ fill: '#ffa615', fontSize: '105px' });
+    });
+    this.options.on('pointerout', () => {
+      this.options.setStyle({ fill: '#A85214', fontSize: '100px' });
+    });
+
+
+
+    this.options.on("pointerdown", () => {
+      this.scene.start("option")
     });
 
   }

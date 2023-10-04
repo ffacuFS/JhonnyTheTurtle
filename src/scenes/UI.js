@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import events from "./EventCenter";
+import GameOver from "./GameOver";
 
 // Manejador de eventos centralizados para comunicacion de componentes
 
@@ -18,28 +19,40 @@ export default class UI extends Phaser.Scene {
   constructor() {
     super("ui");
   }
-  init(data){
-    this.level= data.level || 1;
+  init(data) {
+    this.level = data.level || 1;
     this.fruits = data.fruits || 0;
     this.shell = data.shell || 0;
-    this.health = data.healt || 3;
+    this.health = data.health || 5;
   }
   create() {
-        this.health = this.add.text(10, 20, `Vidas: ${this.health}`, {
-      font: "16px",
-    });
-        
-    this.shell= this.add.text(620,10,`Caparazones: ${this.shell}`,{
-      font: '16px',
+    this.healthText = this.add.text(10, 80, `Vidas: ${this.health}`, {
+      fontSize: "50px",
+      fontFamily: 'DM Serif Display',
+      fill: '#ffd557',
     });
 
-    this.fruits= this.add.text(10,50,`Frutas: ${this.fruits}`,{
-      font: '16px',
-    
+    this.shellText = this.add.text(500, 80, `Caparazones: ${this.shell}`, {
+      fontSize: "50px",
+      fontFamily: 'DM Serif Display',
+      fill: '#ffd557',
     });
 
-    this.level=this.add.text(330,10,`Level: ${this.level}`, {
-      font: '24px',
+    this.fruitsText = this.add.text(200, 80, `Frutas: ${this.fruits}`, {
+      fontSize: "50px",
+      fontFamily: 'DM Serif Display',
+      fill: '#ffd557',
+    });
+
+    this.levelText = this.add.text(960, 10, `Nivel ${this.level}`, {
+      fontSize: "80px",
+      fontFamily: 'DM Serif Display',
+      fill: '#ffd557',
+    }).setOrigin(0.5, 0)
+
+    events.on("actualizarDatos", (data) => {
+      console.log("actualizar datos", data);
+      this.healthText.setText(`Vidas: ${data.health}`);
     });
   }
 }
