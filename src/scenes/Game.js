@@ -103,5 +103,9 @@ export default class Game extends Phaser.Scene {
 
   restarVida() {
     this.turtle.restVida();
+    if (this.health <= 0) {
+      //this.scene.stop("ui");
+      this.scene.start("perdiste"); 
+    }
   }
 }
