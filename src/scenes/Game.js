@@ -19,6 +19,8 @@ export default class Game extends Phaser.Scene {
 
   constructor() {
     super("game");
+    this.enemiesDefeated = 0;
+    this.maxLevel = 3;
   }
 
   init(data) {
@@ -68,9 +70,6 @@ export default class Game extends Phaser.Scene {
     this.physics.add.collider(this.enemies, platLayer);
     this.physics.add.collider(this.turtle, this.enemies, this.restarVida, null, this);
 
-    events.emit("actualizarDatos", {
-      health: this.health,
-    });
 
     //Colision de ataque para eliminar
     events.on("ataqueRealizado", (data) => {
@@ -81,8 +80,10 @@ export default class Game extends Phaser.Scene {
       });
   
       attackingEnemies.forEach(enemy => {
+        this.enemiesDefeated++;
         // Aquí puedes realizar acciones con el enemigo atacado, como eliminarlo, restarle vida, etc.
         enemy.destroy();
+
       });
     });
 
@@ -99,6 +100,12 @@ export default class Game extends Phaser.Scene {
     } else {
       this.turtle.setAlpha(1);
     }
+
+    if (this.enemiesDefeated >= 1) {
+      this.nextLevel();
+      //this.scene.start("victoria");
+    
+    }
   }
 
   restarVida() {
@@ -108,4 +115,32 @@ export default class Game extends Phaser.Scene {
       this.scene.start("perdiste"); 
     }
   }
+
+  nextLevel(){
+    if (this.level < this.maxLevel) { 
+      this.level += 1;
+      this.fruits = 0;
+      this.shell = 0;
+      this.health = 5;
+      this.enemiesDefeated = 0;
+  
+      events.emit("actualizarDatos", {
+        level: this.level,
+        shell: this.shell,
+        fruits: this.fruits,
+        health: this.health,
+      });
+  
+      this.scene.start("game", {
+        level: this.level,
+        shell: this.shell,
+        fruits: this.fruits,
+        health: this.health,
+        velocityEnemigo: this.velocityEnemigo,
+      });
+    } else {
+      this.scene.start("victoria");
+    }
+  }
+  
 }

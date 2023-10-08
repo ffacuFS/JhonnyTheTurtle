@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { getLanguageConfig,getTranslations } from "../services/translations";
 import events from "./EventCenter";
 import Turtle from "../componentes/Turtle";
 
@@ -8,6 +9,11 @@ export default class Preload extends Phaser.Scene {
   }
 
   preload() {
+    //traduccion
+    this.lenguage = getLanguageConfig();
+    alert(this.lenguage)
+
+    //
     this.load.spritesheet("turtle", "./assets/sprites/turtle1.png", {
       frameWidth: 114.6,
       frameHeight: 156,
@@ -28,7 +34,8 @@ export default class Preload extends Phaser.Scene {
   }
 
   create() {
-    this.scene.start("menu");
+    //lenguaje
+   this.scene.start("menu");
 
     //Animación
     this.anims.create({

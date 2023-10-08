@@ -50,9 +50,21 @@ export default class UI extends Phaser.Scene {
       fill: '#ffd557',
     }).setOrigin(0.5, 0)
 
-    events.on("actualizarDatos", (data) => {
+  /*events.on("actualizarDatos", (data) => {
       console.log("actualizar datos", data);
       this.healthText.setText(`Vidas: ${data.health}`);
-    });
+      this.levelText.setText(`Level: ${data.level}`);
+    });*/
+
+    events.on("actualizarDatos", this.actualizarDatos,this);
+  }
+
+  actualizarDatos(data){
+    console.log("actualizar datos", data);
+
+    this.level= data.level;
+    this.health = data.health
+    this.levelText.setText(`Nivel ${data.level}`);
+    this.healthText.setText(`Vidas: ${data.health}`);
   }
 }

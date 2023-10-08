@@ -70,6 +70,7 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
 
       events.emit("actualizarDatos", {
         health: this.scene.health,
+        level: this.scene.level,
       });
 
       this.scene.time.addEvent({
