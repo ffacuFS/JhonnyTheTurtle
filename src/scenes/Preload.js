@@ -31,11 +31,13 @@ export default class Preload extends Phaser.Scene {
     this.load.image("backgroundMenu", "../assets/sprites/Captura-01.png");
     this.load.image("backgroundBoss", "../assets/atlas/laboratory.png");
     this.load.tilemapTiledJSON("level1", "../assets/tilemaps/lv1.json");
+    this.load.tilemapTiledJSON("level2","../assets/tilemaps/lv2.json");
   }
 
   create() {
     //lenguaje
-   this.scene.start("menu");
+    //getLanguageConfig(this.lenguage, ()=> this.scene.start("menu", {lenguage: this.lenguage}));
+    this.scene.start("menu");
 
     //Animación
     this.anims.create({

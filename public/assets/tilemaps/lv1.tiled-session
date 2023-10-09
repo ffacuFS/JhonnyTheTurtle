@@ -3,13 +3,14 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "lv2.json",
     "expandedProjectPaths": [
         "."
     ],
     "file.lastUsedOpenFilter": "Todos los archivos (*)",
     "fileStates": {
         "": {
+            "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "#plataforma": {
@@ -53,26 +54,58 @@
         },
         "lv1.json": {
             "scale": 0.37381510416666663,
-            "selectedLayer": 0,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 2153.4710369570516,
-                "y": 844.0001393291302
+                "x": 2118.6944860496706,
+                "y": 821.2616252743043
             }
         },
+        "lv1.json#laboratory": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "lv1.json#plataforma": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "lv2.json": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 484,
+                "y": 300
+            }
+        },
+        "lv2.json#plataforma": {
+            "scaleInDock": 1
+        },
+        "lv2.tmj": {
+            "scale": 0.8352083333333333,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 478.9224245447743,
+                "y": 319.6807183836369
+            }
+        },
+        "lv2.tmj#plataforma": {
             "scaleInDock": 1
         }
     },
     "last.exportedFilePath": "C:/Users/Facu/Desktop/JhonnyTheTurtle/public/assets/tilemaps",
     "last.imagePath": "C:/Users/Facu/Desktop/JhonnyTheTurtle/public/assets/sprites",
-    "map.lastUsedExportFilter": "Todos los archivos (*)",
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
+    "map.lastUsedFormat": "json",
     "openFiles": [
+        "lv1.json",
+        "lv2.json"
     ],
     "project": "lv1.tiled-project",
     "property.type": "bool",
     "recentFiles": [
-        "C:/Users/solro/lv1.json",
         "lv1.json",
+        "lv2.json",
+        "lv2.tmj",
+        "C:/Users/solro/lv1.json",
         "C:/Users/solro/SombrasAcechantes/public/tilemaps/nivel1.json",
         "level1.json"
     ],

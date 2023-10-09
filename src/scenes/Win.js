@@ -19,7 +19,7 @@ export default class Win extends Phaser.Scene {
 
     // Agrega un evento para manejar el clic en el botón
     restartButton.on("pointerdown", () => {
-      this.scene.start("game"); 
+      this.scene.start("menu"); 
     });
   }
 }

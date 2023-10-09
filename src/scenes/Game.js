@@ -24,7 +24,7 @@ export default class Game extends Phaser.Scene {
   }
 
   init(data) {
-    this.level = data.nivel || 1;
+    this.level = data.level || 1;
     this.fruits = data.fruits || 0;
     this.shell = data.shell || 0;
     this.health = data.health || 5;
@@ -101,7 +101,7 @@ export default class Game extends Phaser.Scene {
       this.turtle.setAlpha(1);
     }
 
-    if (this.enemiesDefeated >= 1) {
+    if (this.enemiesDefeated >= 2) {
       this.nextLevel();
       //this.scene.start("victoria");
     
