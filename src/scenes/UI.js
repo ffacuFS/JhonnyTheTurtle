@@ -26,19 +26,20 @@ export default class UI extends Phaser.Scene {
     this.health = data.health || 5;
   }
   create() {
-    this.healthText = this.add.text(10, 80, `Vidas: ${this.health}`, {
+    this.healthIcon=this.add.image(50, 90, "healthUI");
+    this.healthText = this.add.text(70, 80, ` ${this.health}`, {
       fontSize: "50px",
       fontFamily: 'DM Serif Display',
       fill: '#ffd557',
     });
-
     this.shellText = this.add.text(500, 80, `Caparazones: ${this.shell}`, {
       fontSize: "50px",
       fontFamily: 'DM Serif Display',
       fill: '#ffd557',
     });
+    this.fruitIcon=this.add.image(180, 100, "fruitUI");
 
-    this.fruitsText = this.add.text(200, 80, `Frutas: ${this.fruits}`, {
+    this.fruitsText = this.add.text(210, 80, ` ${this.fruits}`, {
       fontSize: "50px",
       fontFamily: 'DM Serif Display',
       fill: '#ffd557',

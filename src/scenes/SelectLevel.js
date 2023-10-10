@@ -26,17 +26,14 @@ export default class SelectLevel extends Phaser.Scene {
   }
 
   create() {
-    this.back = this.add.text(20, 15, "Volver", {
-      fontSize: "50px",
-      fontFamily: 'DM Serif Display',
-      fill: '#ffd557',
-    })
+    this.add.image(0,0, "menulevelBG").setOrigin(0,0)
+    this.back = this.add.image(75, 75, "back")
       .setInteractive();
     this.back.on('pointerover', () => {
-      this.back.setStyle({ fill: '#ffa615', fontSize: "53px" });
+      this.back.setScale(1.08);
     });
     this.back.on('pointerout', () => {
-      this.back.setStyle({ fill: '#ffd557', fontSize: "50px" });
+      this.back.setScale(1);
     });
 
     this.back.on("pointerdown", () => {

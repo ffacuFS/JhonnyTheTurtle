@@ -26,12 +26,24 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 133.5,
       frameHeight: 162,
     });
+    this.load.spritesheet("boss", "../sprites/boss.png",{
+      frameWidth:170.5,
+      frameHeight:208,
+    });
     this.load.image("buho", "../assets/sprites/buho.png");
     this.load.image("pisos", "../assets/sprites/plataforma.jpg");
-    this.load.image("backgroundMenu", "../assets/sprites/Captura-01.png");
+    this.load.image("menulevelBG", "../assets/atlas/menulevel-01.png");
+    this.load.image("backgroundMenu", "../assets/atlas/newGame-01.png");
     this.load.image("backgroundBoss", "../assets/atlas/laboratory.png");
+    this.load.image("back", "../assets/atlas/back_1.png");
+    this.load.image("play","../assets/atlas/play.png")
+    this.load.image("healthUI", "../assets/atlas/health.png");
+    this.load.image("fruitUI", "../assets/atlas/fruit.png");
+    this.load.image("US-flag", "../assets/atlas/US.png");
+    this.load.image("AR-flag", "../assets/atlas/AR.png")
     this.load.tilemapTiledJSON("level1", "../assets/tilemaps/lv1.json");
     this.load.tilemapTiledJSON("level2","../assets/tilemaps/lv2.json");
+    
   }
 
   create() {
