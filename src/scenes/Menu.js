@@ -1,4 +1,12 @@
 import Phaser from "phaser";
+import { EN_US, ES_AR } from "../enums/lengua";
+import {
+  getLanguageConfig,
+  getPhrase,
+  getTranslations,
+} from "../services/translations";
+import keys from "../enums/keys";
+import { FETCHED, FETCHING, READY, TODO } from "../enums/status";
 import events from "./EventCenter";
 
 // Manejador de eventos centralizados para comunicacion de componentes
@@ -15,56 +23,59 @@ import events from "./EventCenter";
 // events.on('health-changed', this.handleHealthChanged, this)
 
 export default class Menu extends Phaser.Scene {
+  wasChangedLanguage = TODO;
 
   constructor() {
     super("menu");
+    const { options } = keys.menu;
+    this.updateString = options;
+    this.options = options;
   }
 
-  preload() {
-
-
+  init({ language }) {
+    this.level = 1;
+    this.language = language;
   }
+
+  preload() {}
 
   create() {
-    this.add.image(0,0, "backgroundMenu").setOrigin(0,0)
-    this.usFlag=this.add.image(1600, 90, "US-flag")
-    .setInteractive();
-    this.usFlag.on('pointerover', () => {
-      this.usFlag.setScale(1.08);
+    this.add.image(0, 0, "backgroundMenu").setOrigin(0, 0);
+    const buttonEnglish = this.add.image(1600, 90, "US-flag").setInteractive();
+    buttonEnglish.on("pointerover", () => {
+      buttonEnglish.setScale(1.08);
     });
-    this.usFlag.on('pointerout', () => {
-      this.usFlag.setScale(1);
-    });
-
-    this.usFlag.on("pointerdown", () => {
-      this.scene.start("option")
+    buttonEnglish.on("pointerout", () => {
+      buttonEnglish.setScale(1);
     });
 
-    this.arFlag=this.add.image(1500, 90, "AR-flag")
-    .setInteractive();
-    this.arFlag.on('pointerover', () => {
-      this.arFlag.setScale(1.08);
-    });
-    this.arFlag.on('pointerout', () => {
-      this.arFlag.setScale(1);
+    buttonEnglish.on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+      this.getTranslations(EN_US);
     });
 
-    this.arFlag.on("pointerdown", () => {
-      this.scene.start("option")
+    const buttonSpanish = this.add.image(1500, 90, "AR-flag").setInteractive();
+    buttonSpanish.on("pointerover", () => {
+      buttonSpanish.setScale(1.08);
     });
-    this.playButton = this.add.image(1450 , 700, "play")
-    .setInteractive();
-  this.playButton.on('pointerover', () => {
-    this.playButton.setScale(1.08);
-  });
-  this.playButton.on('pointerout', () => {
-    this.playButton.setScale(1);
-  });
+    buttonSpanish.on("pointerout", () => {
+      buttonSpanish.setScale(1);
+    });
 
-  this.playButton.on("pointerdown", () => {
-    this.scene.start("selectlevel")
-  });
-  /*this.selectLevel = this.add.text(950, 700, "NUEVO JUEGO", {
+    buttonSpanish.on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+      this.getTranslations(ES_AR);
+    });
+    this.playButton = this.add.image(1450, 700, "play").setInteractive();
+    this.playButton.on("pointerover", () => {
+      this.playButton.setScale(1.08);
+    });
+    this.playButton.on("pointerout", () => {
+      this.playButton.setScale(1);
+    });
+
+    this.playButton.on("pointerdown", () => {
+      this.scene.start("selectlevel");
+    });
+    /*this.selectLevel = this.add.text(950, 700, "NUEVO JUEGO", {
     fontSize: "100px",
     fontFamily: 'DM Serif Display',
 
@@ -83,26 +94,38 @@ export default class Menu extends Phaser.Scene {
     this.scene.start("selectlevel")
   });*/
 
-    this.options = this.add.text(1200, 850, "OPCIONES", {
-      fontSize: "100px",
-      fontFamily: 'DM Serif Display',
-
-      fill: '#A85214',
-
-    })
+    this.options = this.add
+      .text(1200, 850, getPhrase(this.options), {
+        fontSize: "100px",
+        fontFamily: "DM Serif Display",
+      })
       .setInteractive();
-    this.options.on('pointerover', () => {
-      this.options.setStyle({ fill: '#ffa615', fontSize: '105px' });
+    this.options.on("pointerover", () => {
+      this.options.setStyle({ fill: "#ffa615", fontSize: "105px" });
     });
-    this.options.on('pointerout', () => {
-      this.options.setStyle({ fill: '#A85214', fontSize: '100px' });
+    this.options.on("pointerout", () => {
+      this.options.setStyle({ fill: "#A85214", fontSize: "100px" });
     });
-
-
 
     this.options.on("pointerdown", () => {
-      this.scene.start("option")
+      this.scene.start("option");
     });
+  }
 
+  update() {
+    if (this.wasChangedLanguage === FETCHED) {
+      this.wasChangedLanguage = READY;
+      this.options.setText(getPhrase(this.options));
+    }
+  }
+
+  updateWasChangedLanguage = () => {
+    this.wasChangedLanguage = FETCHED;
+  };
+
+  async getTranslations(language) {
+    this.language = language;
+    this.wasChangedLanguage = FETCHING;
+    await getTranslations(language, this.updateWasChangedLanguage);
   }
 }

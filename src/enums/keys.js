@@ -1,7 +1,11 @@
-const lenguage = {
-    next: 'Continuar'
-}
+const Idioma = {
+  next: "Continuar",
+};
+const menu = {
+  options: "OPCIONES",
+};
 
 export default {
-    lenguage,
-}
+  Idioma,
+  menu,
+};

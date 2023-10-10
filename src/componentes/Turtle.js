@@ -16,7 +16,7 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
     scene.add.existing(this);
     scene.physics.add.existing(this);
     this.velocity = velocity;
-    
+
     this.cursors = scene.input.keyboard.createCursorKeys();
     this.canJump = true;
 
@@ -52,7 +52,7 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
     if (this.keySpace.isDown && this.canJump) {
       // Verificar si el personaje está en el suelo (puedes ajustar el valor en función de tu juego).
       if (this.body.onFloor()) {
-        this.body.setVelocityY(-400);
+        this.body.setVelocityY(-200);
         this.anims.play("jumpD"); // Configurar la velocidad vertical para saltar.
         this.canJump = false;
         // Deshabilitar la capacidad de saltar.

@@ -1,6 +1,10 @@
 import Phaser from "phaser";
-import { EN_US,ES_AR } from "../enums/lengua";
-import { getLanguageConfig,getPhrase } from "../services/translations";
+import { EN_US, ES_AR } from "../enums/lengua";
+import {
+  getLanguageConfig,
+  getPhrase,
+  getTranslations,
+} from "../services/translations";
 import keys from "../enums/keys";
 import { FETCHED, FETCHING, READY, TODO } from "../enums/status";
 
@@ -19,25 +23,24 @@ import events from "./EventCenter";
 // Recibe el nombre del mensaje y una funcion callback a ejecutar
 // events.on('health-changed', this.handleHealthChanged, this)
 
-export default class Lenguage extends Phaser.Scene {
-
-    updateString = "Continuar";
+export default class Idioma extends Phaser.Scene {
+  //updateString = "Continuar";
+  textSpanish;
+  textEnglish;
+  wasChangedLanguage = TODO;
 
   constructor() {
-    super("lenguage");
-    const {next} = keys.lenguage
+    super("idioma");
+    const { next } = keys.Idioma;
     this.updateString = next;
     this.next = next;
   }
 
-  init ({lenguage}){
-    this.lenguage = lenguage;
-    
+  init({ language }) {
+    this.level = 1;
+    this.language = language;
   }
-  preload() {
-
-
-  }
+  preload() {}
 
   create() {
     const { width, height } = this.scale;
@@ -68,46 +71,35 @@ export default class Lenguage extends Phaser.Scene {
       })
       .setOrigin(0.5);
 
-    const buttonUpdate = this.add
-      .rectangle(width * 0.5, height * 0.75, 150, 75, 0x44d27e)
-      .setInteractive()
-      .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-        this.scene.start("game", { language: this.lenguage });
-      });
-
-    this.updatedTextInScene = this.add
-      .text(buttonUpdate.x, buttonUpdate.y, getPhrase(this.updateString), {
-        color: "#000000",
-      })
-      .setOrigin(0.5);
-
-    this.nextText = this.add.text(
-      width * 0.5,
-      height * 0.3,
-      getPhrase(this.next),
-      {
+    this.nextText = this.add
+      .text(700, 20, getPhrase(this.next), {
         color: "#ffffff",
-      }
+      })
+      .setInteractive();
+
+    this.nextText.on(
+      "pointerdown",
+      function () {
+        this.scene.start("menu"); // Cambiar a la escena llamada 'OtraEscena'
+      },
+      this
     );
   }
 
-  update(){
+  update() {
     if (this.wasChangedLanguage === FETCHED) {
-        this.wasChangedLanguage = READY;
-        this.updatedTextInScene.setText(getPhrase(this.updateString));
-        this.nextText.setText(getPhrase(this.next));
-      }
+      this.wasChangedLanguage = READY;
+      this.nextText.setText(getPhrase(this.next));
     }
-  
-    updateWasChangedLanguage = () => {
-      this.wasChangedLanguage = FETCHED;
-    };
-  
-    async getTranslations(lenguage) {
-      this.lenguage = lenguage;
-      this.wasChangedLanguage = FETCHING;
-  
-      await getTranslations(lenguage, this.updateWasChangedLanguage);
-    
+  }
+
+  updateWasChangedLanguage = () => {
+    this.wasChangedLanguage = FETCHED;
+  };
+
+  async getTranslations(language) {
+    this.language = language;
+    this.wasChangedLanguage = FETCHING;
+    await getTranslations(language, this.updateWasChangedLanguage);
   }
 }

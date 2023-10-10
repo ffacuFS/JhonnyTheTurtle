@@ -7,7 +7,7 @@ import UI from "./scenes/UI";
 import Preload from "./scenes/Preload";
 import GameOver from "./scenes/GameOver";
 import Win from "./scenes/Win";
-import Lenguage from "./scenes/Lenguage";
+import Idioma from "./scenes/Idioma";
 
 const config = {
   type: Phaser.AUTO,
@@ -28,11 +28,11 @@ const config = {
   physics: {
     default: "arcade",
     arcade: {
-      gravity: { y: 200 },
+      gravity: { y: 100 },
       debug: true,
     },
   },
-  scene: [Preload,Lenguage, Menu, Game, UI, SelectLevel, Option, GameOver,Win],
+  scene: [Preload, Idioma, Menu, Game, UI, SelectLevel, Option, GameOver, Win],
 };
 
 export default new Phaser.Game(config);
