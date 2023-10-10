@@ -26,45 +26,47 @@ export default class UI extends Phaser.Scene {
     this.health = data.health || 5;
   }
   create() {
-    this.healthIcon=this.add.image(50, 90, "healthUI");
+    this.healthIcon = this.add.image(50, 90, "healthUI");
     this.healthText = this.add.text(70, 80, ` ${this.health}`, {
       fontSize: "50px",
-      fontFamily: 'DM Serif Display',
-      fill: '#ffd557',
+      fontFamily: "DM Serif Display",
+      fill: "#ffd557",
     });
     this.shellText = this.add.text(500, 80, `Caparazones: ${this.shell}`, {
       fontSize: "50px",
-      fontFamily: 'DM Serif Display',
-      fill: '#ffd557',
+      fontFamily: "DM Serif Display",
+      fill: "#ffd557",
     });
-    this.fruitIcon=this.add.image(180, 100, "fruitUI");
+    this.fruitIcon = this.add.image(180, 100, "fruitUI");
 
     this.fruitsText = this.add.text(210, 80, ` ${this.fruits}`, {
       fontSize: "50px",
-      fontFamily: 'DM Serif Display',
-      fill: '#ffd557',
+      fontFamily: "DM Serif Display",
+      fill: "#ffd557",
     });
 
-    this.levelText = this.add.text(960, 10, `Nivel ${this.level}`, {
-      fontSize: "80px",
-      fontFamily: 'DM Serif Display',
-      fill: '#ffd557',
-    }).setOrigin(0.5, 0)
+    this.levelText = this.add
+      .text(960, 10, `Nivel ${this.level}`, {
+        fontSize: "80px",
+        fontFamily: "DM Serif Display",
+        fill: "#ffd557",
+      })
+      .setOrigin(0.5, 0);
 
-  /*events.on("actualizarDatos", (data) => {
+    /*events.on("actualizarDatos", (data) => {
       console.log("actualizar datos", data);
       this.healthText.setText(`Vidas: ${data.health}`);
       this.levelText.setText(`Level: ${data.level}`);
     });*/
 
-    events.on("actualizarDatos", this.actualizarDatos,this);
+    events.on("actualizarDatos", this.actualizarDatos, this);
   }
 
-  actualizarDatos(data){
+  actualizarDatos(data) {
     console.log("actualizar datos", data);
 
-    this.level= data.level;
-    this.health = data.health
+    this.level = data.level;
+    this.health = data.health;
     this.levelText.setText(`Nivel ${data.level}`);
     this.healthText.setText(`Vidas: ${data.health}`);
   }

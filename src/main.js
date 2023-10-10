@@ -7,7 +7,6 @@ import UI from "./scenes/UI";
 import Preload from "./scenes/Preload";
 import GameOver from "./scenes/GameOver";
 import Win from "./scenes/Win";
-import Idioma from "./scenes/Idioma";
 
 const config = {
   type: Phaser.AUTO,
@@ -32,7 +31,7 @@ const config = {
       debug: true,
     },
   },
-  scene: [Preload, Idioma, Menu, Game, UI, SelectLevel, Option, GameOver, Win],
+  scene: [Preload, Menu, Game, UI, SelectLevel, Option, GameOver, Win],
 };
 
 export default new Phaser.Game(config);

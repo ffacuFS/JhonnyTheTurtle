@@ -94,20 +94,21 @@ export default class Menu extends Phaser.Scene {
     this.scene.start("selectlevel")
   });*/
 
-    this.options = this.add
+    this.optionsText = this.add
       .text(1200, 850, getPhrase(this.options), {
         fontSize: "100px",
         fontFamily: "DM Serif Display",
+        fill: "#A85214",
       })
       .setInteractive();
-    this.options.on("pointerover", () => {
-      this.options.setStyle({ fill: "#ffa615", fontSize: "105px" });
+    this.optionsText.on("pointerover", () => {
+      this.optionsText.setStyle({ fill: "#ffa615", fontSize: "105px" });
     });
-    this.options.on("pointerout", () => {
-      this.options.setStyle({ fill: "#A85214", fontSize: "100px" });
+    this.optionsText.on("pointerout", () => {
+      this.optionsText.setStyle({ fill: "#A85214", fontSize: "100px" });
     });
 
-    this.options.on("pointerdown", () => {
+    this.optionsText.on("pointerdown", () => {
       this.scene.start("option");
     });
   }
@@ -115,7 +116,7 @@ export default class Menu extends Phaser.Scene {
   update() {
     if (this.wasChangedLanguage === FETCHED) {
       this.wasChangedLanguage = READY;
-      this.options.setText(getPhrase(this.options));
+      this.optionsText.setText(getPhrase(this.options));
     }
   }
 

@@ -58,6 +58,7 @@ export default class Game extends Phaser.Scene {
     this.turtle = new Turtle(this, player.x, player.y, "turtle", 350);
     this.cameras.main.startFollow(this.turtle, true, 0.1, 0.1);
     this.physics.add.collider(this.turtle, platLayer);
+    this.physics.world.gravity.y = 500; // Puedes ajustar el valor según sea necesario
 
     // Crear grupo para los enemigos
     this.enemies = this.physics.add.group();
