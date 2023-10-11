@@ -45,6 +45,15 @@ export default class Game extends Phaser.Scene {
     const objectsLayer = map.getObjectLayer("Objetos");
     const player = map.findObject("Objetos", (obj) => obj.name === "personaje");
 
+    // Buscar la salida en la capa de objetos
+    const exitObject = map.findObject("Objetos", (obj) => obj.name === "exit");
+
+    // Crear el sprite de la salida
+    const exit = this.add.image(exitObject.x, exitObject.y, "exit");
+    exit.setScale(0.2);
+    this.physics.world.enable(exit);
+    this.physics.add.collider(exit, platLayer);
+
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
@@ -58,7 +67,7 @@ export default class Game extends Phaser.Scene {
     this.turtle = new Turtle(this, player.x, player.y, "turtle", 350);
     this.cameras.main.startFollow(this.turtle, true, 0.1, 0.1);
     this.physics.add.collider(this.turtle, platLayer);
-    this.physics.world.gravity.y = 500; // Puedes ajustar el valor según sea necesario
+    this.physics.world.gravity.y = 500; 
 
     // Crear grupo para los enemigos
     this.enemies = this.physics.add.group();
@@ -69,7 +78,6 @@ export default class Game extends Phaser.Scene {
       (obj) => obj.name === "enemy"
     );
     enemyObjects.forEach((obj) => {
-      //const enemy = new Enemies(this, obj.x, obj.y, "buho", this.velocityEnemigo);
       const enemy = new Enemies(
         this,
         obj.x,
@@ -103,10 +111,13 @@ export default class Game extends Phaser.Scene {
 
       attackingEnemies.forEach((enemy) => {
         this.enemiesDefeated++;
-        // Aquí puedes realizar acciones con el enemigo atacado, como eliminarlo, restarle vida, etc.
         enemy.destroy();
       });
     });
+
+    this.physics.add.collider(this.turtle, exit, () => {
+      this.nextLevel();
+  });
   }
 
   update() {
@@ -120,17 +131,11 @@ export default class Game extends Phaser.Scene {
     } else {
       this.turtle.setAlpha(1);
     }
-
-    if (this.enemiesDefeated >= 2) {
-      this.nextLevel();
-      //this.scene.start("victoria");
-    }
   }
 
   restarVida() {
     this.turtle.restVida();
     if (this.health <= 0) {
-      //this.scene.stop("ui");
       this.scene.start("perdiste");
     }
   }
