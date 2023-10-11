@@ -50,15 +50,12 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
 
     // Verificar si la tecla "Up" está presionada y el personaje puede saltar.
     if (this.keySpace.isDown && this.canJump) {
-      // Verificar si el personaje está en el suelo (puedes ajustar el valor en función de tu juego).
       if (this.body.onFloor()) {
+        this.anims.play("jumpD", true);
         this.body.setVelocityY(-450);
-        this.anims.play("jumpD", true); // Configurar la velocidad vertical para saltar.
         this.canJump = false;
-        // Deshabilitar la capacidad de saltar.
       }
     } else if (!this.keySpace.isDown && !this.canJump) {
-      // Habilitar la capacidad de saltar nuevamente cuando se suelta la tecla ESPACIO.
       this.canJump = true;
     }
   }
