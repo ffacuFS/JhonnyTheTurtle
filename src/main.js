@@ -1,7 +1,6 @@
 import Phaser from "phaser";
 import Game from "./scenes/Game";
 import Menu from "./scenes/Menu";
-import Option from "./scenes/Option";
 import SelectLevel from "./scenes/SelectLevel";
 import UI from "./scenes/UI";
 import Preload from "./scenes/Preload";
@@ -31,7 +30,7 @@ const config = {
       debug: false,
     },
   },
-  scene: [Preload, Menu, Game, UI, SelectLevel, Option, GameOver, Win],
+  scene: [Preload, Menu, Game, UI, SelectLevel, GameOver, Win],
 };
 
 export default new Phaser.Game(config);

@@ -45,6 +45,7 @@ export default class Preload extends Phaser.Scene {
     this.load.image("fruitUI", "../assets/atlas/fruit.png");
     this.load.image("US-flag", "../assets/atlas/US.png");
     this.load.image("AR-flag", "../assets/atlas/AR.png");
+    this.load.image("music", "../assets/atlas/music_1.png");
     this.load.image("exit", "../assets/atlas/exit.png");
     this.load.tilemapTiledJSON("level1", "../assets/tilemaps/lv1.json");
     this.load.tilemapTiledJSON("level2", "../assets/tilemaps/lv2.json");

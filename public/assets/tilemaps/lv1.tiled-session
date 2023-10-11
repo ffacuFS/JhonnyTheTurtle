@@ -101,9 +101,9 @@
                 2
             ],
             "scale": 0.25,
-            "selectedLayer": 0,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 2070,
+                "x": 3834,
                 "y": 970
             }
         },
@@ -123,9 +123,9 @@
     "project": "lv1.tiled-project",
     "property.type": "bool",
     "recentFiles": [
+        "lv1.json",
         "lv2.json",
         "lv3.json",
-        "lv1.json",
         "lv2.tmj",
         "C:/Users/solro/lv1.json",
         "C:/Users/solro/SombrasAcechantes/public/tilemaps/nivel1.json",
