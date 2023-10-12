@@ -54,7 +54,8 @@ export default class Game extends Phaser.Scene {
     this.physics.world.enable(exit);
     this.physics.add.collider(exit, platLayer);
 
-    this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+    //this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+    this.physics.world.setBoundsCollision(true, true, true, false);
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
     this.scene.launch("ui", {
@@ -131,6 +132,8 @@ export default class Game extends Phaser.Scene {
     } else {
       this.turtle.setAlpha(1);
     }
+
+    this.checkTurtleOutOfScreen();
   }
 
   restarVida() {
@@ -164,6 +167,12 @@ export default class Game extends Phaser.Scene {
       });
     } else {
       this.scene.start("victoria");
+    }
+  }
+
+  checkTurtleOutOfScreen() {
+    if (this.turtle.y > this.sys.game.config.height) {
+      this.scene.start("perdiste");
     }
   }
 }
