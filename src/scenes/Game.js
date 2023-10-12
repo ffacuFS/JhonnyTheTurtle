@@ -119,6 +119,18 @@ export default class Game extends Phaser.Scene {
     this.physics.add.collider(this.turtle, exit, () => {
       this.nextLevel();
   });
+
+// Obtener todos los objetos de trampas en la capa de objetos
+const trampaObjects = map.filterObjects("Objetos", (obj) => obj.name === "trampa");
+
+// Crear sprites de trampas para cada objeto encontrado
+this.trampas = this.physics.add.group();
+trampaObjects.forEach((obj) => {
+  const trampa = this.trampas.create(obj.x, obj.y, "trampas").setScale(0.1);
+  trampa.setImmovable(true);
+  this.physics.add.collider(trampa, platLayer);
+  this.physics.add.collider(this.turtle, trampa, this.restarVida, null, this);
+});
   }
 
   update() {
