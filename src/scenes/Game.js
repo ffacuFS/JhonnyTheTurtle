@@ -54,7 +54,7 @@ export default class Game extends Phaser.Scene {
     this.physics.world.enable(exit);
     this.physics.add.collider(exit, platLayer);
 
-    //this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+    this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.physics.world.setBoundsCollision(true, true, true, false);
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
