@@ -20,6 +20,10 @@ export default class Game extends Phaser.Scene {
     super("game");
     this.enemiesDefeated = 0;
     this.maxLevel = 3;
+
+    this.caparazonesRecolectados = 0;
+    this.tiempoInmunidad = 0;
+    this.duracionInmunidad = 10000;
   }
 
   init(data) {
@@ -132,6 +136,7 @@ trampaObjects.forEach((obj) => {
   this.physics.add.collider(this.turtle, trampa, this.restarVida, null, this);
 });
 
+// Crear sprites de caja 
 const boxObjects = map.filterObjects("Objetos", (obj) => obj.name == "caja" );
 this.box= this.physics.add.group();
 boxObjects.forEach ((obj)=> {
@@ -165,18 +170,50 @@ boxObjects.forEach ((obj)=> {
     }
   }
 
+  // Logica de probabilidad al romper caja.
   hitBox (turtle,box){
     box.destroy();
 
-    const fruit = this.physics.add.sprite(box.x,box.y, "fruta");
-    fruit.setScale(0.2);
-    //this.physics.add.collider(fruit, platLayer);
+    const randomValue = Phaser.Math.Between(0, 1);
 
-    this.physics.add.collider(this.turtle,fruit, this.collectFruit, null, this);
+  if (randomValue < 0.5) {
+    // 50% de probabilidad de lanzar una fruta
+    this.spawnFruit(box.x, box.y);
+  } else {
+    // 50% de probabilidad de lanzar un caparazón
+    this.spawnShell(box.x, box.y);
+  }
 
-    this.physics.add.existing(fruit);
-    fruit.body.gravity.y = 150;
+  }
 
+  // Generacion de fruta al romper caja.
+  spawnFruit (x,y){
+    const fruit = this.physics.add.sprite(x, y, "fruta");
+  fruit.setScale(0.2);
+
+  this.physics.add.collider(this.turtle, fruit, this.collectFruit, null, this);
+  
+  this.physics.add.existing(fruit);
+  fruit.body.gravity.y = 150;
+
+  this.time.delayedCall(3000, function () {
+    fruit.destroy();
+  }, [], this);
+  }
+
+  // Generacion de caparazon al romper caja.
+  spawnShell (x,y){
+    const shell = this.physics.add.sprite(x, y, "caparazon");
+    shell.setScale(0.2);
+    
+    this.physics.add.collider(this.turtle, shell, this.collectShell, null, this);
+  
+    this.physics.add.existing(shell);
+    shell.body.gravity.y = 150;
+  
+    this.time.delayedCall(3000, function () {
+      shell.destroy();
+    }, [], this);
   }
 
   collectFruit (turtle,fruit){
@@ -188,6 +225,29 @@ boxObjects.forEach ((obj)=> {
       health: this.health,
     })
   }
+
+  collectShell (turtle,shell){
+    shell.destroy();
+    this.caparazonesRecolectados++;
+
+    if (this.caparazonesRecolectados >= 1) {
+      this.activarInmunidad();
+      this.caparazonesRecolectados = 0;
+    }
+    events.emit("actualizarDatos", {
+      fruits: this.fruits,
+      level: this.level,
+      shell: this.shell+1,
+      health: this.health,
+    })
+
+  }
+
+  activarInmunidad() {
+    this.tiempoInmunidad = this.duracionInmunidad;
+    
+  }
+
   nextLevel() {
     if (this.level < this.maxLevel) {
       this.level += 1;
