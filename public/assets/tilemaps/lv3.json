@@ -192,6 +192,54 @@
                  "width":0,
                  "x":5152,
                  "y":292
+                }, 
+                {
+                 "height":0,
+                 "id":14,
+                 "name":"caja",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":564,
+                 "y":908
+                }, 
+                {
+                 "height":0,
+                 "id":15,
+                 "name":"caja",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1928,
+                 "y":920
+                }, 
+                {
+                 "height":0,
+                 "id":16,
+                 "name":"caja",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2692,
+                 "y":180
+                }, 
+                {
+                 "height":0,
+                 "id":17,
+                 "name":"caja",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":4156,
+                 "y":748
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -200,7 +248,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":14,
+ "nextobjectid":18,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",
@@ -721,7 +769,7 @@
          "margin":0,
          "name":"laboratory",
          "spacing":0,
-         "tilecount":1980,
+         "tilecount":0,
          "tileheight":32,
          "tilewidth":32
         }],

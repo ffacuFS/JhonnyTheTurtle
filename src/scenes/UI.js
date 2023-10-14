@@ -67,7 +67,9 @@ export default class UI extends Phaser.Scene {
 
     this.level = data.level;
     this.health = data.health;
+    this.fruits = data.fruits;
     this.levelText.setText(`Nivel ${data.level}`);
     this.healthText.setText(` ${data.health}`);
+    this.fruitsText.setText(` ${data.fruits}`);
   }
 }

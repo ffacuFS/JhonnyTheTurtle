@@ -157,6 +157,54 @@
                  "width":0,
                  "x":5387.87878787879,
                  "y":633.333333333333
+                }, 
+                {
+                 "height":0,
+                 "id":15,
+                 "name":"caja",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1366.66666666667,
+                 "y":906.060606060606
+                }, 
+                {
+                 "height":0,
+                 "id":16,
+                 "name":"caja",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2551.51515151515,
+                 "y":951.515151515152
+                }, 
+                {
+                 "height":0,
+                 "id":18,
+                 "name":"caja",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":3306.06060606061,
+                 "y":751.515151515152
+                }, 
+                {
+                 "height":0,
+                 "id":19,
+                 "name":"caja",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":3772.72727272727,
+                 "y":351.515151515152
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -165,7 +213,7 @@
          "y":0
         }],
  "nextlayerid":3,
- "nextobjectid":15,
+ "nextobjectid":20,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",

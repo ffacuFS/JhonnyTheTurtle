@@ -131,6 +131,16 @@ trampaObjects.forEach((obj) => {
   this.physics.add.collider(trampa, platLayer);
   this.physics.add.collider(this.turtle, trampa, this.restarVida, null, this);
 });
+
+const boxObjects = map.filterObjects("Objetos", (obj) => obj.name == "caja" );
+this.box= this.physics.add.group();
+boxObjects.forEach ((obj)=> {
+  const box = this.box.create(obj.x, obj.y, "caja" ).setScale(0.5);
+  box.body.setImmovable(true);
+  box.body.setAllowGravity(false);
+  this.physics.add.collider(box,platLayer);
+  this.physics.add.collider(this.turtle,this.box,this.hitBox,null,this);
+})
   }
 
   update() {
@@ -155,6 +165,29 @@ trampaObjects.forEach((obj) => {
     }
   }
 
+  hitBox (turtle,box){
+    box.destroy();
+
+    const fruit = this.physics.add.sprite(box.x,box.y, "fruta");
+    fruit.setScale(0.2);
+    //this.physics.add.collider(fruit, platLayer);
+
+    this.physics.add.collider(this.turtle,fruit, this.collectFruit, null, this);
+
+    this.physics.add.existing(fruit);
+    fruit.body.gravity.y = 150;
+
+  }
+
+  collectFruit (turtle,fruit){
+    fruit.destroy();
+    events.emit("actualizarDatos", {
+      fruits: this.fruits+1,
+      level: this.level,
+      shell: this.shell,
+      health: this.health,
+    })
+  }
   nextLevel() {
     if (this.level < this.maxLevel) {
       this.level += 1;
