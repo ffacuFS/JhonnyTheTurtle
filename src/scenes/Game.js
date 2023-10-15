@@ -15,6 +15,8 @@ export default class Game extends Phaser.Scene {
   obstacles;
   inmunity;
   isInmune = false;
+  platLayer;
+  brokenBoxes = [];
 
   constructor() {
     super("game");
@@ -142,7 +144,6 @@ this.box= this.physics.add.group();
 boxObjects.forEach ((obj)=> {
   const box = this.box.create(obj.x, obj.y, "caja" ).setScale(0.5);
   box.body.setImmovable(true);
-  box.body.setAllowGravity(false);
   this.physics.add.collider(box,platLayer);
   this.physics.add.collider(this.turtle,this.box,this.hitBox,null,this);
 })
@@ -170,78 +171,98 @@ boxObjects.forEach ((obj)=> {
     }
   }
 
-  // Logica de probabilidad al romper caja.
-  hitBox (turtle,box){
-    box.destroy();
+// Logica de probabilidad al romper caja.
+hitBox(turtle, box) {
+  // Escuchar el evento "ataqueRealizado"
+  events.on("ataqueRealizado", (data) => {
+    const attacker = data.attacker;
 
-    const randomValue = Phaser.Math.Between(0, 1);
+    // Comprobar si el atacante es el personaje (tortuga)
+    if (attacker === this.turtle) {
+      const boxKey = `${box.x},${box.y}`;
 
-  if (randomValue < 0.5) {
-    // 50% de probabilidad de lanzar una fruta
-    this.spawnFruit(box.x, box.y);
-  } else {
-    // 50% de probabilidad de lanzar un caparazón
-    this.spawnShell(box.x, box.y);
-  }
+      // Verificar si la caja ya se ha roto antes
+      if (!this.brokenBoxes[boxKey]) {
+        // Si la caja no se ha roto antes, destrúyela
+        box.destroy();
 
-  }
+        // Marcar la caja como rota en el objeto de seguimiento
+        this.brokenBoxes[boxKey] = true;
 
-  // Generacion de fruta al romper caja.
-  spawnFruit (x,y){
-    const fruit = this.physics.add.sprite(x, y, "fruta");
+        const randomValue = Phaser.Math.Between(0, 1);
+
+        if (randomValue < 0.5) {
+          // 50% de probabilidad de lanzar una fruta
+          this.spawnFruit(box.x, box.y);
+        } else {
+          // 50% de probabilidad de lanzar un caparazón
+          this.spawnShell(box.x, box.y);
+        }
+      }
+    }
+  });
+}
+
+
+// Generacion de fruta al romper caja.
+spawnFruit(x, y) {
+  const fruit = this.physics.add.sprite(x, y, "fruta");
   fruit.setScale(0.2);
 
   this.physics.add.collider(this.turtle, fruit, this.collectFruit, null, this);
-  
+  this.physics.add.collider(fruit, this.platLayer);
+
   this.physics.add.existing(fruit);
-  fruit.body.gravity.y = 150;
+  fruit.body.setAllowGravity(false);
 
   this.time.delayedCall(3000, function () {
     fruit.destroy();
   }, [], this);
-  }
+}
 
-  // Generacion de caparazon al romper caja.
-  spawnShell (x,y){
-    const shell = this.physics.add.sprite(x, y, "caparazon");
-    shell.setScale(0.2);
-    
-    this.physics.add.collider(this.turtle, shell, this.collectShell, null, this);
-  
-    this.physics.add.existing(shell);
-    shell.body.gravity.y = 150;
-  
-    this.time.delayedCall(3000, function () {
-      shell.destroy();
-    }, [], this);
-  }
+// Generacion de caparazon al romper caja.
+spawnShell(x, y) {
+  const shell = this.physics.add.sprite(x, y, "caparazon");
+  shell.setScale(0.2);
 
-  collectFruit (turtle,fruit){
-    fruit.destroy();
-    events.emit("actualizarDatos", {
-      fruits: this.fruits+1,
-      level: this.level,
-      shell: this.shell,
-      health: this.health,
-    })
-  }
+  this.physics.add.collider(this.turtle, shell, this.collectShell, null, this);
+  this.physics.add.collider(shell, this.platLayer);
 
-  collectShell (turtle,shell){
+  this.physics.add.existing(shell);
+  shell.body.setAllowGravity(false);
+
+  this.time.delayedCall(3000, function () {
     shell.destroy();
-    this.caparazonesRecolectados++;
+  }, [], this);
+}
 
-    if (this.caparazonesRecolectados >= 1) {
-      this.activarInmunidad();
-      this.caparazonesRecolectados = 0;
-    }
-    events.emit("actualizarDatos", {
-      fruits: this.fruits,
-      level: this.level,
-      shell: this.shell+1,
-      health: this.health,
-    })
+collectFruit(turtle, fruit) {
+  fruit.destroy();
+  this.fruits += 1;
+  events.emit("actualizarDatos", {
+    fruits: this.fruits,
+    level: this.level,
+    shell: this.shell,
+    health: this.health,
+  });
+}
 
+collectShell(turtle, shell) {
+  shell.destroy();
+  this.shell += 1;
+
+  if (this.shell >= 1) {
+    this.activarInmunidad();
+    this.shell = 0;
   }
+  events.emit("actualizarDatos", {
+    fruits: this.fruits,
+    level: this.level,
+    shell: this.shell,
+    health: this.health,
+  });
+}
+
 
   activarInmunidad() {
     this.tiempoInmunidad = this.duracionInmunidad;
