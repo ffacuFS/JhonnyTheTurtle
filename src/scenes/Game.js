@@ -2,6 +2,7 @@ import Phaser, { LEFT } from "phaser";
 import Turtle from "../componentes/Turtle";
 import Enemies from "../componentes/Enemies";
 import events from "./EventCenter";
+import Boss from "../componentes/Boss";
 
 export default class Game extends Phaser.Scene {
   level;
@@ -50,6 +51,7 @@ export default class Game extends Phaser.Scene {
 
     const objectsLayer = map.getObjectLayer("Objetos");
     const player = map.findObject("Objetos", (obj) => obj.name === "personaje");
+    const boss = map.findObject("Objetos", (obj) => obj.name === "boss");
 
     // Buscar la salida en la capa de objetos
     const exitObject = map.findObject("Objetos", (obj) => obj.name === "exit");
@@ -74,7 +76,10 @@ export default class Game extends Phaser.Scene {
     this.turtle = new Turtle(this, player.x, player.y, "turtle", 350);
     this.cameras.main.startFollow(this.turtle, true, 0.1, 0.1);
     this.physics.add.collider(this.turtle, platLayer);
-    this.physics.world.gravity.y = 500; 
+    this.physics.world.gravity.y = 500;
+
+    //Agg boss
+    //this.boss = new Boss(this, boss.x, boss.y, "bosses", 350);
 
     // Crear grupo para los enemigos
     this.enemies = this.physics.add.group();
@@ -100,53 +105,59 @@ export default class Game extends Phaser.Scene {
     this.physics.add.collider(
       this.turtle,
       this.enemies,
-      this.restarVida,
+      this.hitEnemies,
       null,
       this
     );
 
-    //Colision de ataque para eliminar
-    events.on("ataqueRealizado", (data) => {
-      const attacker = data.attacker;
-
-      const attackingEnemies = this.enemies.getChildren().filter((enemy) => {
-        return Phaser.Geom.Intersects.RectangleToRectangle(
-          attacker.getBounds(),
-          enemy.getBounds()
-        );
-      });
-
-      attackingEnemies.forEach((enemy) => {
-        this.enemiesDefeated++;
-        enemy.destroy();
-      });
-    });
-
     this.physics.add.collider(this.turtle, exit, () => {
       this.nextLevel();
-  });
+    });
 
-// Obtener todos los objetos de trampas en la capa de objetos
-const trampaObjects = map.filterObjects("Objetos", (obj) => obj.name === "trampa");
+    // Obtener todos los objetos de trampas en la capa de objetos
+    const trampaObjects = map.filterObjects(
+      "Objetos",
+      (obj) => obj.name === "trampa"
+    );
 
-// Crear sprites de trampas para cada objeto encontrado
-this.trampas = this.physics.add.group();
-trampaObjects.forEach((obj) => {
-  const trampa = this.trampas.create(obj.x, obj.y, "trampas").setScale(0.1);
-  trampa.setImmovable(true);
-  this.physics.add.collider(trampa, platLayer);
-  this.physics.add.collider(this.turtle, trampa, this.restarVida, null, this);
-});
+    // Crear sprites de trampas para cada objeto encontrado
+    this.trampas = this.physics.add.group();
+    trampaObjects.forEach((obj) => {
+      const trampa = this.trampas.create(obj.x, obj.y, "trampas").setScale(0.1);
+      trampa.setImmovable(true);
+      this.physics.add.collider(trampa, platLayer);
+      this.physics.add.collider(
+        this.turtle,
+        trampa,
+        this.restarVida,
+        null,
+        this
+      );
+    });
 
-// Crear sprites de caja 
-const boxObjects = map.filterObjects("Objetos", (obj) => obj.name == "caja" );
-this.box= this.physics.add.group();
-boxObjects.forEach ((obj)=> {
-  const box = this.box.create(obj.x, obj.y, "caja" ).setScale(0.5);
-  box.body.setImmovable(true);
-  this.physics.add.collider(box,platLayer);
-  this.physics.add.collider(this.turtle,this.box,this.hitBox,null,this);
-})
+    // Crear sprites de caja
+    const boxObjects = map.filterObjects(
+      "Objetos",
+      (obj) => obj.name == "caja"
+    );
+    this.box = this.physics.add.group();
+    boxObjects.forEach((obj) => {
+      const box = this.box.create(obj.x, obj.y, "caja").setScale(0.5);
+      box.body.setImmovable(true);
+      this.physics.add.collider(box, platLayer);
+      this.physics.add.collider(
+        this.turtle,
+        this.box,
+        this.hitBox,
+        this.turtle.isAttack,
+        this
+      );
+    });
+
+    //collider con jefe y disparo
+    this.events.on("bossDisparo", (datos) => {
+      const { bala } = datos;
+    });
   }
 
   update() {
@@ -164,109 +175,94 @@ boxObjects.forEach ((obj)=> {
     this.checkTurtleOutOfScreen();
   }
 
+  attackBoss() {}
+
+  hitEnemies(turtle, enemy) {
+    if (turtle.isAttack) {
+      enemy.destroy();
+    } else {
+      this.restarVida();
+    }
+  }
+
   restarVida() {
     this.turtle.restVida();
     if (this.health <= 0) {
+      this.scene.stop("ui");
       this.scene.start("perdiste");
     }
   }
 
-// Logica de probabilidad al romper caja.
-hitBox(turtle, box) {
-  // Escuchar el evento "ataqueRealizado"
-  events.on("ataqueRealizado", (data) => {
-    const attacker = data.attacker;
+  // Logica de probabilidad al romper caja.
+  hitBox(turtle, box) {
+    const randomValue = Phaser.Math.Between(0, 1);
 
-    // Comprobar si el atacante es el personaje (tortuga)
-    if (attacker === this.turtle) {
-      const boxKey = `${box.x},${box.y}`;
-
-      // Verificar si la caja ya se ha roto antes
-      if (!this.brokenBoxes[boxKey]) {
-        // Si la caja no se ha roto antes, destrúyela
-        box.destroy();
-
-        // Marcar la caja como rota en el objeto de seguimiento
-        this.brokenBoxes[boxKey] = true;
-
-        const randomValue = Phaser.Math.Between(0, 1);
-
-        if (randomValue < 0.5) {
-          // 50% de probabilidad de lanzar una fruta
-          this.spawnFruit(box.x, box.y);
-        } else {
-          // 50% de probabilidad de lanzar un caparazón
-          this.spawnShell(box.x, box.y);
-        }
-      }
+    if (randomValue < 0.5) {
+      // 50% de probabilidad de lanzar una fruta
+      this.spawnObject(box.x, box.y, "fruta");
+    } else {
+      // 50% de probabilidad de lanzar un caparazón
+      this.spawnObject(box.x, box.y, "caparazon");
     }
-  });
-}
 
-
-// Generacion de fruta al romper caja.
-spawnFruit(x, y) {
-  const fruit = this.physics.add.sprite(x, y, "fruta");
-  fruit.setScale(0.2);
-
-  this.physics.add.collider(this.turtle, fruit, this.collectFruit, null, this);
-  this.physics.add.collider(fruit, this.platLayer);
-
-  this.physics.add.existing(fruit);
-  fruit.body.setAllowGravity(false);
-
-  this.time.delayedCall(3000, function () {
-    fruit.destroy();
-  }, [], this);
-}
-
-// Generacion de caparazon al romper caja.
-spawnShell(x, y) {
-  const shell = this.physics.add.sprite(x, y, "caparazon");
-  shell.setScale(0.2);
-
-  this.physics.add.collider(this.turtle, shell, this.collectShell, null, this);
-  this.physics.add.collider(shell, this.platLayer);
-
-  this.physics.add.existing(shell);
-  shell.body.setAllowGravity(false);
-
-  this.time.delayedCall(3000, function () {
-    shell.destroy();
-  }, [], this);
-}
-
-collectFruit(turtle, fruit) {
-  fruit.destroy();
-  this.fruits += 1;
-  events.emit("actualizarDatos", {
-    fruits: this.fruits,
-    level: this.level,
-    shell: this.shell,
-    health: this.health,
-  });
-}
-
-collectShell(turtle, shell) {
-  shell.destroy();
-  this.shell += 1;
-
-  if (this.shell >= 1) {
-    this.activarInmunidad();
-    this.shell = 0;
+    box.destroy();
   }
-  events.emit("actualizarDatos", {
-    fruits: this.fruits,
-    level: this.level,
-    shell: this.shell,
-    health: this.health,
-  });
-}
 
+  // Generacion de fruta al romper caja.
+  spawnObject(x, y, sprite) {
+    const object = this.physics.add.sprite(x, y, sprite);
+    object.setScale(0.2);
+    object.setData({ tipo: sprite });
+
+    this.physics.add.collider(
+      this.turtle,
+      object,
+      this.collectObject,
+      null,
+      this
+    );
+    this.physics.add.collider(object, this.platLayer);
+
+    this.physics.add.existing(object);
+    object.body.setAllowGravity(false);
+
+    this.time.delayedCall(
+      3000,
+      function () {
+        object.destroy();
+      },
+      [],
+      this
+    );
+  }
+
+  collectObject(turtle, object) {
+    switch (object.data.values.tipo) {
+      case "caparazon":
+        this.shell += 1;
+
+        if (this.shell >= 3) {
+          this.activarInmunidad();
+          this.shell = 0;
+        }
+        break;
+      case "fruta":
+        this.fruits += 1;
+        break;
+    }
+
+    object.destroy();
+
+    events.emit("actualizarDatos", {
+      fruits: this.fruits,
+      level: this.level,
+      shell: this.shell,
+      health: this.health,
+    });
+  }
 
   activarInmunidad() {
     this.tiempoInmunidad = this.duracionInmunidad;
-    
   }
 
   nextLevel() {
@@ -298,7 +294,11 @@ collectShell(turtle, shell) {
 
   checkTurtleOutOfScreen() {
     if (this.turtle.y > this.sys.game.config.height) {
-      this.scene.start("perdiste");
+      this.scene.stop("ui");
+
+      this.scene.start("perdiste", {
+        level: this.level,
+      });
     }
   }
 }

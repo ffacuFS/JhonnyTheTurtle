@@ -46,7 +46,6 @@ export function getLanguageConfig() {
   let languageConfig;
 
   // Obtener desde la URL el idioma
-  console.log(window.location.href);
 
   /* 
       depende como lo manejemos: 

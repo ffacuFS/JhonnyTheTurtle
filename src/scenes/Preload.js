@@ -11,7 +11,6 @@ export default class Preload extends Phaser.Scene {
   preload() {
     //traduccion
     this.language = getLanguageConfig();
-    alert(this.language);
 
     //
     this.load.spritesheet("turtle", "./assets/sprites/turtle1.png", {
@@ -48,12 +47,16 @@ export default class Preload extends Phaser.Scene {
     this.load.image("music", "../assets/atlas/music_1.png");
     this.load.image("exit", "../assets/atlas/exit.png");
     this.load.image("trampas", "../assets/atlas/Trampa.png");
-    this.load.image("caja","../assets/sprites/caja.png");
-    this.load.image("fruta","../assets/sprites/fruta.png");
-    this.load.image("caparazon","../assets/sprites/caparazon.png");
+    this.load.image("caja", "../assets/sprites/caja.png");
+    this.load.image("fruta", "../assets/sprites/fruta.png");
+    this.load.image("caparazon", "../assets/sprites/caparazon.png");
+    this.load.image("bala", "../assets/sprites/bala.png");
     this.load.tilemapTiledJSON("level1", "../assets/tilemaps/lv1.json");
     this.load.tilemapTiledJSON("level2", "../assets/tilemaps/lv2.json");
     this.load.tilemapTiledJSON("level3", "../assets/tilemaps/lv3.json");
+
+    //boss prueba
+    this.load.image("bosses", "../assets/sprites/bosses.png");
   }
 
   create() {

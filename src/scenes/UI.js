@@ -54,7 +54,6 @@ export default class UI extends Phaser.Scene {
       .setOrigin(0.5, 0);
 
     /*events.on("actualizarDatos", (data) => {
-      console.log("actualizar datos", data);
       this.healthText.setText(`Vidas: ${data.health}`);
       this.levelText.setText(`Level: ${data.level}`);
     });*/
@@ -63,8 +62,6 @@ export default class UI extends Phaser.Scene {
   }
 
   actualizarDatos(data) {
-    console.log("actualizar datos", data);
-
     this.level = data.level;
     this.health = data.health;
     this.fruits = data.fruits;
@@ -72,6 +69,6 @@ export default class UI extends Phaser.Scene {
     this.levelText.setText(`Nivel ${data.level}`);
     this.healthText.setText(` ${data.health}`);
     this.fruitsText.setText(` ${data.fruits}`);
-    this.shellText.setText(` ${data.shell}`)
+    this.shellText.setText(` ${data.shell}`);
   }
 }
