@@ -32,13 +32,15 @@ export default class UI extends Phaser.Scene {
       fontFamily: "DM Serif Display",
       fill: "#ffd557",
     });
-    this.shellText = this.add.text(500, 80, `Caparazones: ${this.shell}`, {
+
+    this.shellIcon = this.add.image(470, 100, "shellUI");
+    this.shellText = this.add.text(500, 80, ` ${this.shell}`, {
       fontSize: "50px",
       fontFamily: "DM Serif Display",
       fill: "#ffd557",
     });
+   
     this.fruitIcon = this.add.image(180, 100, "fruitUI");
-
     this.fruitsText = this.add.text(210, 80, ` ${this.fruits}`, {
       fontSize: "50px",
       fontFamily: "DM Serif Display",

@@ -42,9 +42,9 @@ export default class Game extends Phaser.Scene {
 
     const map = this.make.tilemap({ key: mapKey });
 
-    const capaBackground = map.addTilesetImage("laboratory", "backgroundBoss");
+    const capaBackground = map.addTilesetImage("tortuga-bay", "bgtortugabay");
     const BGlayer = map.createLayer("Background", capaBackground);
-    const capaPlataforma = map.addTilesetImage("plataforma", "pisos");
+    const capaPlataforma = map.addTilesetImage("plataformas", "arena");
     const platLayer = map.createLayer("Pisos", capaPlataforma);
 
     platLayer.setCollisionByProperty({ colision: true });
@@ -199,10 +199,10 @@ export default class Game extends Phaser.Scene {
 
     if (randomValue < 0.5) {
       // 50% de probabilidad de lanzar una fruta
-      this.spawnObject(box.x, box.y, "fruta");
+      this.spawnObject(box.x, box.y, "fruit");
     } else {
       // 50% de probabilidad de lanzar un caparazón
-      this.spawnObject(box.x, box.y, "caparazon");
+      this.spawnObject(box.x, box.y, "shell");
     }
 
     box.destroy();
@@ -211,7 +211,6 @@ export default class Game extends Phaser.Scene {
   // Generacion de fruta al romper caja.
   spawnObject(x, y, sprite) {
     const object = this.physics.add.sprite(x, y, sprite);
-    object.setScale(0.2);
     object.setData({ tipo: sprite });
 
     this.physics.add.collider(
@@ -238,7 +237,7 @@ export default class Game extends Phaser.Scene {
 
   collectObject(turtle, object) {
     switch (object.data.values.tipo) {
-      case "caparazon":
+      case "shell":
         this.shell += 1;
 
         if (this.shell >= 3) {
@@ -246,7 +245,7 @@ export default class Game extends Phaser.Scene {
           this.shell = 0;
         }
         break;
-      case "fruta":
+      case "fruit":
         this.fruits += 1;
         break;
     }

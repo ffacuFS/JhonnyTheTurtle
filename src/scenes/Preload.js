@@ -29,27 +29,38 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 133.5,
       frameHeight: 162,
     });
-    this.load.spritesheet("boss", "../sprites/boss.png", {
+    this.load.spritesheet("boss", "../assets/sprites/boss.png", {
       frameWidth: 170.5,
       frameHeight: 208,
     });
+    this.load.spritesheet("shells", "../assets/sprites/shells.png",{
+      frameWidth: 86.5,
+      frameHeight: 88,
+    });
+    this.load.spritesheet("fruits","../assets/atlas/fruits_1.png",{
+      frameWidth: 50,
+      frameHeight:80,
+    });
     this.load.image("buho", "../assets/sprites/buho.png");
-    this.load.image("pisos", "../assets/sprites/plataforma.jpg");
+    this.load.image("arena", "../assets/atlas/plataformas.png");
+    this.load.image("pisos","../assets/sprites/plataforma.jpg")
     this.load.image("menulevelBG", "../assets/atlas/menulevel-01.png");
     this.load.image("backgroundMenu", "../assets/atlas/newGame-01.png");
     this.load.image("backgroundBoss", "../assets/atlas/laboratory.png");
+    this.load.image("bgtortugabay","../assets/atlas/tortuga-bay.png")
     this.load.image("back", "../assets/atlas/back_1.png");
     this.load.image("play", "../assets/atlas/play.png");
     this.load.image("healthUI", "../assets/atlas/health.png");
     this.load.image("fruitUI", "../assets/atlas/fruit.png");
+    this.load.image("shellUI", "../assets/atlas/shellUI.png")
     this.load.image("US-flag", "../assets/atlas/US.png");
     this.load.image("AR-flag", "../assets/atlas/AR.png");
     this.load.image("music", "../assets/atlas/music_1.png");
     this.load.image("exit", "../assets/atlas/exit.png");
     this.load.image("trampas", "../assets/atlas/Trampa.png");
     this.load.image("caja", "../assets/sprites/caja.png");
-    this.load.image("fruta", "../assets/sprites/fruta.png");
-    this.load.image("caparazon", "../assets/sprites/caparazon.png");
+    this.load.image("fruit", "../assets/sprites/fruit.png");
+    this.load.image("shell", "../assets/sprites/shell.png");
     this.load.image("bala", "../assets/sprites/bala.png");
     this.load.tilemapTiledJSON("level1", "../assets/tilemaps/lv1.json");
     this.load.tilemapTiledJSON("level2", "../assets/tilemaps/lv2.json");
@@ -63,7 +74,7 @@ export default class Preload extends Phaser.Scene {
     //lenguaje
     this.scene.start("menu");
 
-    //Animación
+    //Animación tortuga
     this.anims.create({
       key: "left",
       frames: this.anims.generateFrameNumbers("turtle", { start: 0, end: 4 }),
@@ -98,6 +109,35 @@ export default class Preload extends Phaser.Scene {
       }),
       frameRate: 10,
       repeat: -1,
+    });
+    //animacion Boss
+    this.anims.create({
+      key: "bossAnim",
+      frames: this.anims.generateFrameNumbers("boss",{
+        start:0,
+        end: 7,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+    //animacion objetos
+    this.anims.create({
+      key:"shell",
+      frames: this.anims.generateFrameNumbers("shells",{
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 10,
+      repeat:-1,
+    });
+    this.anims.create({
+      key:"fruits",
+      frames: this.anims.generateFrameNumbers("fruits",{
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 10,
+      repeat:-1,
     });
   }
 }
