@@ -112,6 +112,7 @@ export default class Game extends Phaser.Scene {
 
     this.physics.add.collider(this.turtle, exit, () => {
       this.nextLevel();
+      events.emit("desbloquearNuevoNivel");
     });
 
     // Obtener todos los objetos de trampas en la capa de objetos
