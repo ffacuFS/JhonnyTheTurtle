@@ -56,7 +56,7 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
     if (this.keySpace.isDown && this.canJump) {
       if (this.body.onFloor()) {
         this.anims.play("jumpD", true);
-        this.body.setVelocityY(-450);
+        this.body.setVelocityY(-480);
         this.canJump = false;
       }
     } else if (!this.keySpace.isDown && !this.canJump) {

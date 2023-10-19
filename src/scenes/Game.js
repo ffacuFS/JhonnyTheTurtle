@@ -44,7 +44,7 @@ export default class Game extends Phaser.Scene {
 
     const capaBackground = map.addTilesetImage("tortuga-bay", "bgtortugabay");
     const BGlayer = map.createLayer("Background", capaBackground);
-    const capaPlataforma = map.addTilesetImage("plataformas", "arena");
+    const capaPlataforma = map.addTilesetImage("plataforma", "arena");
     const platLayer = map.createLayer("Pisos", capaPlataforma);
 
     platLayer.setCollisionByProperty({ colision: true });
@@ -197,7 +197,7 @@ export default class Game extends Phaser.Scene {
   // Logica de probabilidad al romper caja.
   hitBox(turtle, box) {
     const randomValue = Phaser.Math.Between(0, 1);
-
+    if (turtle.isAttack){
     if (randomValue < 0.5) {
       // 50% de probabilidad de lanzar una fruta
       this.spawnObject(box.x, box.y, "fruit");
@@ -207,6 +207,7 @@ export default class Game extends Phaser.Scene {
     }
 
     box.destroy();
+  }
   }
 
   // Generacion de fruta al romper caja.

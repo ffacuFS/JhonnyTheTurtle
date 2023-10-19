@@ -41,8 +41,12 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 50,
       frameHeight:80,
     });
+    this.load.spritesheet("crab", "../assets/sprites/crab_4.png",{
+      frameWidth: 105,
+      frameHeight:88,
+    })
     this.load.image("buho", "../assets/sprites/buho.png");
-    this.load.image("arena", "../assets/atlas/plataformas.png");
+    this.load.image("arena", "../assets/atlas/plataformas_2.png");
     this.load.image("pisos","../assets/sprites/plataforma.jpg")
     this.load.image("menulevelBG", "../assets/atlas/menulevel-01.png");
     this.load.image("backgroundMenu", "../assets/atlas/newGame-01.png");
@@ -110,12 +114,21 @@ export default class Preload extends Phaser.Scene {
       frameRate: 10,
       repeat: -1,
     });
-    //animacion Boss
+    //animacion Boss y enemigos
     this.anims.create({
       key: "bossAnim",
       frames: this.anims.generateFrameNumbers("boss",{
         start:0,
         end: 7,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "crabAnim",
+      frames: this.anims.generateFrameNumbers('crab', {
+        start: 0,
+        end: 2,
       }),
       frameRate: 10,
       repeat: -1,
