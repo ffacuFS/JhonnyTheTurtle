@@ -27,10 +27,18 @@ export default class GameOver extends Phaser.Scene {
 
     // Agrega un evento para manejar el clic en el botón
     restartButton.on("pointerdown", () => {
-      this.scene.start("game");
+      this.scene.start("game", {
+        level: this.level,
+        health: this.health,
+        fruits: this.fruits,
+        shell: this.shell,
+    });
       this.scene.launch("ui", {
         level: this.level,
-      });
+        health: this.health,
+        fruits: this.fruits,
+        shell: this.shell,
+    });
     });
   }
 }

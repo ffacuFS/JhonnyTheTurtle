@@ -24,9 +24,13 @@ export default class Game extends Phaser.Scene {
     this.enemiesDefeated = 0;
     this.maxLevel = 3;
 
-    this.caparazonesRecolectados = 0;
+    this.shellsRecolect = 0;
     this.tiempoInmunidad = 0;
     this.duracionInmunidad = 10000;
+    this.isInmune = false;
+
+    this.fruitRecolect = 0;
+    
   }
 
   init(data) {
@@ -191,6 +195,7 @@ export default class Game extends Phaser.Scene {
     if (this.health <= 0) {
       this.scene.stop("ui");
       this.scene.start("perdiste");
+      
     }
   }
 
@@ -242,13 +247,20 @@ export default class Game extends Phaser.Scene {
       case "shell":
         this.shell += 1;
 
-        if (this.shell >= 3) {
+        if (this.shellsRecolect === 2) {
           this.activarInmunidad();
           this.shell = 0;
         }
         break;
       case "fruit":
         this.fruits += 1;
+        this.fruitRecolect += 1;
+
+        if ( this.fruitRecolect === 2) {
+            this.moreHealth();
+            this.fruitRecolect = 0;
+            this.fruits = 0;
+        }
         break;
     }
 
@@ -262,6 +274,17 @@ export default class Game extends Phaser.Scene {
     });
   }
 
+  moreHealth (){
+    this.health += 1;
+
+    events.emit("actualizarDatos", {
+        fruits: this.fruits,
+        level: this.level,
+        shell: this.shell,
+        health: this.health,
+    });
+  }
+
   activarInmunidad() {
     this.tiempoInmunidad = this.duracionInmunidad;
   }
@@ -269,9 +292,6 @@ export default class Game extends Phaser.Scene {
   nextLevel() {
     if (this.level < this.maxLevel) {
       this.level += 1;
-      this.fruits = 0;
-      this.shell = 0;
-      this.health = 5;
       this.enemiesDefeated = 0;
 
       events.emit("actualizarDatos", {
@@ -289,6 +309,7 @@ export default class Game extends Phaser.Scene {
         velocityEnemigo: this.velocityEnemigo,
       });
     } else {
+      this.scene.stop("ui");
       this.scene.start("victoria");
     }
   }
@@ -299,6 +320,7 @@ export default class Game extends Phaser.Scene {
 
       this.scene.start("perdiste", {
         level: this.level,
+
       });
     }
   }
