@@ -31,26 +31,65 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
 
   actualizar() {
     this.isAttack = false;
-    if (this.cursors.left.isDown && this.keyA.isDown) {
-      this.body.setVelocityX(-400);
-      this.anims.play("attack", true);
-      this.isAttack = true;
-      //events.emit("ataqueRealizado", { attacker: this });
-    } else if (this.cursors.left.isDown) {
-      this.body.setVelocityX(-400);
-      this.anims.play("left", true);
-    } else if (this.cursors.right.isDown && this.keyA.isDown) {
-      this.body.setVelocityX(400);
-      this.anims.play("attack", true);
-      this.isAttack = true;
-      //events.emit("ataqueRealizado", { attacker: this });
-    } else if (this.cursors.right.isDown) {
-      this.body.setVelocityX(400);
-      this.anims.play("right", true);
+    if (this.scene.shell === 1) {
+      if (this.cursors.left.isDown && this.keyA.isDown) {
+        this.body.setVelocityX(-400);
+        this.anims.play("attackR", true);
+        this.isAttack = true;
+      } else if (this.cursors.left.isDown) {
+        this.body.setVelocityX(-400);
+        this.anims.play("leftR", true);
+      } else if (this.cursors.right.isDown && this.keyA.isDown) {
+        this.body.setVelocityX(400);
+        this.anims.play("attackR", true);
+        this.isAttack = true;
+      } else if (this.cursors.right.isDown) {
+        this.body.setVelocityX(400);
+        this.anims.play("rightR", true);
+      } else {
+        this.body.setVelocityX(0);
+        this.anims.play("turnR", true);
+      }
+    } else if (this.scene.shell >= 2) {
+      if (this.cursors.left.isDown && this.keyA.isDown) {
+        this.body.setVelocityX(-400);
+        this.anims.play("attackD", true);
+        this.isAttack = true;
+      } else if (this.cursors.left.isDown) {
+        this.body.setVelocityX(-400);
+        this.anims.play("leftD", true);
+      } else if (this.cursors.right.isDown && this.keyA.isDown) {
+        this.body.setVelocityX(400);
+        this.anims.play("attackD", true);
+        this.isAttack = true;
+      } else if (this.cursors.right.isDown) {
+        this.body.setVelocityX(400);
+        this.anims.play("rightD", true);
+      } else {
+        this.body.setVelocityX(0);
+        this.anims.play("turnD", true);
+      }
     } else {
-      this.body.setVelocityX(0);
-      this.anims.play("turn", true);
+      if (this.cursors.left.isDown && this.keyA.isDown) {
+        this.body.setVelocityX(-400);
+        this.anims.play("attack", true);
+        this.isAttack = true;
+      } else if (this.cursors.left.isDown) {
+        this.body.setVelocityX(-400);
+        this.anims.play("left", true);
+      } else if (this.cursors.right.isDown && this.keyA.isDown) {
+        this.body.setVelocityX(400);
+        this.anims.play("attack", true);
+        this.isAttack = true;
+      } else if (this.cursors.right.isDown) {
+        this.body.setVelocityX(400);
+        this.anims.play("right", true);
+      } else {
+        this.body.setVelocityX(0);
+        this.anims.play("turn", true);
+      }
     }
+    
 
     // Verificar si la tecla "Up" está presionada y el personaje puede saltar.
     if (this.keySpace.isDown && this.canJump) {

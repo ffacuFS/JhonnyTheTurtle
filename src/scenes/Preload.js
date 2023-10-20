@@ -12,19 +12,36 @@ export default class Preload extends Phaser.Scene {
     //traduccion
     this.language = getLanguageConfig();
 
-    //
+    //turtle
     this.load.spritesheet("turtle", "./assets/sprites/turtle1.png", {
       frameWidth: 114.6,
       frameHeight: 156,
     });
-    this.load.spritesheet(
-      "turtleAttack",
-      "./assets/sprites/turtle-attack1.png",
-      {
-        frameWidth: 147.8,
-        frameHeight: 147,
-      }
-    );
+    this.load.spritesheet("turtleAttack", "./assets/sprites/turtle-attack1.png", {
+      frameWidth: 147.8,
+      frameHeight: 147,
+    });
+    //turtle red 
+    this.load.spritesheet("turtleR", "./assets/sprites/turtlered.png", {
+      frameWidth: 114.6,
+      frameHeight: 156,
+    });
+    this.load.spritesheet("turtleAttackR", "./assets/sprites/turtle-attack-red.png", {
+      frameWidth: 147.8,
+      frameHeight: 147,
+    });
+    //turtle yellow
+    this.load.spritesheet("turtleD", "./assets/sprites/turtleyellow.png", {
+      frameWidth: 114.6,
+      frameHeight: 156,
+    });
+    this.load.spritesheet("turtleAttackD", "./assets/sprites/turtle-attack-yellow.png", {
+      frameWidth: 147.8,
+      frameHeight: 147,
+    });
+
+
+
     this.load.spritesheet("turtleJump", "./assets/sprites/turtle-jump1.png", {
       frameWidth: 133.5,
       frameHeight: 162,
@@ -115,6 +132,60 @@ export default class Preload extends Phaser.Scene {
       frameRate: 10,
       repeat: -1,
     });
+
+    //Animación tortuga roja
+    this.anims.create({
+      key: "leftR",
+      frames: this.anims.generateFrameNumbers("turtleR", { start: 0, end: 4 }),
+      frameRate: 10,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "turnR",
+      frames: [{ key: "turtleR", frame: 5 }],
+      frameRate: 20,
+    });
+    this.anims.create({
+      key: "rightR",
+      frames: this.anims.generateFrameNumbers("turtleR", { start: 6, end: 10 }),
+      frameRate: 10,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "attackR",
+      frames: this.anims.generateFrameNumbers("turtleAttackR", { start: 0, end: 12,}),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    //Animación tortuga dorada
+    this.anims.create({
+      key: "leftD",
+      frames: this.anims.generateFrameNumbers("turtleD", { start: 0, end: 4 }),
+      frameRate: 10,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "turnD",
+      frames: [{ key: "turtleD", frame: 5 }],
+      frameRate: 20,
+    });
+    this.anims.create({
+      key: "rightD",
+      frames: this.anims.generateFrameNumbers("turtleD", { start: 6, end: 10 }),
+      frameRate: 10,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "attackD",
+      frames: this.anims.generateFrameNumbers("turtleAttackD", { start: 0, end: 12,}),
+      frameRate: 10,
+      repeat: -1,
+    });
+   
+
+
+
     //animacion Boss y enemigos
     this.anims.create({
       key: "bossAnim",
