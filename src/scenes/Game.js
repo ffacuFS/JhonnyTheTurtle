@@ -48,8 +48,12 @@ export default class Game extends Phaser.Scene {
 
     const capaBackground = map.addTilesetImage("tortuga-bay", "bgtortugabay");
     const BGlayer = map.createLayer("Background", capaBackground);
+
     const capaPlataforma = map.addTilesetImage("plataforma", "arena");
     const platLayer = map.createLayer("Pisos", capaPlataforma);
+
+    const capaLaboratorio = map.addTilesetImage("laboratorio", "laboratorio");
+    const BGlab = map.createLayer("objetosBG", capaLaboratorio);
 
     platLayer.setCollisionByProperty({ colision: true });
 
