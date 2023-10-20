@@ -1,4 +1,12 @@
 import Phaser from "phaser";
+import { EN_US, ES_AR } from "../enums/lengua";
+import {
+  getLanguageConfig,
+  getPhrase,
+  getTranslations,
+} from "../services/translations";
+import keys from "../enums/keys";
+import { FETCHED, FETCHING, READY, TODO } from "../enums/status";
 import events from "./EventCenter";
 
 // Manejador de eventos centralizados para comunicacion de componentes
@@ -15,58 +23,95 @@ import events from "./EventCenter";
 // events.on('health-changed', this.handleHealthChanged, this)
 
 export default class Menu extends Phaser.Scene {
+  wasChangedLanguage = TODO;
 
   constructor() {
     super("menu");
+    const { options } = keys.menu;
+    this.updateString = options;
+    this.options = options;
   }
 
-  preload() {
-
-
+  init({ language }) {
+    this.level = 1;
+    this.language = language;
   }
+
+  preload() {}
 
   create() {
-    this.add.image(0,0, "backgroundMenu").setOrigin(0,0)
+    this.add.image(0, 0, "backgroundMenu").setOrigin(0, 0);
+    const buttonMusic = this.add.image(1800, 90, "music").setInteractive();
+    buttonMusic.on("pointerover", () => {
+      buttonMusic.setScale(1.08);
+    });
+   
 
-    this.selectLevel = this.add.text(950, 700, "NUEVO JUEGO", {
-      fontSize: "100px",
-      fontFamily: 'DM Serif Display',
+    const buttonEnglish = this.add.image(1600, 90, "US-flag").setInteractive();
+    buttonEnglish.on("pointerover", () => {
+      buttonEnglish.setScale(1.08);
+    });
+    buttonEnglish.on("pointerout", () => {
+      buttonEnglish.setScale(1);
+    });
 
-      fill: '#A85214',
+    buttonEnglish.on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+      this.getTranslations(EN_US);
+    });
 
-    })
+    const buttonSpanish = this.add.image(1500, 90, "AR-flag").setInteractive();
+    buttonSpanish.on("pointerover", () => {
+      buttonSpanish.setScale(1.08);
+    });
+    buttonSpanish.on("pointerout", () => {
+      buttonSpanish.setScale(1);
+    });
+
+    buttonSpanish.on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+      this.getTranslations(ES_AR);
+    });
+    this.playButton = this.add.image(1450, 700, "play").setInteractive();
+    this.playButton.on("pointerover", () => {
+      this.playButton.setScale(1.08);
+    });
+    this.playButton.on("pointerout", () => {
+      this.playButton.setScale(1);
+    });
+
+    this.playButton.on("pointerdown", () => {
+      this.scene.start("selectlevel");
+    });
+
+    this.optionsText = this.add
+      .text(1200, 850, getPhrase(this.options), {
+        fontSize: "100px",
+        fontFamily: "DM Serif Display",
+        fill: "#A85214",
+      })
       .setInteractive();
-    this.selectLevel.on('pointerover', () => {
-      this.selectLevel.setStyle({ fill: '#ffa615', fontSize: '105px' });
+    this.optionsText.on("pointerover", () => {
+      this.optionsText.setStyle({ fill: "#ffa615", fontSize: "105px" });
     });
-    this.selectLevel.on('pointerout', () => {
-      this.selectLevel.setStyle({ fill: '#A85214', fontSize: '100px' });
-    });
-
-    this.selectLevel.on("pointerdown", () => {
-      this.scene.start("selectlevel")
+    this.optionsText.on("pointerout", () => {
+      this.optionsText.setStyle({ fill: "#A85214", fontSize: "100px" });
     });
 
-    this.options = this.add.text(950, 800, "OPCIONES", {
-      fontSize: "100px",
-      fontFamily: 'DM Serif Display',
+  }
 
-      fill: '#A85214',
+  update() {
+    if (this.wasChangedLanguage === FETCHED) {
+      this.wasChangedLanguage = READY;
+      this.optionsText.setText(getPhrase(this.options));
+    }
+  }
 
-    })
-      .setInteractive();
-    this.options.on('pointerover', () => {
-      this.options.setStyle({ fill: '#ffa615', fontSize: '105px' });
-    });
-    this.options.on('pointerout', () => {
-      this.options.setStyle({ fill: '#A85214', fontSize: '100px' });
-    });
+  updateWasChangedLanguage = () => {
+    this.wasChangedLanguage = FETCHED;
+  };
 
-
-
-    this.options.on("pointerdown", () => {
-      this.scene.start("option")
-    });
-
+  async getTranslations(language) {
+    this.language = language;
+    this.wasChangedLanguage = FETCHING;
+    await getTranslations(language, this.updateWasChangedLanguage);
   }
 }

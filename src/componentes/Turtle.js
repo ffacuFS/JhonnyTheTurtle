@@ -8,6 +8,7 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
   keySpace;
   isInmune;
   scene;
+  isAttack;
 
   constructor(scene, x, y, texture, velocity) {
     super(scene, x, y, texture);
@@ -16,7 +17,7 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
     scene.add.existing(this);
     scene.physics.add.existing(this);
     this.velocity = velocity;
-    
+
     this.cursors = scene.input.keyboard.createCursorKeys();
     this.canJump = true;
 
@@ -29,17 +30,20 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
   }
 
   actualizar() {
+    this.isAttack = false;
     if (this.cursors.left.isDown && this.keyA.isDown) {
       this.body.setVelocityX(-400);
       this.anims.play("attack", true);
-      events.emit("ataqueRealizado", { attacker: this });
+      this.isAttack = true;
+      //events.emit("ataqueRealizado", { attacker: this });
     } else if (this.cursors.left.isDown) {
       this.body.setVelocityX(-400);
       this.anims.play("left", true);
     } else if (this.cursors.right.isDown && this.keyA.isDown) {
       this.body.setVelocityX(400);
       this.anims.play("attack", true);
-      events.emit("ataqueRealizado", { attacker: this });
+      this.isAttack = true;
+      //events.emit("ataqueRealizado", { attacker: this });
     } else if (this.cursors.right.isDown) {
       this.body.setVelocityX(400);
       this.anims.play("right", true);
@@ -50,32 +54,30 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
 
     // Verificar si la tecla "Up" está presionada y el personaje puede saltar.
     if (this.keySpace.isDown && this.canJump) {
-      // Verificar si el personaje está en el suelo (puedes ajustar el valor en función de tu juego).
       if (this.body.onFloor()) {
-        this.body.setVelocityY(-400);
-        this.anims.play("jumpD"); // Configurar la velocidad vertical para saltar.
+        this.anims.play("jumpD", true);
+        this.body.setVelocityY(-480);
         this.canJump = false;
-        // Deshabilitar la capacidad de saltar.
       }
     } else if (!this.keySpace.isDown && !this.canJump) {
-      // Habilitar la capacidad de saltar nuevamente cuando se suelta la tecla ESPACIO.
       this.canJump = true;
     }
   }
   restVida() {
-    console.log(this.isInmune);
     if (!this.isInmune) {
       this.scene.health -= 1;
       this.isInmune = true;
 
       events.emit("actualizarDatos", {
         health: this.scene.health,
+        level: this.scene.level,
+        shell: this.scene.shell,
+        fruits: this.scene.fruits,
       });
 
       this.scene.time.addEvent({
         delay: 2000,
         callback: () => {
-          console.log("se quita inmunidad");
           this.isInmune = false;
         },
         callbackScope: this,

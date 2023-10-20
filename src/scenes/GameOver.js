@@ -6,9 +6,15 @@ export default class GameOver extends Phaser.Scene {
   constructor() {
     super("perdiste");
   }
-  init(){
-    
+
+  init(data) {
+    this.level = data.level;
+    this.health = data.health || 5;
+
+    this.fruits = data.fruits || 0;
+    this.shell = data.shell || 0;
   }
+
   create() {
     const restartButton = this.add.text(400, 300, "Volver a Jugar", {
       fontFamily: "Arial",
@@ -21,8 +27,18 @@ export default class GameOver extends Phaser.Scene {
 
     // Agrega un evento para manejar el clic en el botón
     restartButton.on("pointerdown", () => {
-      // Reinicia la escena principal
-      this.scene.start("game");
+      this.scene.start("game", {
+        level: this.level,
+        health: this.health,
+        fruits: this.fruits,
+        shell: this.shell,
+    });
+      this.scene.launch("ui", {
+        level: this.level,
+        health: this.health,
+        fruits: this.fruits,
+        shell: this.shell,
+    });
     });
   }
 }

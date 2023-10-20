@@ -1,13 +1,13 @@
 export default class Enemies extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, texture, velocity) {
     super(scene, x, y, texture);
-    this.setTexture("buho");
+    this.setTexture("crab");
     scene.add.existing(this);
     scene.physics.add.existing(this);
     this.velocityEnemigo = velocity;
-    this.setScale(0.2);
     this.setCollideWorldBounds(true);
     this.setupTween();
+    this.anims.play('crabAnim');
   }
 
   setupTween() {
