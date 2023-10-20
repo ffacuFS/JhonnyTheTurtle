@@ -46,12 +46,13 @@ export default class Preload extends Phaser.Scene {
       frameHeight:88,
     })
     this.load.image("buho", "../assets/sprites/buho.png");
-    this.load.image("arena", "../assets/atlas/plataformas_2.png");
+    this.load.image("arena", "../assets/atlas/plataformas.png");
     this.load.image("pisos","../assets/sprites/plataforma.jpg")
+    this.load.image("laboratorio", "../assets/atlas/laboratorio.png")
     this.load.image("menulevelBG", "../assets/atlas/menulevel-01.png");
     this.load.image("backgroundMenu", "../assets/atlas/newGame-01.png");
     this.load.image("backgroundBoss", "../assets/atlas/laboratory.png");
-    this.load.image("bgtortugabay","../assets/atlas/tortuga-bay.png")
+    this.load.image("bgtortugabay","../assets/atlas/backgrounds.png")
     this.load.image("back", "../assets/atlas/back_1.png");
     this.load.image("play", "../assets/atlas/play.png");
     this.load.image("healthUI", "../assets/atlas/health.png");
