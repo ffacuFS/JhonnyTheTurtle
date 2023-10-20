@@ -31,7 +31,7 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
 
   actualizar() {
     this.isAttack = false;
-    if (this.scene.shell === 1) {
+    if (this.scene.shell === 1 || this.scene.shell === 2) {
       if (this.cursors.left.isDown && this.keyA.isDown) {
         this.body.setVelocityX(-400);
         this.anims.play("attackR", true);
