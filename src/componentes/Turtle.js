@@ -26,12 +26,29 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
     this.isInmune = false;
+    this.inmunityDurationR = 5000;
+    this.inmunityDurationD = 10000;
     this.body.setCollideWorldBounds(true);
   }
 
   actualizar() {
     this.isAttack = false;
     if (this.scene.shell === 1 || this.scene.shell === 2) {
+      if (!this.isInmune) {
+        this.isInmune = true;
+        console.log("es inmune");
+        this.scene.time.addEvent({
+          delay: this.inmunityDurationR,
+          callback: () => {
+            this.isInmune = false;
+            console.log("ya no es inmune");
+            this.scene.shell -= 1; 
+            console.log("resta caparazón");
+          },
+          callbackScope: this,
+          loop: false,
+        });
+      }
       if (this.cursors.left.isDown && this.keyA.isDown) {
         this.body.setVelocityX(-400);
         this.anims.play("attackR", true);
@@ -51,6 +68,21 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
         this.anims.play("turnR", true);
       }
     } else if (this.scene.shell > 2) {
+      if (!this.isInmune) {
+        this.isInmune = true;
+        console.log("es inmune");
+        this.scene.time.addEvent({
+          delay: this.inmunityDurationD,
+          callback: () => {
+            this.isInmune = false;
+            console.log("ya no es inmune");
+            this.scene.shell -= 3; 
+            console.log("resta 3 caparazones");
+          },
+          callbackScope: this,
+          loop: false,
+        });
+      }
       if (this.cursors.left.isDown && this.keyA.isDown) {
         this.body.setVelocityX(-400);
         this.anims.play("attackD", true);

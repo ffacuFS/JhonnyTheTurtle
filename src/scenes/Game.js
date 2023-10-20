@@ -250,17 +250,22 @@ export default class Game extends Phaser.Scene {
     switch (object.data.values.tipo) {
       case "shell":
         this.shell += 1;
+        console.log("junto caparazón");
 
-        if (this.shellsRecolect === 2) {
-          this.activarInmunidad();
-          this.shell = 0;
-        }
+        //if (this.shellsRecolect === 1) {
+          //this.isInmune = true;
+          //console.log("es inmune");
+          //delay: 10000
+          //this.shell -= 1;
+          //this.isInmune = false;
+          //console.log("ya no es inmune");
+        //}
         break;
       case "fruit":
         this.fruits += 1;
         this.fruitRecolect += 1;
 
-        if ( this.fruitRecolect === 2) {
+        if ( this.fruitRecolect === 3) {
             this.moreHealth();
             this.fruitRecolect = 0;
             this.fruits = 0;
