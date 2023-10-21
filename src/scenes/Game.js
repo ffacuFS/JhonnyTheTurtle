@@ -19,6 +19,7 @@ export default class Game extends Phaser.Scene {
   platLayer;
   brokenBoxes = [];
 
+
   constructor() {
     super("game");
     this.enemiesDefeated = 0;
@@ -107,7 +108,8 @@ export default class Game extends Phaser.Scene {
       );
       this.enemies.add(enemy);
     });
-
+ 
+   
     // Configurar colisiones
     this.physics.add.collider(this.enemies, platLayer);
     this.physics.add.collider(
@@ -162,6 +164,7 @@ export default class Game extends Phaser.Scene {
         this
       );
     });
+  
 
     //collider con jefe y disparo
     this.events.on("bossDisparo", (datos) => {
@@ -186,10 +189,12 @@ export default class Game extends Phaser.Scene {
 
   attackBoss() {}
 
+
   hitEnemies(turtle, enemy) {
     if (turtle.isAttack) {
       enemy.destroy();
     } else {
+      turtle.anims.play('turtleHurt1');
       this.restarVida();
     }
   }

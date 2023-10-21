@@ -39,9 +39,10 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 147.8,
       frameHeight: 147,
     });
-
-
-
+    this.load.spritesheet("turtleHurt", "./assets/sprites/turtle-hurt.png", {
+      frameWidth: 77.2,
+      frameHeight: 131,
+    });
     this.load.spritesheet("turtleJump", "./assets/sprites/turtle-jump1.png", {
       frameWidth: 133.5,
       frameHeight: 162,
@@ -66,6 +67,10 @@ export default class Preload extends Phaser.Scene {
       frameWidth:853,
       frameHeight:842,
     });
+    this.load.spritesheet('key','../assets/sprites/key_1.png',{
+      frameWidth: 44,
+      frameHeight: 88,
+    } )
     this.load.image("buho", "../assets/sprites/buho.png");
     this.load.image("arena", "../assets/atlas/plataformas.png");
     this.load.image("pisos","../assets/sprites/plataforma.jpg")
@@ -136,6 +141,16 @@ export default class Preload extends Phaser.Scene {
       frameRate: 10,
       repeat: -1,
     });
+    this.anims.create({
+      key: "turtleHurt1",
+      frames: this.anims.generateFrameNumbers("turtleHurt", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 10,
+      repeat:0,
+    });
+    
 
     //Animación tortuga roja
     this.anims.create({
@@ -188,7 +203,7 @@ export default class Preload extends Phaser.Scene {
     });
     this.anims.create({
       key: "gameOver",
-      frames: this.anims.generateFrameNumbers("gameOVer", { start: 0, end: 4 }),
+      frames: this.anims.generateFrameNumbers("gameOVerA", { start: 0, end: 4 }),
       frameRate: 10,
       repeat: -1,
     });
@@ -229,6 +244,15 @@ export default class Preload extends Phaser.Scene {
       frames: this.anims.generateFrameNumbers("fruits",{
         start: 0,
         end: 3,
+      }),
+      frameRate: 10,
+      repeat:-1,
+    });
+    this.anims.create({
+      key:"keyA",
+      frames: this.anims.generateFrameNumbers("key",{
+        start: 0,
+        end: 1,
       }),
       frameRate: 10,
       repeat:-1,
