@@ -41,7 +41,6 @@ export default class SelectLevel extends Phaser.Scene {
         fontFamily: "DM Serif Display",
         fill: "#ffd557",
         stroke: "ffa615",
-        strokeThickness: 10,
       })
       .setOrigin(0.5, 0.5);
 

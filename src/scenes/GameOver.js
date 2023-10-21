@@ -16,11 +16,16 @@ export default class GameOver extends Phaser.Scene {
   }
 
   create() {
-    const restartButton = this.add.text(400, 300, "Volver a Jugar", {
-      fontFamily: "Arial",
-      fontSize: 24,
-      color: "#ffffff",
+    const gameOverAnim =this.add.sprite(860, 400, "gameOver");
+    gameOverAnim.anims.play ("gameOVerA");
+    console.log("anim creada")
+    const restartButton = this.add.text(700, 900, "Volver a Jugar", {
+      fontSize: "100px",
+      fontFamily: "DM Serif Display",
+      fill: "#ffd557",
+      stroke: "ffa615",
     });
+    
 
     // Configura el botón para que sea interactivo
     restartButton.setInteractive();

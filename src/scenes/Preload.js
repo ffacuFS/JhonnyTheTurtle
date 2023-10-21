@@ -61,7 +61,11 @@ export default class Preload extends Phaser.Scene {
     this.load.spritesheet("crab", "../assets/sprites/crab_4.png",{
       frameWidth: 105,
       frameHeight:88,
-    })
+    });
+    this.load.spritesheet("gameOver","../assets/sprites/perdida_spritesheet.png",{
+      frameWidth:853,
+      frameHeight:842,
+    });
     this.load.image("buho", "../assets/sprites/buho.png");
     this.load.image("arena", "../assets/atlas/plataformas.png");
     this.load.image("pisos","../assets/sprites/plataforma.jpg")
@@ -182,7 +186,12 @@ export default class Preload extends Phaser.Scene {
       frameRate: 10,
       repeat: -1,
     });
-   
+    this.anims.create({
+      key: "gameOver",
+      frames: this.anims.generateFrameNumbers("gameOVer", { start: 0, end: 4 }),
+      frameRate: 10,
+      repeat: -1,
+    });
 
 
 
