@@ -29,6 +29,8 @@ export default class Game extends Phaser.Scene {
     this.tiempoInmunidad = 0;
     this.duracionInmunidad = 10000;
     this.isInmune = false;
+    this.llaveRecolectada = false;
+    this.exit = null;
 
     this.fruitRecolect = 0;
     
@@ -66,10 +68,20 @@ export default class Game extends Phaser.Scene {
     const exitObject = map.findObject("Objetos", (obj) => obj.name === "exit");
 
     // Crear el sprite de la salida
-    const exit = this.add.image(exitObject.x, exitObject.y, "exit");
-    exit.setScale(0.2);
-    this.physics.world.enable(exit);
-    this.physics.add.collider(exit, platLayer);
+    this.exit = this.physics.add.sprite(exitObject.x, exitObject.y, "exit").setScale(0.2);
+    this.exit.setImmovable(true); 
+    //const exit = this.add.image(exitObject.x, exitObject.y, "exit");
+    //exit.setScale(0.2);
+    this.physics.world.enable(this.exit);
+    this.physics.add.collider(this.exit, platLayer);
+
+    // Buscar la salida en la capa de objetos
+    const keyObject = map.findObject("Objetos", (obj) => obj.name === "key");
+
+    // Crear el sprite de la salida
+    const key = this.add.image(keyObject.x, keyObject.y, "key");
+    this.physics.world.enable(key);
+    this.physics.add.collider(key, platLayer);
 
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.physics.world.setBoundsCollision(true, true, true, false);
@@ -86,6 +98,18 @@ export default class Game extends Phaser.Scene {
     this.cameras.main.startFollow(this.turtle, true, 0.1, 0.1);
     this.physics.add.collider(this.turtle, platLayer);
     this.physics.world.gravity.y = 500;
+
+    this.physics.add.collider(this.turtle, key, () => {
+      this.llaveRecolectada = true;
+      key.destroy(); 
+    });
+
+    this.physics.add.collider(this.turtle, this.exit, () => {
+      if (this.llaveRecolectada) {
+        this.nextLevel();
+        events.emit("desbloquearNuevoNivel");
+      }
+    });
 
     //Agg boss
     //this.boss = new Boss(this, boss.x, boss.y, "bosses", 350);
@@ -119,11 +143,6 @@ export default class Game extends Phaser.Scene {
       null,
       this
     );
-
-    this.physics.add.collider(this.turtle, exit, () => {
-      this.nextLevel();
-      events.emit("desbloquearNuevoNivel");
-    });
 
     // Obtener todos los objetos de trampas en la capa de objetos
     const trampaObjects = map.filterObjects(
