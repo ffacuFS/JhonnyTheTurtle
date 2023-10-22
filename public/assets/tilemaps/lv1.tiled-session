@@ -59,8 +59,8 @@
             "scale": 0.37381510416666663,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 932.2790762478666,
-                "y": 137.76864397923998
+                "x": 3199.4426834790484,
+                "y": 575.1506496220696
             }
         },
         "lv1.json#background": {
@@ -84,8 +84,8 @@
             "scale": 0.33,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 1756.060606060606,
-                "y": 1050
+                "x": 3200,
+                "y": 578.7878787878788
             }
         },
         "lv2.json#background": {
@@ -112,8 +112,8 @@
             "scale": 0.25,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 3198,
-                "y": 578
+                "x": 3200,
+                "y": 576
             }
         },
         "lv3.json#background": {

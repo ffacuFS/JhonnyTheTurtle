@@ -42,6 +42,7 @@ export default class Game extends Phaser.Scene {
     this.shell = data.shell || 0;
     this.health = data.health || 5;
     this.velocityEnemigo = data.velocityEnemigo || 2;
+    this.velocityBoss = data.velocityBoss || 200;
   }
 
   create() {
@@ -112,7 +113,17 @@ export default class Game extends Phaser.Scene {
     });
 
     //Agg boss
-    //this.boss = new Boss(this, boss.x, boss.y, "bosses", 350);
+    this.boss = new Boss(this, boss.x, boss.y, "bosses",this.velocityBoss);
+    this.boss.setTurtle(this.turtle);
+
+    // Llamar al método shootAtPlayer cada cierto intervalo de tiempo
+    this.time.addEvent({
+      delay: 2000, // ajusta el intervalo según tus preferencias
+      callback: () => {
+        this.boss.shootAtPlayer(this.turtle);
+      },
+      loop: true,
+    });
 
     // Crear grupo para los enemigos
     this.enemies = this.physics.add.group();
@@ -193,7 +204,8 @@ export default class Game extends Phaser.Scene {
 
   update() {
     this.turtle.actualizar();
-    this.enemies.getChildren().forEach((enemy) => {
+    this.boss.update();
+      this.enemies.getChildren().forEach((enemy) => {
       enemy.update();
     });
 
@@ -205,9 +217,6 @@ export default class Game extends Phaser.Scene {
 
     this.checkTurtleOutOfScreen();
   }
-
-  attackBoss() {}
-
 
   hitEnemies(turtle, enemy) {
     if (turtle.isAttack) {
