@@ -77,8 +77,7 @@ export default class Preload extends Phaser.Scene {
     this.load.image("laboratorio", "../assets/atlas/laboratorio.png")
     this.load.image("menulevelBG", "../assets/atlas/menulevel-01.png");
     this.load.image("backgroundMenu", "../assets/atlas/newGame-01.png");
-    this.load.image("backgroundBoss", "../assets/atlas/laboratory.png");
-    this.load.image("bgtortugabay","../assets/atlas/backgrounds.png")
+    this.load.image("backgrounds","../assets/atlas/escenas.png")
     this.load.image("back", "../assets/atlas/back_1.png");
     this.load.image("play", "../assets/atlas/play.png");
     this.load.image("healthUI", "../assets/atlas/health.png");

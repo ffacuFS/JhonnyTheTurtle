@@ -47,7 +47,7 @@ export default class Game extends Phaser.Scene {
 
     const map = this.make.tilemap({ key: mapKey });
 
-    const capaBackground = map.addTilesetImage("tortuga-bay", "bgtortugabay");
+    const capaBackground = map.addTilesetImage("background", "backgrounds");
     const BGlayer = map.createLayer("Background", capaBackground);
 
     const capaPlataforma = map.addTilesetImage("plataforma", "arena");
