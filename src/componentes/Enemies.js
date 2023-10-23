@@ -1,13 +1,20 @@
 export default class Enemies extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, x, y, texture, velocity) {
-    super(scene, x, y, texture);
-    this.setTexture('crab');
+  constructor(scene, x, y, enemyType, velocity) {
+    super(scene, x, y, enemyType);
+
+    if (enemyType === "crab") {
+      this.setTexture('crab'); // Usa la textura del cangrejo para "enemy"
+      this.anims.play('crabAnim'); // Puedes definir la animación correspondiente al cangrejo
+    } else if (enemyType === "owl") {
+      this.setTexture('owl'); // Usa la textura del búho para "enemy2"
+      this.anims.play('owlAnim'); // Puedes definir la animación correspondiente al búho
+    }
+
     scene.add.existing(this);
     scene.physics.add.existing(this);
     this.velocityEnemigo = velocity;
     this.setCollideWorldBounds(true);
     this.setupTween();
-    this.anims.play('crabAnim');
   }
 
   setupTween() {

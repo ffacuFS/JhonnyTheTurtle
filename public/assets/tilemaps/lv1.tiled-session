@@ -56,11 +56,11 @@
             "expandedObjectLayers": [
                 2
             ],
-            "scale": 0.37381510416666663,
+            "scale": 0.33,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 3199.4426834790484,
-                "y": 575.1506496220696
+                "x": 3174.242424242424,
+                "y": 550
             }
         },
         "lv1.json#background": {
@@ -84,8 +84,8 @@
             "scale": 0.33,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 3200,
-                "y": 578.7878787878788
+                "x": 4810.606060606061,
+                "y": 1043.9393939393938
             }
         },
         "lv2.json#background": {
@@ -112,8 +112,8 @@
             "scale": 0.25,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 3200,
-                "y": 576
+                "x": 3166,
+                "y": 542
             }
         },
         "lv3.json#background": {
@@ -144,9 +144,9 @@
     "project": "lv1.tiled-project",
     "property.type": "bool",
     "recentFiles": [
-        "lv3.json",
-        "lv2.json",
         "lv1.json",
+        "lv2.json",
+        "lv3.json",
         "lv2.tmj",
         "C:/Users/solro/lv1.json",
         "C:/Users/solro/SombrasAcechantes/public/tilemaps/nivel1.json",
