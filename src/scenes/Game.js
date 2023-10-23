@@ -33,7 +33,7 @@ export default class Game extends Phaser.Scene {
     this.exit = null;
 
     this.fruitRecolect = 0;
-    
+
   }
 
   init(data) {
@@ -70,7 +70,7 @@ export default class Game extends Phaser.Scene {
 
     // Crear el sprite de la salida
     this.exit = this.physics.add.sprite(exitObject.x, exitObject.y, "exit").setScale(0.2);
-    this.exit.setImmovable(true); 
+    this.exit.setImmovable(true);
     //const exit = this.add.image(exitObject.x, exitObject.y, "exit");
     //exit.setScale(0.2);
     this.physics.world.enable(this.exit);
@@ -102,7 +102,7 @@ export default class Game extends Phaser.Scene {
 
     this.physics.add.collider(this.turtle, key, () => {
       this.llaveRecolectada = true;
-      key.destroy(); 
+      key.destroy();
     });
 
     this.physics.add.collider(this.turtle, this.exit, () => {
@@ -118,7 +118,7 @@ export default class Game extends Phaser.Scene {
 
     // Llamar al método shootAtPlayer cada cierto intervalo de tiempo
     this.time.addEvent({
-      delay: 2000, 
+      delay: 2000,
       callback: () => {
         this.boss.shootAtPlayer(this.turtle);
       },
@@ -129,22 +129,57 @@ export default class Game extends Phaser.Scene {
     this.enemies = this.physics.add.group();
 
     // Obtener objetos de enemigo desde el mapa y crear sprites
-    const enemyObjects = map.filterObjects(
-      "Objetos",
-      (obj) => obj.name === "enemy"
-    );
-    enemyObjects.forEach((obj) => {
-      const enemy = new Enemies(
-        this,
-        obj.x,
-        obj.y,
-        "crab",
-        this.velocityEnemigo
-      );
-      this.enemies.add(enemy);
+    /* const enemyObjects = map.filterObjects(
+       "Objetos",
+       (obj) => obj.name === "enemy"
+     );
+     enemyObjects.forEach((obj) => {
+       const enemy = new Enemies(
+         this,
+         obj.x,
+         obj.y,
+         "crab",
+         this.velocityEnemigo
+       );
+       this.enemies.add(enemy);
+     });*/
+
+    //enemigos
+
+    objectsLayer.objects.forEach((obj) => {
+      const { x = 0, y = 0, name, } = obj;
+
+      switch (name) {
+        case "enemy": {
+          const enemy = new Enemies(
+            this,
+            obj.x,
+            obj.y,
+            "crab",
+            this.velocityEnemigo
+          );
+          this.enemies.add(enemy);
+
+          break;
+        }
+        case "enemy2": {
+          const enemy2 = new Enemies(
+            this,
+            obj.x,
+            obj.y,
+            "owl",
+            this.velocityEnemigo
+          );
+          this.enemies.add(enemy2);
+
+          break;
+        }
+      }
     });
 
-   
+
+
+
     // Configurar colisiones
     this.physics.add.collider(this.enemies, platLayer);
     this.physics.add.collider(
@@ -155,7 +190,7 @@ export default class Game extends Phaser.Scene {
       this
     );
 
-   
+
     // Obtener todos los objetos de trampas en la capa de objetos
     const trampaObjects = map.filterObjects(
       "Objetos",
@@ -195,7 +230,7 @@ export default class Game extends Phaser.Scene {
         this
       );
     });
-  
+
 
     //collider con jefe y disparo
     this.events.on("bossDisparo", (datos) => {
@@ -206,11 +241,11 @@ export default class Game extends Phaser.Scene {
   update() {
     this.turtle.actualizar();
     this.boss.update();
-      this.enemies.getChildren().forEach((enemy) => {
+    this.enemies.getChildren().forEach((enemy) => {
       enemy.update();
     });
-   
-  
+
+
 
     if (this.isInmune) {
       this.turtle.setAlpha(0.5);
@@ -235,24 +270,24 @@ export default class Game extends Phaser.Scene {
     if (this.health <= 0) {
       this.scene.stop("ui");
       this.scene.start("perdiste");
-      
+
     }
   }
 
   // Logica de probabilidad al romper caja.
   hitBox(turtle, box) {
     const randomValue = Phaser.Math.Between(0, 1);
-    if (turtle.isAttack){
-    if (randomValue < 0.5) {
-      // 50% de probabilidad de lanzar una fruta
-      this.spawnObject(box.x, box.y, "fruit");
-    } else {
-      // 50% de probabilidad de lanzar un caparazón
-      this.spawnObject(box.x, box.y, "shell");
-    }
+    if (turtle.isAttack) {
+      if (randomValue < 0.5) {
+        // 50% de probabilidad de lanzar una fruta
+        this.spawnObject(box.x, box.y, "fruit");
+      } else {
+        // 50% de probabilidad de lanzar un caparazón
+        this.spawnObject(box.x, box.y, "shell");
+      }
 
-    box.destroy();
-  }
+      box.destroy();
+    }
   }
 
   // Generacion de fruta al romper caja.
@@ -289,22 +324,22 @@ export default class Game extends Phaser.Scene {
         console.log("junto caparazón");
 
         //if (this.shellsRecolect === 1) {
-          //this.isInmune = true;
-          //console.log("es inmune");
-          //delay: 10000
-          //this.shell -= 1;
-          //this.isInmune = false;
-          //console.log("ya no es inmune");
+        //this.isInmune = true;
+        //console.log("es inmune");
+        //delay: 10000
+        //this.shell -= 1;
+        //this.isInmune = false;
+        //console.log("ya no es inmune");
         //}
         break;
       case "fruit":
         this.fruits += 1;
         this.fruitRecolect += 1;
 
-        if ( this.fruitRecolect === 3) {
-            this.moreHealth();
-            this.fruitRecolect = 0;
-            this.fruits = 0;
+        if (this.fruitRecolect === 3) {
+          this.moreHealth();
+          this.fruitRecolect = 0;
+          this.fruits = 0;
         }
         break;
     }
@@ -319,14 +354,14 @@ export default class Game extends Phaser.Scene {
     });
   }
 
-  moreHealth (){
+  moreHealth() {
     this.health += 1;
 
     events.emit("actualizarDatos", {
-        fruits: this.fruits,
-        level: this.level,
-        shell: this.shell,
-        health: this.health,
+      fruits: this.fruits,
+      level: this.level,
+      shell: this.shell,
+      health: this.health,
     });
   }
 
