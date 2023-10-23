@@ -142,6 +142,18 @@ export default class Game extends Phaser.Scene {
 
           break;
         }
+        case "enemy3": {
+          const enemy3 = new Enemies(
+            this,
+            obj.x,
+            obj.y,
+            "robot",
+            this.velocityEnemigo
+          );
+          this.enemies.add(enemy3);
+
+          break;
+        }
         case "boss": {
           this.boss = new Boss(this, obj.x, obj.y, "boss", this.velocityBoss);
           this.boss.setTurtle(this.turtle);
@@ -304,14 +316,6 @@ export default class Game extends Phaser.Scene {
         this.shell += 1;
         console.log("junto caparazón");
 
-        //if (this.shellsRecolect === 1) {
-        //this.isInmune = true;
-        //console.log("es inmune");
-        //delay: 10000
-        //this.shell -= 1;
-        //this.isInmune = false;
-        //console.log("ya no es inmune");
-        //}
         break;
       case "fruit":
         this.fruits += 1;

@@ -8,6 +8,10 @@ export default class Enemies extends Phaser.Physics.Arcade.Sprite {
     } else if (enemyType === "owl") {
       this.setTexture('owl'); // Usa la textura del búho para "enemy2"
       this.anims.play('owlAnim'); // Puedes definir la animación correspondiente al búho
+    } else if (enemyType === "robot") {
+      this.setTexture('robot'); // Usa la textura del robot para "enemy3"
+      this.setScale(0.3);
+      //this.anims.play('robotAnim'); // Puedes definir la animación correspondiente al robot
     }
 
     scene.add.existing(this);
@@ -18,8 +22,8 @@ export default class Enemies extends Phaser.Physics.Arcade.Sprite {
   }
 
   setupTween() {
-    if (this.texture.key === 'crab') {
-      // Configuración de movimiento de cangrejo (izquierda a derecha)
+    if (this.texture.key === 'crab' || this.texture.key === 'robot') {
+      // Configuración de movimiento de cangrejo y robot (izquierda a derecha)
       this.scene.tweens.add({
         targets: this,
         x: `+=200`,
@@ -48,7 +52,9 @@ export default class Enemies extends Phaser.Physics.Arcade.Sprite {
   }
 
   update() {
-    // Mover horizontalmente a los enemigos en cada fotograma
-    this.x += this.velocityEnemigo;
+    // Mover horizontalmente a los enemigos de tipo "crab" y "robot" en cada fotograma
+    if (this.texture.key === 'crab' || this.texture.key === 'robot') {
+      this.x += this.velocityEnemigo;
+    }
   }
 }

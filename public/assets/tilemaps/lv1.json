@@ -319,15 +319,15 @@
                 }, 
                 {
                  "height":0,
-                 "id":36,
-                 "name":"enemy2",
+                 "id":37,
+                 "name":"enemy1",
                  "point":true,
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":772.727272727273,
-                 "y":624.242424242424
+                 "x":769.69696969697,
+                 "y":593.939393939394
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -336,7 +336,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":37,
+ "nextobjectid":38,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",

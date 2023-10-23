@@ -59,8 +59,8 @@
             "scale": 0.33,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 3198.4848484848485,
-                "y": 577.2727272727273
+                "x": 768.1818181818181,
+                "y": 592.4242424242423
             }
         },
         "lv1.json#background": {
@@ -112,8 +112,8 @@
             "scale": 0.25,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 2734,
-                "y": 1014
+                "x": 1054,
+                "y": 754
             }
         },
         "lv3.json#background": {
