@@ -75,6 +75,11 @@ export default class Preload extends Phaser.Scene {
       frameWidth:174,
       frameHeight:107,
     })
+    //A CAMBIAR 
+    this.load.image("robot", "../assets/sprites/robot.png");
+
+
+
     this.load.image("arena", "../assets/atlas/plataformas.png");
     this.load.image("pisos","../assets/sprites/plataforma.jpg")
     this.load.image("laboratorio", "../assets/atlas/laboratorio.png")

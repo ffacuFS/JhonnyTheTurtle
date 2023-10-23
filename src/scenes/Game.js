@@ -63,7 +63,6 @@ export default class Game extends Phaser.Scene {
 
     const objectsLayer = map.getObjectLayer("Objetos");
     const player = map.findObject("Objetos", (obj) => obj.name === "personaje");
-    const boss = map.findObject("Objetos", (obj) => obj.name === "boss");
 
     // Buscar la salida en la capa de objetos
     const exitObject = map.findObject("Objetos", (obj) => obj.name === "exit");
@@ -112,40 +111,9 @@ export default class Game extends Phaser.Scene {
       }
     });
 
-    //Agg boss
-    this.boss = new Boss(this, boss.x, boss.y, "boss", this.velocityBoss);
-    this.boss.setTurtle(this.turtle);
-
-    // Llamar al método shootAtPlayer cada cierto intervalo de tiempo
-    this.time.addEvent({
-      delay: 2000,
-      callback: () => {
-        this.boss.shootAtPlayer(this.turtle);
-      },
-      loop: true,
-    });
 
     // Crear grupo para los cangrejos
     this.enemies = this.physics.add.group();
-
-    // Obtener objetos de enemigo desde el mapa y crear sprites
-    /* const enemyObjects = map.filterObjects(
-       "Objetos",
-       (obj) => obj.name === "enemy"
-     );
-     enemyObjects.forEach((obj) => {
-       const enemy = new Enemies(
-         this,
-         obj.x,
-         obj.y,
-         "crab",
-         this.velocityEnemigo
-       );
-       this.enemies.add(enemy);
-     });*/
-
-    //enemigos
-
     objectsLayer.objects.forEach((obj) => {
       const { x = 0, y = 0, name, } = obj;
 
@@ -174,11 +142,22 @@ export default class Game extends Phaser.Scene {
 
           break;
         }
+        case "boss": {
+          this.boss = new Boss(this, obj.x, obj.y, "boss", this.velocityBoss);
+          this.boss.setTurtle(this.turtle);
+    
+          // Llamar al método shootAtPlayer cada cierto intervalo de tiempo
+          this.time.addEvent({
+            delay: 2000,
+            callback: () => {
+              this.boss.shootAtPlayer(this.turtle);
+            },
+            loop: true,
+          });
+          break;
+        }
       }
     });
-
-
-
 
     // Configurar colisiones
     this.physics.add.collider(this.enemies, platLayer);
@@ -240,7 +219,9 @@ export default class Game extends Phaser.Scene {
 
   update() {
     this.turtle.actualizar();
-    this.boss.update();
+    if (this.boss) {
+      this.boss.update();
+    }    
     this.enemies.getChildren().forEach((enemy) => {
       enemy.update();
     });

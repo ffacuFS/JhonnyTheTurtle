@@ -223,18 +223,6 @@
                 }, 
                 {
                  "height":0,
-                 "id":15,
-                 "name":"boss",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":2207.29250778713,
-                 "y":313.074350034885
-                }, 
-                {
-                 "height":0,
                  "id":19,
                  "name":"caja",
                  "point":true,

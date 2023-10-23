@@ -18,17 +18,33 @@ export default class Enemies extends Phaser.Physics.Arcade.Sprite {
   }
 
   setupTween() {
-    this.scene.tweens.add({
-      targets: this,
-      x: `+=200`,
-      ease: 'Linear',
-      duration: 2000,
-      yoyo: true,
-      repeat: -1,
-      onStart: () => {
-        this.velocityEnemigo *= -1;
-      },
-    });
+    if (this.texture.key === 'crab') {
+      // Configuración de movimiento de cangrejo (izquierda a derecha)
+      this.scene.tweens.add({
+        targets: this,
+        x: `+=200`,
+        ease: 'Linear',
+        duration: 2000,
+        yoyo: true,
+        repeat: -1,
+        onStart: () => {
+          this.velocityEnemigo *= -1;
+        },
+      });
+    } else if (this.texture.key === 'owl') {
+      // Configuración de movimiento de búho (arriba y abajo)
+      this.scene.tweens.add({
+        targets: this,
+        y: `+=200`, // Cambia la posición vertical
+        ease: 'Linear',
+        duration: 2000,
+        yoyo: true,
+        repeat: -1,
+        onStart: () => {
+          this.velocityEnemigo *= -1;
+        },
+      });
+    }
   }
 
   update() {
