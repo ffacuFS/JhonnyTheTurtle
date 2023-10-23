@@ -71,7 +71,10 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 44,
       frameHeight: 88,
     } )
-    this.load.image("buho", "../assets/sprites/buho.png");
+    this.load.spritesheet('owl', '../assets/sprites/buho.png', {
+      frameWidth:174,
+      frameHeight:107,
+    })
     this.load.image("arena", "../assets/atlas/plataformas.png");
     this.load.image("pisos","../assets/sprites/plataforma.jpg")
     this.load.image("laboratorio", "../assets/atlas/laboratorio.png")
@@ -224,6 +227,15 @@ export default class Preload extends Phaser.Scene {
       frames: this.anims.generateFrameNumbers('crab', {
         start: 0,
         end: 2,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "owlAnim",
+      frames: this.anims.generateFrameNumbers('owl', {
+        start: 0,
+        end: 3,
       }),
       frameRate: 10,
       repeat: -1,

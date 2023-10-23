@@ -5,7 +5,7 @@ import Turtle from "./Turtle";
 export default class Boss extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, texture, velocity) {
     super(scene, x, y, texture,velocity);
-    this.setTexture("bosses");
+    this.setTexture("boss");
     scene.add.existing(this);
     scene.physics.add.existing(this);
     this.velocityBoss = velocity;
@@ -13,6 +13,8 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
     this.setupTween();
     this.velocityBoss = velocity;
     this.health = 2;
+    this.anims.play('bossAnim');
+   
   }
 
   setTurtle(turtle) {

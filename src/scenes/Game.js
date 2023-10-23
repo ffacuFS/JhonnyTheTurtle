@@ -113,19 +113,19 @@ export default class Game extends Phaser.Scene {
     });
 
     //Agg boss
-    this.boss = new Boss(this, boss.x, boss.y, "bosses",this.velocityBoss);
+    this.boss = new Boss(this, boss.x, boss.y, "boss", this.velocityBoss);
     this.boss.setTurtle(this.turtle);
 
     // Llamar al método shootAtPlayer cada cierto intervalo de tiempo
     this.time.addEvent({
-      delay: 2000, // ajusta el intervalo según tus preferencias
+      delay: 2000, 
       callback: () => {
         this.boss.shootAtPlayer(this.turtle);
       },
       loop: true,
     });
 
-    // Crear grupo para los enemigos
+    // Crear grupo para los cangrejos
     this.enemies = this.physics.add.group();
 
     // Obtener objetos de enemigo desde el mapa y crear sprites
@@ -138,12 +138,12 @@ export default class Game extends Phaser.Scene {
         this,
         obj.x,
         obj.y,
-        "buho",
+        "crab",
         this.velocityEnemigo
       );
       this.enemies.add(enemy);
     });
- 
+
    
     // Configurar colisiones
     this.physics.add.collider(this.enemies, platLayer);
@@ -155,6 +155,7 @@ export default class Game extends Phaser.Scene {
       this
     );
 
+   
     // Obtener todos los objetos de trampas en la capa de objetos
     const trampaObjects = map.filterObjects(
       "Objetos",
@@ -208,6 +209,8 @@ export default class Game extends Phaser.Scene {
       this.enemies.getChildren().forEach((enemy) => {
       enemy.update();
     });
+   
+  
 
     if (this.isInmune) {
       this.turtle.setAlpha(0.5);
