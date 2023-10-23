@@ -1,11 +1,12 @@
 import Phaser from "phaser";
 import Game from "./scenes/Game";
 import Menu from "./scenes/Menu";
-import Option from "./scenes/Option";
 import SelectLevel from "./scenes/SelectLevel";
 import UI from "./scenes/UI";
 import Preload from "./scenes/Preload";
 import GameOver from "./scenes/GameOver";
+import Win from "./scenes/Win";
+
 const config = {
   type: Phaser.AUTO,
   width: 1920,
@@ -25,11 +26,11 @@ const config = {
   physics: {
     default: "arcade",
     arcade: {
-      gravity: { y: 200 },
-      debug: true,
+      gravity: { y: 100 },
+      debug: false,
     },
   },
-  scene: [Preload, Menu, Game, UI, SelectLevel, Option, GameOver],
+  scene: [Preload, Menu, Game, UI, SelectLevel, GameOver, Win],
 };
 
 export default new Phaser.Game(config);
