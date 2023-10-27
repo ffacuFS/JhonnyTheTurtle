@@ -267,6 +267,7 @@ export default class Game extends Phaser.Scene {
 
   restarVida() {
     this.turtle.restVida();
+    this.cameras.main.shake(100, 0.02);
     if (this.health <= 0) {
       this.scene.stop("ui");
       this.scene.start("perdiste");
@@ -412,4 +413,6 @@ export default class Game extends Phaser.Scene {
       });
     }
   }
+
+  
 }

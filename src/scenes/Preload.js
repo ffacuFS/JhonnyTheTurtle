@@ -100,6 +100,11 @@ export default class Preload extends Phaser.Scene {
     this.load.image("fruit", "../assets/sprites/fruit.png");
     this.load.image("shell", "../assets/sprites/shell.png");
     this.load.image("bala", "../assets/sprites/bala.png");
+    this.load.image("pausa","../assets/sprites/pausa.png");
+    this.load.image("popup","../assets/sprites/popup.png");
+    this.load.image("reiniciar","../assets/sprites/reiniciar.png");
+    this.load.image("continuar","../assets/sprites/continuar.png");
+
     this.load.tilemapTiledJSON("level1", "../assets/tilemaps/lv1.json");
     this.load.tilemapTiledJSON("level2", "../assets/tilemaps/lv2.json");
     this.load.tilemapTiledJSON("level3", "../assets/tilemaps/lv3.json");
