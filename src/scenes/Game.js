@@ -4,6 +4,7 @@ import Enemies from "../componentes/Enemies";
 import events from "./EventCenter";
 import Boss from "../componentes/Boss";
 
+
 export default class Game extends Phaser.Scene {
   level;
   shell;
@@ -18,7 +19,7 @@ export default class Game extends Phaser.Scene {
   isInmune = false;
   platLayer;
   brokenBoxes = [];
-
+  lifeText;
 
   constructor() {
     super("game");
@@ -64,24 +65,21 @@ export default class Game extends Phaser.Scene {
     const objectsLayer = map.getObjectLayer("Objetos");
     const player = map.findObject("Objetos", (obj) => obj.name === "personaje");
 
-    // Buscar la salida en la capa de objetos
     const exitObject = map.findObject("Objetos", (obj) => obj.name === "exit");
 
     // Crear el sprite de la salida
     this.exit = this.physics.add.sprite(exitObject.x, exitObject.y, "exit").setScale(0.2);
     this.exit.setImmovable(true);
-    //const exit = this.add.image(exitObject.x, exitObject.y, "exit");
-    //exit.setScale(0.2);
     this.physics.world.enable(this.exit);
     this.physics.add.collider(this.exit, platLayer);
 
     // Buscar la salida en la capa de objetos
-    const keyObject = map.findObject("Objetos", (obj) => obj.name === "key");
+    //const keyObject = map.findObject("Objetos", (obj) => obj.name === "key");
 
     // Crear el sprite de la salida
-    const key = this.add.image(keyObject.x, keyObject.y, "key");
-    this.physics.world.enable(key);
-    this.physics.add.collider(key, platLayer);
+    //const key = this.add.image(keyObject.x, keyObject.y, "key");
+    //this.physics.world.enable(key);
+    //this.physics.add.collider(key, platLayer);
 
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.physics.world.setBoundsCollision(true, true, true, false);
@@ -99,16 +97,16 @@ export default class Game extends Phaser.Scene {
     this.physics.add.collider(this.turtle, platLayer);
     this.physics.world.gravity.y = 500;
 
-    this.physics.add.collider(this.turtle, key, () => {
-      this.llaveRecolectada = true;
-      key.destroy();
-    });
+    //this.physics.add.collider(this.turtle, key, () => {
+      //this.llaveRecolectada = true;
+      //key.destroy();
+    //});
 
     this.physics.add.collider(this.turtle, this.exit, () => {
-      if (this.llaveRecolectada) {
+      //if (this.llaveRecolectada) {
         this.nextLevel();
         events.emit("desbloquearNuevoNivel");
-      }
+      //}
     });
 
 
@@ -227,6 +225,15 @@ export default class Game extends Phaser.Scene {
     this.events.on("bossDisparo", (datos) => {
       const { bala } = datos;
     });
+
+    this.lifeText = this.add.text(this.turtle.x, this.turtle.y, "+1", {
+      fontSize: "32px",
+      fontFamily: "DM Serif Display",
+      fill: "#ffa615",
+      align: "center",
+    });
+    this.lifeText.setOrigin(0.5);
+    this.lifeText.setVisible(false);
   }
 
   update() {
@@ -341,14 +348,30 @@ export default class Game extends Phaser.Scene {
 
   moreHealth() {
     this.health += 1;
-
+  
     events.emit("actualizarDatos", {
       fruits: this.fruits,
       level: this.level,
       shell: this.shell,
       health: this.health,
     });
+  
+    // Muestra el texto "+1" y lo posiciona junto al personaje
+    this.lifeText.setText("+1");
+    this.lifeText.setPosition(this.turtle.x, this.turtle.y - 50);
+    this.lifeText.setVisible(true);
+  
+    // Oculta el texto después de un tiempo
+    this.time.delayedCall(
+      1000, // Duración en milisegundos para mostrar el texto
+      () => {
+        this.lifeText.setVisible(false);
+      },
+      [],
+      this
+    );
   }
+  
 
   activarInmunidad() {
     this.tiempoInmunidad = this.duracionInmunidad;

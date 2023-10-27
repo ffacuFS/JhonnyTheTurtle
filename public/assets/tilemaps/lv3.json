@@ -266,30 +266,6 @@
                 }, 
                 {
                  "height":0,
-                 "id":21,
-                 "name":"key",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":5018.18181818182,
-                 "y":390.909090909091
-                }, 
-                {
-                 "height":0,
-                 "id":22,
-                 "name":"",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":1056,
-                 "y":756
-                }, 
-                {
-                 "height":0,
                  "id":23,
                  "name":"enemy3",
                  "point":true,
