@@ -71,9 +71,13 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 44,
       frameHeight: 88,
     } )
-    this.load.spritesheet('owl', '../assets/sprites/buho.png', {
-      frameWidth:174,
+    this.load.spritesheet('owl', '../assets/sprites/buho_2.png', {
+      frameWidth:192,
       frameHeight:107,
+    })
+    this.load.spritesheet('trap', '../assets/sprites/trampa1.png', {
+      frameWidth:128.285,
+      frameHeight:85,
     })
     //A CAMBIAR 
     this.load.image("robot", "../assets/sprites/robot.png");
@@ -87,6 +91,7 @@ export default class Preload extends Phaser.Scene {
     this.load.image("backgroundMenu", "../assets/atlas/newGame-01.png");
     this.load.image("backgrounds","../assets/atlas/escenas.png")
     this.load.image("back", "../assets/atlas/back_1.png");
+    this.load.image("pause", "../assets/atlas/pause.png");
     this.load.image("play", "../assets/atlas/play.png");
     this.load.image("healthUI", "../assets/atlas/health.png");
     this.load.image("fruitUI", "../assets/atlas/fruit.png");
@@ -267,6 +272,15 @@ export default class Preload extends Phaser.Scene {
         end: 3,
       }),
       frameRate: 10,
+      repeat:-1,
+    });
+    this.anims.create({
+      key:"trapA",
+      frames: this.anims.generateFrameNumbers("trap",{
+        start: 0,
+        end: 6,
+      }),
+      frameRate: 3,
       repeat:-1,
     });
     this.anims.create({

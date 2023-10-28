@@ -63,7 +63,7 @@ export default class UI extends Phaser.Scene {
 
     events.on("actualizarDatos", this.actualizarDatos, this);
 
-    this.pauseButton = this.add.image(1800, 50, "pausa").setInteractive();
+    this.pauseButton = this.add.image(1800, 60, "pause").setInteractive();
   this.pauseButton.on("pointerup", this.showPauseMenu, this);
   }
 
