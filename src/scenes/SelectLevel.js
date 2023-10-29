@@ -72,7 +72,7 @@ export default class SelectLevel extends Phaser.Scene {
     });
      this.level1.on("pointerdown", () => {
       if (this.nivelesDesbloqueados >= 1) {
-        this.scene.start("game", { level: 1 });
+        this.scene.start("game", { level: 3 });
         this.updateLevelText(1);
       }
     });
@@ -102,7 +102,7 @@ export default class SelectLevel extends Phaser.Scene {
     });
      this.level3.on("pointerdown", () => {
       if (this.nivelesDesbloqueados >= 3) {
-        this.scene.start("game", { level: 3 });
+        this.scene.start("game", { level: 1 });
         this.updateLevelText(3);
         console.log("todavia no")
       }

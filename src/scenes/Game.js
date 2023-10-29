@@ -67,6 +67,8 @@ export default class Game extends Phaser.Scene {
 
     const exitObject = map.findObject("Objetos", (obj) => obj.name === "exit");
 
+    this.physics.world.setBounds(0, 0, this.game.config.width, this.game.config.height);
+
     // Crear el sprite de la salida
     this.exit = this.physics.add.sprite(exitObject.x, exitObject.y, "exit").setScale(0.2);
     this.exit.setImmovable(true);
@@ -128,7 +130,7 @@ export default class Game extends Phaser.Scene {
 
           break;
         }
-        case "enemy2": {
+        /*case "enemy2": {
           const enemy2 = new Enemies(
             this,
             obj.x,
@@ -139,7 +141,7 @@ export default class Game extends Phaser.Scene {
           this.enemies.add(enemy2);
 
           break;
-        }
+        }*/
         case "enemy3": {
           const enemy3 = new Enemies(
             this,
@@ -153,12 +155,12 @@ export default class Game extends Phaser.Scene {
           break;
         }
         case "boss": {
-          this.boss = new Boss(this, obj.x, obj.y, "boss", this.velocityBoss);
+          this.boss = new Boss(this, obj.x, obj.y, "boss", this.velocityBoss,1);
           this.boss.setTurtle(this.turtle);
     
           // Llamar al método shootAtPlayer cada cierto intervalo de tiempo
           this.time.addEvent({
-            delay: 2000,
+            delay: 4000,
             callback: () => {
               this.boss.shootAtPlayer(this.turtle);
             },
@@ -235,13 +237,13 @@ export default class Game extends Phaser.Scene {
     });
     this.lifeText.setOrigin(0.5);
     this.lifeText.setVisible(false);
+
+    //Collider ataque pj y boss
+    this.physics.add.collider(this.turtle, this.boss, this.turtleBossCollision, null, this);
   }
 
   update() {
-    this.turtle.actualizar();
-    if (this.boss) {
-      this.boss.update();
-    }    
+    this.turtle.actualizar();   
     this.enemies.getChildren().forEach((enemy) => {
       enemy.update();
     });
@@ -255,6 +257,32 @@ export default class Game extends Phaser.Scene {
     }
 
     this.checkTurtleOutOfScreen();
+  }
+
+  turtleBossCollision(turtle, boss) {
+    this.restarVida();
+    if (turtle.isAttack) {
+      // Restar vida al jefe
+      boss.health -= 1;
+      console.log("boss pierde 1 vida")
+  
+      // Realizar lógica adicional aquí, como verificar si el jefe ha perdido toda su vida
+      if (this.boss.health <= 0) {
+        // Jefe sin vida, destruirlo
+        this.boss.destroy();
+      }
+  
+      // Puedes desactivar temporalmente la colisión para evitar múltiples colisiones en un corto período
+      this.turtle.body.checkCollision.none = true;
+      this.time.delayedCall(
+        1000, // Puedes ajustar el tiempo de desactivación de la colisión
+        () => {
+          this.turtle.body.checkCollision.none = false;
+        },
+        [],
+        this
+      );
+    }
   }
 
   hitEnemies(turtle, enemy) {
