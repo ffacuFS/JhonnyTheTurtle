@@ -20,7 +20,6 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
 
     this.cursors = scene.input.keyboard.createCursorKeys();
     this.canJump = true;
-
     this.keyA = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     this.keySpace = scene.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
@@ -30,6 +29,9 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
     this.inmunityDurationD = 10000;
     this.body.setCollideWorldBounds(true);
   }
+  
+   
+ 
 
   actualizar() {
     this.isAttack = false;
@@ -49,18 +51,13 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
           loop: false,
         });
       }
-      if (this.cursors.left.isDown && this.keyA.isDown) {
-        this.body.setVelocityX(-400);
+      if ( this.keyA.isDown) {
         this.anims.play("attackR", true);
         this.isAttack = true;
       } else if (this.cursors.left.isDown) {
         this.body.setVelocityX(-400);
         this.anims.play("leftR", true);
-      } else if (this.cursors.right.isDown && this.keyA.isDown) {
-        this.body.setVelocityX(400);
-        this.anims.play("attackR", true);
-        this.isAttack = true;
-      } else if (this.cursors.right.isDown) {
+      }else if (this.cursors.right.isDown) {
         this.body.setVelocityX(400);
         this.anims.play("rightR", true);
       } else {
@@ -83,18 +80,13 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
           loop: false,
         });
       }
-      if (this.cursors.left.isDown && this.keyA.isDown) {
-        this.body.setVelocityX(-400);
+      if (this.keyA.isDown) {
         this.anims.play("attackD", true);
         this.isAttack = true;
       } else if (this.cursors.left.isDown) {
         this.body.setVelocityX(-400);
         this.anims.play("leftD", true);
-      } else if (this.cursors.right.isDown && this.keyA.isDown) {
-        this.body.setVelocityX(400);
-        this.anims.play("attackD", true);
-        this.isAttack = true;
-      } else if (this.cursors.right.isDown) {
+     } else if (this.cursors.right.isDown) {
         this.body.setVelocityX(400);
         this.anims.play("rightD", true);
       } else {
@@ -102,18 +94,13 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
         this.anims.play("turnD", true);
       }
     } else {
-      if (this.cursors.left.isDown && this.keyA.isDown) {
-        this.body.setVelocityX(-400);
+      if (this.keyA.isDown) {
         this.anims.play("attack", true);
         this.isAttack = true;
       } else if (this.cursors.left.isDown) {
         this.body.setVelocityX(-400);
         this.anims.play("left", true);
-      } else if (this.cursors.right.isDown && this.keyA.isDown) {
-        this.body.setVelocityX(400);
-        this.anims.play("attack", true);
-        this.isAttack = true;
-      } else if (this.cursors.right.isDown) {
+      }else if (this.cursors.right.isDown) {
         this.body.setVelocityX(400);
         this.anims.play("right", true);
       } else {

@@ -47,6 +47,19 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
+
+  //creacion de sonidos
+  this.attackSound = this.sound.add('attack');
+  this.deathSound = this.sound.add('death');
+  this.damageSound = this.sound.add('damage');
+  this.soundBox = this.sound.add('brokenBox');
+  this.frutaSound = this.sound.add('frutaSound');
+  this.disparoSound = this.sound.add('disparoSound');
+
+
+
+
+
     const mapKey = `level${this.level}`;
 
     const map = this.make.tilemap({ key: mapKey });
@@ -112,7 +125,7 @@ export default class Game extends Phaser.Scene {
     });
 
 
-    // Crear grupo para los cangrejos
+    // Crear grupo para los enemigos
     this.enemies = this.physics.add.group();
     objectsLayer.objects.forEach((obj) => {
       const { x = 0, y = 0, name, } = obj;
@@ -163,6 +176,8 @@ export default class Game extends Phaser.Scene {
             delay: 4000,
             callback: () => {
               this.boss.shootAtPlayer(this.turtle);
+               this.disparoSound.play();
+
             },
             loop: true,
           });
@@ -260,7 +275,10 @@ export default class Game extends Phaser.Scene {
   }
 
   turtleBossCollision(turtle, boss) {
-    this.restarVida();
+    this.scene.start("perdiste");
+    console.log("cero vidas");
+    this.deathSound.play();
+
     if (turtle.isAttack) {
       // Restar vida al jefe
       boss.health -= 1;
@@ -287,14 +305,18 @@ export default class Game extends Phaser.Scene {
 
   hitEnemies(turtle, enemy) {
     if (turtle.isAttack) {
+      this.attackSound.play();
+
       enemy.destroy();
     } else {
       turtle.anims.play('turtleHurt1');
+      this.damageSound.play();
       this.restarVida();
     }
   }
 
   restarVida() {
+    this.damageSound.play();
     this.turtle.restVida();
     this.cameras.main.shake(100, 0.02);
     if (this.health <= 0) {
@@ -315,7 +337,7 @@ export default class Game extends Phaser.Scene {
         // 50% de probabilidad de lanzar un caparazón
         this.spawnObject(box.x, box.y, "shell");
       }
-
+      this.soundBox.play();
       box.destroy();
     }
   }
@@ -355,6 +377,7 @@ export default class Game extends Phaser.Scene {
 
         break;
       case "fruit":
+        this.frutaSound.play();
         this.fruits += 1;
         this.fruitRecolect += 1;
 
@@ -409,6 +432,8 @@ export default class Game extends Phaser.Scene {
 
   nextLevel() {
     if (this.level < this.maxLevel) {
+      const nextLevelSound = this.sound.add('nextLevel');
+      nextLevelSound.play();
       this.level += 1;
       this.enemiesDefeated = 0;
 
@@ -435,6 +460,7 @@ export default class Game extends Phaser.Scene {
   checkTurtleOutOfScreen() {
     if (this.turtle.y > this.sys.game.config.height) {
       this.scene.stop("ui");
+      this.deathSound.play();
 
       this.scene.start("perdiste", {
         level: this.level,

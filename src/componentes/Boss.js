@@ -14,8 +14,11 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
     this.velocityBoss = velocity;
     this.health = health || 3;
     this.anims.play('bossAnim');
-   
+
   }
+ 
+
+
 
   setTurtle(turtle) {
     this.turtle = turtle;
@@ -30,6 +33,7 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
       this.scene.physics.moveToObject(projectile, turtle, 300);
   
       this.scene.physics.add.overlap(projectile, turtle, () => {
+        this.scene.damageSound.play();
         // Restar vida a la Turtle
         this.scene.restarVida();
         // Destruir el proyectil al impactar

@@ -81,9 +81,6 @@ export default class Preload extends Phaser.Scene {
     })
     //A CAMBIAR 
     this.load.image("robot", "../assets/sprites/robot.png");
-
-
-
     this.load.image("arena", "../assets/atlas/plataformas.png");
     this.load.image("pisos","../assets/sprites/plataforma.jpg")
     this.load.image("laboratorio", "../assets/atlas/laboratorio.png")
@@ -109,6 +106,20 @@ export default class Preload extends Phaser.Scene {
     this.load.image("popup","../assets/sprites/popup.png");
     this.load.image("reiniciar","../assets/sprites/reiniciar.png");
     this.load.image("continuar","../assets/sprites/continuar.png");
+
+    this.load.audio("brokenBox", "../assets/sounds/Caja-Rota.mp3");
+    this.load.audio("damage", "../assets/sounds/damage.mp3");
+    this.load.audio("death", "../assets/sounds/Muerte.mp3");
+    this.load.audio("nextLevel", "../assets/sounds/wao.mp3");
+    this.load.audio("attack", "../assets/sounds/attack.mp3");
+    this.load.audio("frutaSound", "../assets/sounds/fruta.mp3")
+    this.load.audio("disparoSound", "../assets/sounds/Disparojefe.mp3")
+
+
+
+
+
+
 
     this.load.tilemapTiledJSON("level1", "../assets/tilemaps/lv1.json");
     this.load.tilemapTiledJSON("level2", "../assets/tilemaps/lv2.json");
