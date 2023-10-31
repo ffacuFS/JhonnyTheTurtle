@@ -26,6 +26,13 @@ export default class UI extends Phaser.Scene {
     this.health = data.health || 5;
   }
   create() {
+    const user = this.firebase.getUser();
+    this.add.text(10, 10, `Usuario ${user.displayName || user.uid}` , {
+      fontSize: "25px",
+      fontFamily: "DM Serif Display",
+      fill: "#ffd557",
+    });
+
     this.healthIcon = this.add.image(50, 90, "healthUI");
     this.healthText = this.add.text(70, 80, ` ${this.health}`, {
       fontSize: "50px",
