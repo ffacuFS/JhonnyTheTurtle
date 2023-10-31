@@ -70,9 +70,9 @@ export default class SelectLevel extends Phaser.Scene {
     this.level1.on("pointerout", () => {
       this.level1.setStyle({ fill: "#ffd557", fontSize: "70px" });
     });
-     this.level1.on("pointerdown", () => {
+    this.level1.on("pointerdown", () => {
       if (this.nivelesDesbloqueados >= 1) {
-        this.scene.start("game", { level: 1 });
+        this.scene.start("game", { level: 2 });
         this.updateLevelText(1);
       }
     });
@@ -84,12 +84,12 @@ export default class SelectLevel extends Phaser.Scene {
     this.level2.on("pointerout", () => {
       this.level2.setStyle({ fill: "#ffd557", fontSize: "70px" });
     });
-  
+
     this.level2.on("pointerdown", () => {
       if (this.nivelesDesbloqueados >= 2) {
-        this.scene.start("game", { level: 2 });
+        this.scene.start("game", { level: 1 });
         this.updateLevelText(2);
-        console.log("todavia no")
+        console.log("todavia no");
       }
     });
 
@@ -100,11 +100,11 @@ export default class SelectLevel extends Phaser.Scene {
     this.level3.on("pointerout", () => {
       this.level3.setStyle({ fill: "#ffd557", fontSize: "70px" });
     });
-     this.level3.on("pointerdown", () => {
+    this.level3.on("pointerdown", () => {
       if (this.nivelesDesbloqueados >= 3) {
         this.scene.start("game", { level: 3 });
         this.updateLevelText(3);
-        console.log("todavia no")
+        console.log("todavia no");
       }
     });
 
@@ -114,7 +114,7 @@ export default class SelectLevel extends Phaser.Scene {
   updateLevelText(selectedLevel) {
     this.levelText.setText(`Nivel seleccionado: ${selectedLevel}`);
   }
-   desbloquearNuevoNivel() {
+  desbloquearNuevoNivel() {
     this.nivelesDesbloqueados++;
   }
 }

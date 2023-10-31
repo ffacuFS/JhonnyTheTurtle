@@ -7,6 +7,7 @@ import {
 } from "../services/translations";
 import keys from "../enums/keys";
 import { FETCHED, FETCHING, READY, TODO } from "../enums/status";
+import Score from "./Score";
 import events from "./EventCenter";
 
 // Manejador de eventos centralizados para comunicacion de componentes
@@ -45,7 +46,6 @@ export default class Menu extends Phaser.Scene {
     buttonMusic.on("pointerover", () => {
       buttonMusic.setScale(1.08);
     });
-   
 
     const buttonEnglish = this.add.image(1600, 90, "US-flag").setInteractive();
     buttonEnglish.on("pointerover", () => {
@@ -95,9 +95,10 @@ export default class Menu extends Phaser.Scene {
     this.optionsText.on("pointerout", () => {
       this.optionsText.setStyle({ fill: "#A85214", fontSize: "100px" });
     });
-
+    this.optionsText.on("pointerdown", () => {
+      this.scene.start("score");
+    });
   }
-
   update() {
     if (this.wasChangedLanguage === FETCHED) {
       this.wasChangedLanguage = READY;

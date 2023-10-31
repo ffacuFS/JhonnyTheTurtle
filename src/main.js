@@ -7,6 +7,7 @@ import Preload from "./scenes/Preload";
 import GameOver from "./scenes/GameOver";
 import Win from "./scenes/Win";
 import FirebasePlugin from "./plugins/FirebasePlugin";
+import Score from "./scenes/Score";
 
 const config = {
   type: Phaser.AUTO,
@@ -31,7 +32,7 @@ const config = {
       debug: true,
     },
   },
-  scene: [Preload, Menu, Game, UI, SelectLevel, GameOver, Win],
+  scene: [Preload, Menu, Game, UI, SelectLevel, GameOver, Win, Score],
   plugins: {
     global: [
       {
@@ -42,7 +43,6 @@ const config = {
       },
     ],
   },
-
 };
 
 export default new Phaser.Game(config);
