@@ -64,17 +64,13 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 105,
       frameHeight:88,
     });
-    this.load.spritesheet("gameOver","../assets/sprites/perdida_spritesheet.png",{
-      frameWidth:853,
-      frameHeight:842,
-    });
     this.load.spritesheet('key','../assets/sprites/key_1.png',{
       frameWidth: 44,
       frameHeight: 88,
     } )
-    this.load.spritesheet('owl', '../assets/sprites/buho_2.png', {
-      frameWidth:192,
-      frameHeight:107,
+    this.load.spritesheet('owl', '../assets/sprites/buho.png', {
+      frameWidth:180.5,
+      frameHeight:126,
     })
     this.load.spritesheet('trap', '../assets/sprites/trampa1.png', {
       frameWidth:128.285,
@@ -107,6 +103,7 @@ export default class Preload extends Phaser.Scene {
     this.load.image("popup","../assets/sprites/popup.png");
     this.load.image("reiniciar","../assets/sprites/reiniciar.png");
     this.load.image("continuar","../assets/sprites/continuar.png");
+    this.load.image("perdiste", "../assets/sprites/perdida_1.png")
 
     this.load.audio("brokenBox", "../assets/sounds/Caja-Rota.mp3");
     this.load.audio("damage", "../assets/sounds/damage.mp3");
@@ -132,9 +129,10 @@ export default class Preload extends Phaser.Scene {
 
   create() {
      // agregar un texto "Login" en la parte superior de la pantalla
-     this.add
-     .text(960, 100, "Login", {
-       fontSize: 48,
+     this.add.text(960, 100, "Login", {
+      fontSize: "70px",
+      fontFamily: "DM Serif Display",
+      fill: "#ffd557",
      })
      .setOrigin(0.5);
    // agregar un texto Ingresar con Email y contraseña que al hacer clic me levante un popup js para ingresar los datos
@@ -173,9 +171,11 @@ export default class Preload extends Phaser.Scene {
      });*/
 
    // Agregar un texto "Ingresas de forma Anonima" que al hacer clic me levante un popup js para ingresar los datos
-   this.add
-     .text(960, 300, "Ingresas de forma Anonima", {
-       fontSize: 24,
+ this.invitado =  this.add
+     .text(960, 300, "Jugar como invitado", {
+      fontSize: "70px",
+      fontFamily: "DM Serif Display",
+      fill: "#ffd557",
      })
      .setOrigin(0.5)
      .setInteractive()
@@ -187,11 +187,17 @@ export default class Preload extends Phaser.Scene {
          })
          .catch((error) => {
            console.log("🚀 ~ file: Login.js:74 ~ .catch ~ error", error);
-         });
+         }); 
      });
+     this.invitado.on("pointerover", () => {
+      this.invitado.setStyle({ fill: "#ffa615", fontSize: "73px" });
+    });
+    this.invitado.on("pointerout", () => {
+      this.invitado.setStyle({ fill: "#ffd557", fontSize: "70px" });
+    });
 
    // agregar un texto centrado "Ingresar con Google" que al hacer clic me levante un popup js para ingresar los datos
-   /*this.add
+   this.add
      .text(400, 400, "Ingresar con Google", {
        fontSize: 24,
      })
@@ -224,7 +230,7 @@ export default class Preload extends Phaser.Scene {
          .catch((error) => {
            console.log("🚀 ~ file: Login.js:74 ~ .catch ~ error", error);
          });
-     });*/
+     });
 
     
     //lenguaje

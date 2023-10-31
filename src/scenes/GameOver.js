@@ -16,10 +16,8 @@ export default class GameOver extends Phaser.Scene {
   }
 
   create() {
-    const gameOverAnim =this.add.sprite(860, 400, "gameOver");
-    gameOverAnim.anims.play ("gameOVerA");
-    console.log("anim creada")
-    const restartButton = this.add.text(700, 900, "Volver a Jugar", {
+    const gameOverAnim =this.add.sprite(860, 500, "perdiste");
+    const restartButton = this.add.text(550, 900, "Volver a Jugar", {
       fontSize: "100px",
       fontFamily: "DM Serif Display",
       fill: "#ffd557",

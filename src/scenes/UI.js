@@ -90,10 +90,15 @@ export default class UI extends Phaser.Scene {
   
     // Crear el menú de pausa
     this.pauseMenu = this.add.container(960, 540);
-    const background = this.add.graphics().fillStyle(0x000000, 0.7).fillRect(-400, -300, 800, 600);
-    const continueButton = this.add.text(0, -50, "Continuar", { fontSize: "40px", fill: "#ffd557" }).setOrigin(0.5).setInteractive();
-    const restartButton = this.add.text(0, 50, "Reiniciar", { fontSize: "40px", fill: "#ffd557" }).setOrigin(0.5).setInteractive();
-    const menuButton = this.add.text(0, 150, "Volver al Menú", { fontSize: "40px", fill: "#ffd557" }).setOrigin(0.5).setInteractive();
+    const radius = 20;
+    const background = this.add.graphics()
+                          .fillStyle(0xFFFFFF, 0.7)
+                          .fillRoundedRect(-400, -300, 800, 600, radius);
+    background.setDepth(0); 
+
+    const continueButton = this.add.text(0, -50, "Continuar", { fontSize: "40px", fill: "#000000",fontFamily: "DM Serif Display" }).setOrigin(0.5).setInteractive();
+    const restartButton = this.add.text(0, 50, "Reiniciar", { fontSize: "40px", fill: "#000000",fontFamily: "DM Serif Display" }).setOrigin(0.5).setInteractive();
+    const menuButton = this.add.text(0, 150, "Menú Principal", { fontSize: "40px", fill: "#000000",fontFamily: "DM Serif Display"}).setOrigin(0.5).setInteractive();
   
     // Agregar eventos a los botones del menú de pausa
     continueButton.on("pointerup", this.hidePauseMenu, this);

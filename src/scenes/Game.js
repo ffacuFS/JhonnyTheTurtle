@@ -143,7 +143,7 @@ export default class Game extends Phaser.Scene {
 
           break;
         }
-        /*case "enemy2": {
+        case "enemy2": {
           const enemy2 = new Enemies(
             this,
             obj.x,
@@ -154,7 +154,7 @@ export default class Game extends Phaser.Scene {
           this.enemies.add(enemy2);
 
           break;
-        }*/
+        }
         case "enemy3": {
           const enemy3 = new Enemies(
             this,
@@ -305,12 +305,11 @@ export default class Game extends Phaser.Scene {
 
   hitEnemies(turtle, enemy) {
     if (turtle.isAttack) {
-      this.attackSound.play();
+    enemy.destroy();
+    this.attackSound.play();
 
-      enemy.destroy();
     } else {
       turtle.anims.play('turtleHurt1');
-      this.damageSound.play();
       this.restarVida();
     }
   }
