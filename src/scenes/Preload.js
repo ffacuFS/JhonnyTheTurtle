@@ -88,8 +88,11 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 128.285,
       frameHeight: 85,
     });
+    this.load.spritesheet("robot","../assets/sprites/robot_2.png",{
+      frameWidth: 132.27,
+      frameHeight: 157,
+    })
     //A CAMBIAR
-    this.load.image("robot", "../assets/sprites/robot.png");
     this.load.image("arena", "../assets/atlas/plataformas.png");
     this.load.image("pisos", "../assets/sprites/plataforma.jpg");
     this.load.image("laboratorio", "../assets/atlas/laboratorio.png");
@@ -276,7 +279,7 @@ export default class Preload extends Phaser.Scene {
         end: 19,
       }),
       frameRate: 10,
-      repeat: 1,
+      repeat: 0,
     });
     this.anims.create({
       key: "turtleHurt1",
@@ -379,6 +382,15 @@ export default class Preload extends Phaser.Scene {
         end: 3,
       }),
       frameRate: 10,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "robotAnim",
+      frames: this.anims.generateFrameNumbers("robot", {
+        start: 0,
+        end: 10,
+      }),
+      frameRate: 5,
       repeat: -1,
     });
     //animacion objetos

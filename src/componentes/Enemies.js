@@ -10,8 +10,7 @@ export default class Enemies extends Phaser.Physics.Arcade.Sprite {
       this.anims.play("owlAnim"); // Puedes definir la animación correspondiente al búho
     } else if (enemyType === "robot") {
       this.setTexture("robot"); // Usa la textura del robot para "enemy3"
-      this.setScale(0.3);
-      //this.anims.play('robotAnim'); // Puedes definir la animación correspondiente al robot
+      this.anims.play("robotAnim");      //this.anims.play('robotAnim'); // Puedes definir la animación correspondiente al robot
     }
 
     scene.add.existing(this);
