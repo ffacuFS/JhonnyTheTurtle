@@ -20,7 +20,7 @@ export default class SelectLevel extends Phaser.Scene {
     this.nivelesDesbloqueados = 1;
   }
 
-  preload() {}
+  preload() { }
 
   create() {
     this.add.image(0, 0, "menulevelBG").setOrigin(0, 0);
@@ -72,7 +72,7 @@ export default class SelectLevel extends Phaser.Scene {
     });
     this.level1.on("pointerdown", () => {
       if (this.nivelesDesbloqueados >= 1) {
-        this.scene.start("game", { level: 3 });
+        this.scene.start("game", { level: 1 });
         this.updateLevelText(1);
       }
     });
