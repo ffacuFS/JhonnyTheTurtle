@@ -3,77 +3,61 @@ import { getLanguageConfig, getTranslations } from "../services/translations";
 import events from "./EventCenter";
 import Turtle from "../componentes/Turtle";
 import FirebasePlugin from "../plugins/FirebasePlugin";
-
 export default class Preload extends Phaser.Scene {
   constructor() {
     super("preload");
   }
-
   preload() {
     //traduccion
     this.language = getLanguageConfig();
-
-    //turtle
     this.load.spritesheet("turtle", "./assets/sprites/turtle1.png", {
       frameWidth: 114.6,
       frameHeight: 156,
     });
     this.load.spritesheet("turtleAttack", "./assets/sprites/turtle-attack1.png", {
-        frameWidth: 147.8,
-        frameHeight: 147,
-      });
+      frameWidth: 147.8,
+      frameHeight: 147,
+    });
     this.load.spritesheet("turtleHurt", "./assets/sprites/turtle-hurt.png", {
-        frameWidth: 77.2,
-        frameHeight: 131,
-      });
+      frameWidth: 77.2,
+      frameHeight: 131,
+    });
     this.load.spritesheet("turtleJump", "./assets/sprites/turtle-jump1.png", {
-        frameWidth: 133.5,
-        frameHeight: 162,
-      });
+      frameWidth: 133.5,
+      frameHeight: 162,
+    });
     //turtle red
     this.load.spritesheet("turtleR", "./assets/sprites/turtlered.png", {
       frameWidth: 114.6,
       frameHeight: 156,
     });
     this.load.spritesheet("turtleAttackR", "./assets/sprites/turtle-attack-red.png", {
-        frameWidth: 147.8,
-        frameHeight: 147,
-      });
+      frameWidth: 147.8,
+      frameHeight: 147,
+    });
     this.load.spritesheet("turtleJumpR", "./assets/sprites/turtle-jump-red.png", {
-        frameWidth: 133.5,
-        frameHeight: 162,
-      });
+      frameWidth: 133.5,
+      frameHeight: 162,
+    });
     //turtle yellow
     this.load.spritesheet("turtleD", "./assets/sprites/turtleyellow.png", {
       frameWidth: 114.6,
       frameHeight: 156,
     });
     this.load.spritesheet("turtleAttackD", "./assets/sprites/turtle-attack-yellow.png", {
-        frameWidth: 147.8,
-        frameHeight: 147,
-      });
+      frameWidth: 147.8,
+      frameHeight: 147,
+    });
     this.load.spritesheet("turtleJumpD", "./assets/sprites/turtle-jump-yellow.png", {
-        frameWidth: 133.5,
-        frameHeight: 162,
-      });
+      frameWidth: 133.5,
+      frameHeight: 162,
+    });
     this.load.spritesheet("boss", "../assets/sprites/boss.png", {
       frameWidth: 170.5,
       frameHeight: 208,
     });
-    this.load.spritesheet("shells", "../assets/sprites/shells.png", {
-      frameWidth: 86.5,
-      frameHeight: 88,
-    });
-    this.load.spritesheet("fruits", "../assets/atlas/fruits_1.png", {
-      frameWidth: 50,
-      frameHeight: 80,
-    });
     this.load.spritesheet("crab", "../assets/sprites/crab_4.png", {
       frameWidth: 105,
-      frameHeight: 88,
-    });
-    this.load.spritesheet("key", "../assets/sprites/key_1.png", {
-      frameWidth: 44,
       frameHeight: 88,
     });
     this.load.spritesheet("owl", "../assets/sprites/buho.png", {
@@ -84,13 +68,11 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 128.285,
       frameHeight: 85,
     });
-    this.load.spritesheet("robot","../assets/sprites/robot_2.png",{
+    this.load.spritesheet("robot", "../assets/sprites/robot_2.png", {
       frameWidth: 132.27,
       frameHeight: 157,
     })
-    //A CAMBIAR
     this.load.image("arena", "../assets/atlas/plataformas.png");
-    this.load.image("pisos", "../assets/sprites/plataforma.jpg");
     this.load.image("laboratorio", "../assets/atlas/laboratorio.png");
     this.load.image("menulevelBG", "../assets/atlas/menulevel-01.png");
     this.load.image("backgroundMenu", "../assets/atlas/newGame-01.png");
@@ -111,9 +93,6 @@ export default class Preload extends Phaser.Scene {
     this.load.image("shell", "../assets/sprites/shell.png");
     this.load.image("bala", "../assets/sprites/bala.png");
     this.load.image("pausa", "../assets/sprites/pausa.png");
-    this.load.image("popup", "../assets/sprites/popup.png");
-    this.load.image("reiniciar", "../assets/sprites/reiniciar.png");
-    this.load.image("continuar", "../assets/sprites/continuar.png");
     this.load.image("perdiste", "../assets/sprites/perdida_1.png");
 
     this.load.audio("brokenBox", "../assets/sounds/Caja-Rota.mp3");
@@ -127,9 +106,6 @@ export default class Preload extends Phaser.Scene {
     this.load.tilemapTiledJSON("level1", "../assets/tilemaps/lv1.json");
     this.load.tilemapTiledJSON("level2", "../assets/tilemaps/lv2.json");
     this.load.tilemapTiledJSON("level3", "../assets/tilemaps/lv3.json");
-
-    //boss prueba
-    this.load.image("bosses", "../assets/sprites/bosses.png");
   }
 
   create() {
@@ -237,10 +213,6 @@ export default class Preload extends Phaser.Scene {
             console.log("🚀 ~ file: Login.js:74 ~ .catch ~ error", error);
           });
       });
-
-    //lenguaje
-    // this.scene.start("menu");
-
     //Animación tortuga
     this.anims.create({
       key: "left",
@@ -286,8 +258,6 @@ export default class Preload extends Phaser.Scene {
       frameRate: 10,
       repeat: 0,
     });
-
-    //Animación tortuga roja
     this.anims.create({
       key: "leftR",
       frames: this.anims.generateFrameNumbers("turtleR", { start: 0, end: 4 }),
@@ -323,8 +293,6 @@ export default class Preload extends Phaser.Scene {
       frameRate: 10,
       repeat: 0,
     });
-
-    //Animación tortuga dorada
     this.anims.create({
       key: "leftD",
       frames: this.anims.generateFrameNumbers("turtleD", { start: 0, end: 4 }),
@@ -373,7 +341,6 @@ export default class Preload extends Phaser.Scene {
       frameRate: 10,
       repeat: -1,
     });
-
     //animacion Boss y enemigos
     this.anims.create({
       key: "bossAnim",
@@ -413,24 +380,6 @@ export default class Preload extends Phaser.Scene {
     });
     //animacion objetos
     this.anims.create({
-      key: "shell",
-      frames: this.anims.generateFrameNumbers("shells", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 10,
-      repeat: -1,
-    });
-    this.anims.create({
-      key: "fruits",
-      frames: this.anims.generateFrameNumbers("fruits", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 10,
-      repeat: -1,
-    });
-    this.anims.create({
       key: "trapA",
       frames: this.anims.generateFrameNumbers("trap", {
         start: 0,
@@ -439,14 +388,6 @@ export default class Preload extends Phaser.Scene {
       frameRate: 3,
       repeat: -1,
     });
-    this.anims.create({
-      key: "keyA",
-      frames: this.anims.generateFrameNumbers("key", {
-        start: 0,
-        end: 1,
-      }),
-      frameRate: 10,
-      repeat: -1,
-    });
+
   }
 }

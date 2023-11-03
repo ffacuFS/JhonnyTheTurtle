@@ -52,50 +52,25 @@ export default class Game extends Phaser.Scene {
     this.soundBox = this.sound.add("brokenBox");
     this.frutaSound = this.sound.add("frutaSound");
     this.disparoSound = this.sound.add("disparoSound");
-
+    //creacion mapa y capas
     const mapKey = `level${this.level}`;
-
     const map = this.make.tilemap({ key: mapKey });
-
     const capaBackground = map.addTilesetImage("background", "backgrounds");
     const BGlayer = map.createLayer("Background", capaBackground);
-
     const capaPlataforma = map.addTilesetImage("plataforma", "arena");
     const platLayer = map.createLayer("Pisos", capaPlataforma);
-
     const capaLaboratorio = map.addTilesetImage("laboratorio", "laboratorio");
     const BGlab = map.createLayer("objetosBG", capaLaboratorio);
-
     platLayer.setCollisionByProperty({ colision: true });
-
     const objectsLayer = map.getObjectLayer("Objetos");
     const player = map.findObject("Objetos", (obj) => obj.name === "personaje");
-
     const exitObject = map.findObject("Objetos", (obj) => obj.name === "exit");
-
-    this.physics.world.setBounds(
-      0,
-      0,
-      this.game.config.width,
-      this.game.config.height
-    );
-
-    // Crear el sprite de la salida
-    this.exit = this.physics.add
-      .sprite(exitObject.x, exitObject.y, "exit")
+    this.physics.world.setBounds(0, 0, this.game.config.width, this.game.config.height);
+    this.exit = this.physics.add.sprite(exitObject.x, exitObject.y, "exit")
       .setScale(0.2);
     this.exit.setImmovable(true);
     this.physics.world.enable(this.exit);
     this.physics.add.collider(this.exit, platLayer);
-
-    // Buscar la salida en la capa de objetos
-    //const keyObject = map.findObject("Objetos", (obj) => obj.name === "key");
-
-    // Crear el sprite de la salida
-    //const key = this.add.image(keyObject.x, keyObject.y, "key");
-    //this.physics.world.enable(key);
-    //this.physics.add.collider(key, platLayer);
-
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.physics.world.setBoundsCollision(true, true, true, false);
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
@@ -111,24 +86,13 @@ export default class Game extends Phaser.Scene {
     this.cameras.main.startFollow(this.turtle, true, 0.1, 0.1);
     this.physics.add.collider(this.turtle, platLayer);
     this.physics.world.gravity.y = 500;
-
-    //this.physics.add.collider(this.turtle, key, () => {
-    //this.llaveRecolectada = true;
-    //key.destroy();
-    //});
-
     this.physics.add.collider(this.turtle, this.exit, () => {
-      //if (this.llaveRecolectada) {
       this.nextLevel();
       events.emit("desbloquearNuevoNivel");
-      //}
     });
-
-    // Crear grupo para los enemigos
     this.enemies = this.physics.add.group();
     objectsLayer.objects.forEach((obj) => {
       const { x = 0, y = 0, name } = obj;
-
       switch (name) {
         case "enemy": {
           const enemy = new Enemies(
@@ -139,7 +103,6 @@ export default class Game extends Phaser.Scene {
             this.velocityEnemigo
           );
           this.enemies.add(enemy);
-
           break;
         }
         case "enemy2": {
@@ -151,7 +114,6 @@ export default class Game extends Phaser.Scene {
             this.velocityEnemigo
           );
           this.enemies.add(enemy2);
-
           break;
         }
         case "enemy3": {
@@ -176,8 +138,6 @@ export default class Game extends Phaser.Scene {
             1
           );
           this.boss.setTurtle(this.turtle);
-
-          // Llamar al método shootAtPlayer cada cierto intervalo de tiempo
           this.time.addEvent({
             delay: 4000,
             callback: () => {
@@ -190,8 +150,6 @@ export default class Game extends Phaser.Scene {
         }
       }
     });
-
-    // Configurar colisiones
     this.physics.add.collider(this.enemies, platLayer);
     this.physics.add.collider(
       this.turtle,
@@ -200,20 +158,16 @@ export default class Game extends Phaser.Scene {
       null,
       this
     );
-
-    // Obtener todos los objetos de trampas en la capa de objetos
     const trampaObjects = map.filterObjects(
       "Objetos",
       (obj) => obj.name === "trampa"
     );
-
-    // Crear sprites de trampas para cada objeto encontrado
     this.trampas = this.physics.add.group();
     trampaObjects.forEach((obj) => {
       const trampa = this.trampas.create(obj.x, obj.y, "trap");
       trampa.setImmovable(true);
       trampa.body.setSize(120, 10);
-      trampa.body.setOffset(10, 75)
+      trampa.body.setOffset(106, 75)
       trampa.anims.play("trapA");
       this.physics.add.collider(trampa, platLayer);
       this.physics.add.collider(
@@ -224,8 +178,6 @@ export default class Game extends Phaser.Scene {
         this
       );
     });
-
-    // Crear sprites de caja
     const boxObjects = map.filterObjects(
       "Objetos",
       (obj) => obj.name == "caja"
@@ -243,12 +195,9 @@ export default class Game extends Phaser.Scene {
         this
       );
     });
-
-    //collider con jefe y disparo
     this.events.on("bossDisparo", (datos) => {
       const { bala } = datos;
     });
-
     this.lifeText = this.add.text(this.turtle.x, this.turtle.y, "+1", {
       fontSize: "32px",
       fontFamily: "DM Serif Display",
@@ -257,8 +206,6 @@ export default class Game extends Phaser.Scene {
     });
     this.lifeText.setOrigin(0.5);
     this.lifeText.setVisible(false);
-
-    //Collider ataque pj y boss
     this.physics.add.collider(
       this.turtle,
       this.boss,
@@ -273,33 +220,21 @@ export default class Game extends Phaser.Scene {
     this.enemies.getChildren().forEach((enemy) => {
       enemy.update();
     });
-
     if (this.isInmune) {
       this.turtle.setAlpha(0.5);
     } else {
       this.turtle.setAlpha(1);
     }
-
     this.checkTurtleOutOfScreen();
   }
 
   turtleBossCollision(turtle, boss) {
-    //this.scene.start("perdiste");
-    console.log("cero vidas");
     this.deathSound.play();
-
     if (turtle.isAttack) {
-      // Restar vida al jefe
       boss.health -= 1;
-      console.log("boss pierde 1 vida");
-
-      // Realizar lógica adicional aquí, como verificar si el jefe ha perdido toda su vida
       if (this.boss.health <= 0) {
-        // Jefe sin vida, destruirlo
         this.boss.destroy();
       }
-
-      // Puedes desactivar temporalmente la colisión para evitar múltiples colisiones en un corto período
       this.turtle.body.checkCollision.none = true;
       this.time.delayedCall(
         1000, // Puedes ajustar el tiempo de desactivación de la colisión
@@ -311,7 +246,6 @@ export default class Game extends Phaser.Scene {
       );
     }
   }
-
   hitEnemies(turtle, enemy) {
     if (turtle.isAttack) {
       enemy.destroy();
@@ -321,7 +255,6 @@ export default class Game extends Phaser.Scene {
       this.restarVida();
     }
   }
-
   restarVida() {
     this.damageSound.play();
     this.turtle.restVida();
@@ -331,28 +264,21 @@ export default class Game extends Phaser.Scene {
       this.scene.start("perdiste");
     }
   }
-
-  // Logica de probabilidad al romper caja.
   hitBox(turtle, box) {
     const randomValue = Phaser.Math.Between(0, 1);
     if (turtle.isAttack) {
       if (randomValue < 0.5) {
-        // 50% de probabilidad de lanzar una fruta
         this.spawnObject(box.x, box.y, "fruit");
       } else {
-        // 50% de probabilidad de lanzar un caparazón
         this.spawnObject(box.x, box.y, "shell");
       }
       this.soundBox.play();
       box.destroy();
     }
   }
-
-  // Generacion de fruta al romper caja.
   spawnObject(x, y, sprite) {
     const object = this.physics.add.sprite(x, y, sprite);
     object.setData({ tipo: sprite });
-
     this.physics.add.collider(
       this.turtle,
       object,
@@ -361,10 +287,8 @@ export default class Game extends Phaser.Scene {
       this
     );
     this.physics.add.collider(object, this.platLayer);
-
     this.physics.add.existing(object);
     object.body.setAllowGravity(false);
-
     this.time.delayedCall(
       3000,
       function () {
@@ -380,13 +304,11 @@ export default class Game extends Phaser.Scene {
       case "shell":
         this.shell += 1;
         console.log("junto caparazón");
-
         break;
       case "fruit":
         this.frutaSound.play();
         this.fruits += 1;
         this.fruitRecolect += 1;
-
         if (this.fruitRecolect === 3) {
           this.moreHealth();
           this.fruitRecolect = 0;
@@ -394,9 +316,7 @@ export default class Game extends Phaser.Scene {
         }
         break;
     }
-
     object.destroy();
-
     events.emit("actualizarDatos", {
       fruits: this.fruits,
       level: this.level,
@@ -407,20 +327,15 @@ export default class Game extends Phaser.Scene {
 
   moreHealth() {
     this.health += 1;
-
     events.emit("actualizarDatos", {
       fruits: this.fruits,
       level: this.level,
       shell: this.shell,
       health: this.health,
     });
-
-    // Muestra el texto "+1" y lo posiciona junto al personaje
     this.lifeText.setText("+1");
     this.lifeText.setPosition(this.turtle.x, this.turtle.y - 50);
     this.lifeText.setVisible(true);
-
-    // Oculta el texto después de un tiempo
     this.time.delayedCall(
       1000, // Duración en milisegundos para mostrar el texto
       () => {
@@ -434,21 +349,18 @@ export default class Game extends Phaser.Scene {
   activarInmunidad() {
     this.tiempoInmunidad = this.duracionInmunidad;
   }
-
   nextLevel() {
     if (this.level < this.maxLevel) {
       const nextLevelSound = this.sound.add("nextLevel");
       nextLevelSound.play();
       this.level += 1;
       this.enemiesDefeated = 0;
-
       events.emit("actualizarDatos", {
         level: this.level,
         shell: this.shell,
         fruits: this.fruits,
         health: this.health,
       });
-
       this.scene.start("game", {
         level: this.level,
         shell: this.shell,
@@ -461,12 +373,10 @@ export default class Game extends Phaser.Scene {
       this.scene.start("victoria");
     }
   }
-
   checkTurtleOutOfScreen() {
     if (this.turtle.y > this.sys.game.config.height) {
       this.scene.stop("ui");
       this.deathSound.play();
-
       this.scene.start("perdiste", {
         level: this.level,
       });
