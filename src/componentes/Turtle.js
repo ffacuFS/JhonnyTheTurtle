@@ -59,7 +59,7 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
         this.anims.play("rightR", true);
       } else {
         this.body.setVelocityX(0);
-        //this.anims.play("turnR", true);
+        this.anims.play("turnR", true);
       }
     } else if (this.scene.shell > 2) {
       if (!this.isInmune) {
@@ -112,16 +112,25 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
       }
     }
 
-    // Verificar si la tecla "Up" está presionada y el personaje puede saltar.
-    if (this.keySpace.isDown && this.canJump) {
-      if (this.body.onFloor()) {
-        this.anims.play("jumpD", true);
-        this.body.setVelocityY(-480);
-        this.canJump = false;
-      }
-    } else if (!this.keySpace.isDown && !this.canJump) {
-      this.canJump = true;
+// Verificar si la tecla "Up" está presionada y el personaje puede saltar.
+if (this.keySpace.isDown && this.canJump) {
+  if (this.body.onFloor()) {
+    let jumpAnimationKey;
+    if (this.scene.shell === 1 || this.scene.shell === 2) {
+      jumpAnimationKey = "jumpR"; // Si tiene 1 o 2 caparazones
+    } else if (this.scene.shell > 2) {
+      jumpAnimationKey = "jumpD"; // Si tiene más de 2 caparazones
+    } else {
+      jumpAnimationKey = "jump"; // Si no tiene caparazones
     }
+    this.anims.play(jumpAnimationKey, true);
+    this.body.setVelocityY(-480);
+    this.canJump = false;
+  }
+} else if (!this.keySpace.isDown && !this.canJump) {
+  this.canJump = true;
+}
+
   }
   restVida() {
     if (!this.isInmune) {

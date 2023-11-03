@@ -18,48 +18,44 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 114.6,
       frameHeight: 156,
     });
-    this.load.spritesheet(
-      "turtleAttack",
-      "./assets/sprites/turtle-attack1.png",
-      {
+    this.load.spritesheet("turtleAttack", "./assets/sprites/turtle-attack1.png", {
         frameWidth: 147.8,
         frameHeight: 147,
-      }
-    );
+      });
+    this.load.spritesheet("turtleHurt", "./assets/sprites/turtle-hurt.png", {
+        frameWidth: 77.2,
+        frameHeight: 131,
+      });
+    this.load.spritesheet("turtleJump", "./assets/sprites/turtle-jump1.png", {
+        frameWidth: 133.5,
+        frameHeight: 162,
+      });
     //turtle red
     this.load.spritesheet("turtleR", "./assets/sprites/turtlered.png", {
       frameWidth: 114.6,
       frameHeight: 156,
     });
-    this.load.spritesheet(
-      "turtleAttackR",
-      "./assets/sprites/turtle-attack-red.png",
-      {
+    this.load.spritesheet("turtleAttackR", "./assets/sprites/turtle-attack-red.png", {
         frameWidth: 147.8,
         frameHeight: 147,
-      }
-    );
+      });
+    this.load.spritesheet("turtleJumpR", "./assets/sprites/turtle-jump-red.png", {
+        frameWidth: 133.5,
+        frameHeight: 162,
+      });
     //turtle yellow
     this.load.spritesheet("turtleD", "./assets/sprites/turtleyellow.png", {
       frameWidth: 114.6,
       frameHeight: 156,
     });
-    this.load.spritesheet(
-      "turtleAttackD",
-      "./assets/sprites/turtle-attack-yellow.png",
-      {
+    this.load.spritesheet("turtleAttackD", "./assets/sprites/turtle-attack-yellow.png", {
         frameWidth: 147.8,
         frameHeight: 147,
-      }
-    );
-    this.load.spritesheet("turtleHurt", "./assets/sprites/turtle-hurt.png", {
-      frameWidth: 77.2,
-      frameHeight: 131,
-    });
-    this.load.spritesheet("turtleJump", "./assets/sprites/turtle-jump1.png", {
-      frameWidth: 133.5,
-      frameHeight: 162,
-    });
+      });
+    this.load.spritesheet("turtleJumpD", "./assets/sprites/turtle-jump-yellow.png", {
+        frameWidth: 133.5,
+        frameHeight: 162,
+      });
     this.load.spritesheet("boss", "../assets/sprites/boss.png", {
       frameWidth: 170.5,
       frameHeight: 208,
@@ -273,7 +269,7 @@ export default class Preload extends Phaser.Scene {
       repeat: -1,
     });
     this.anims.create({
-      key: "jumpD",
+      key: "jump",
       frames: this.anims.generateFrameNumbers("turtleJump", {
         start: 10,
         end: 19,
@@ -318,6 +314,15 @@ export default class Preload extends Phaser.Scene {
       frameRate: 10,
       repeat: -1,
     });
+    this.anims.create({
+      key: "jumpR",
+      frames: this.anims.generateFrameNumbers("turtleJumpR", {
+        start: 10,
+        end: 19,
+      }),
+      frameRate: 10,
+      repeat: 0,
+    });
 
     //Animación tortuga dorada
     this.anims.create({
@@ -346,6 +351,19 @@ export default class Preload extends Phaser.Scene {
       frameRate: 10,
       repeat: -1,
     });
+    this.anims.create({
+      key: "jumpD",
+      frames: this.anims.generateFrameNumbers("turtleJumpD", {
+        start: 10,
+        end: 19,
+      }),
+      frameRate: 10,
+      repeat: 0,
+    });
+
+
+
+
     this.anims.create({
       key: "gameOver",
       frames: this.anims.generateFrameNumbers("gameOVerA", {
