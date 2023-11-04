@@ -26,7 +26,6 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 133.5,
       frameHeight: 162,
     });
-    //turtle red
     this.load.spritesheet("turtleR", "./assets/sprites/turtlered.png", {
       frameWidth: 114.6,
       frameHeight: 156,
@@ -39,7 +38,6 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 133.5,
       frameHeight: 162,
     });
-    //turtle yellow
     this.load.spritesheet("turtleD", "./assets/sprites/turtleyellow.png", {
       frameWidth: 114.6,
       frameHeight: 156,
@@ -102,6 +100,14 @@ export default class Preload extends Phaser.Scene {
     this.load.audio("attack", "../assets/sounds/attack.mp3");
     this.load.audio("frutaSound", "../assets/sounds/fruta.mp3");
     this.load.audio("disparoSound", "../assets/sounds/Disparojefe.mp3");
+
+    this.load.audio("prueba", "../assets/sounds/prueba.mp3");
+    this.load.audio("prueba1", "../assets/sounds/prueba1.mp3");
+    this.load.audio("prueba2", "../assets/sounds/prueba2.mp3");
+    this.load.audio("prueba3", "../assets/sounds/prueba3.mp3");
+
+
+
 
     this.load.tilemapTiledJSON("level1", "../assets/tilemaps/lv1.json");
     this.load.tilemapTiledJSON("level2", "../assets/tilemaps/lv2.json");

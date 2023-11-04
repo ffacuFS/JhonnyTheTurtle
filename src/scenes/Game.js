@@ -3,6 +3,7 @@ import Turtle from "../componentes/Turtle";
 import Enemies from "../componentes/Enemies";
 import events from "./EventCenter";
 import Boss from "../componentes/Boss";
+import gameConfig from "../enums/config"; 
 
 export default class Game extends Phaser.Scene {
   level;
@@ -45,6 +46,27 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
+    if (this.level === 1) {
+      this.backgroundMusic = this.sound.add("prueba1");
+      if (!gameConfig.isSoundMuted) {
+        this.backgroundMusic.play();
+      }
+    } else if (this.level === 2) {
+      this.backgroundMusic = this.sound.add("prueba2");
+      if (!gameConfig.isSoundMuted) {
+        this.backgroundMusic.play();
+      }
+    } else if (this.level === 3) {
+      this.backgroundMusic = this.sound.add("prueba3");
+      if (!gameConfig.isSoundMuted) {
+        this.backgroundMusic.play();
+      }
+    }
+    events.on("stopBackgroundMusic", () => {
+      if (this.backgroundMusic) {
+        this.backgroundMusic.stop();
+      }
+    });
     //creacion de sonidos
     this.attackSound = this.sound.add("attack");
     this.deathSound = this.sound.add("death");
@@ -87,6 +109,7 @@ export default class Game extends Phaser.Scene {
     this.physics.add.collider(this.turtle, platLayer);
     this.physics.world.gravity.y = 500;
     this.physics.add.collider(this.turtle, this.exit, () => {
+      this.backgroundMusic.stop(); 
       this.nextLevel();
       events.emit("desbloquearNuevoNivel");
     });
@@ -142,7 +165,9 @@ export default class Game extends Phaser.Scene {
             delay: 4000,
             callback: () => {
               this.boss.shootAtPlayer(this.turtle);
+              if (!gameConfig.isSoundMuted) {
               this.disparoSound.play();
+              }
             },
             loop: true,
           });
@@ -229,7 +254,9 @@ export default class Game extends Phaser.Scene {
   }
 
   turtleBossCollision(turtle, boss) {
+    if (!gameConfig.isSoundMuted) {
     this.deathSound.play();
+    }
     if (turtle.isAttack) {
       boss.health -= 1;
       if (this.boss.health <= 0) {
@@ -249,17 +276,22 @@ export default class Game extends Phaser.Scene {
   hitEnemies(turtle, enemy) {
     if (turtle.isAttack) {
       enemy.destroy();
+      if (!gameConfig.isSoundMuted) {
       this.attackSound.play();
+      }
     } else {
       turtle.anims.play("turtleHurt1");
       this.restarVida();
     }
   }
   restarVida() {
+    if (!gameConfig.isSoundMuted) {
     this.damageSound.play();
+    }
     this.turtle.restVida();
     this.cameras.main.shake(100, 0.02);
     if (this.health <= 0) {
+      this.backgroundMusic.stop(); 
       this.scene.stop("ui");
       this.scene.start("perdiste");
     }
@@ -272,7 +304,9 @@ export default class Game extends Phaser.Scene {
       } else {
         this.spawnObject(box.x, box.y, "shell");
       }
+      if (!gameConfig.isSoundMuted) {
       this.soundBox.play();
+      }
       box.destroy();
     }
   }
@@ -306,7 +340,9 @@ export default class Game extends Phaser.Scene {
         console.log("junto caparazón");
         break;
       case "fruit":
+        if (!gameConfig.isSoundMuted) {
         this.frutaSound.play();
+        }
         this.fruits += 1;
         this.fruitRecolect += 1;
         if (this.fruitRecolect === 3) {
@@ -352,7 +388,9 @@ export default class Game extends Phaser.Scene {
   nextLevel() {
     if (this.level < this.maxLevel) {
       const nextLevelSound = this.sound.add("nextLevel");
+      if (!gameConfig.isSoundMuted) {
       nextLevelSound.play();
+      }
       this.level += 1;
       this.enemiesDefeated = 0;
       events.emit("actualizarDatos", {
@@ -375,11 +413,16 @@ export default class Game extends Phaser.Scene {
   }
   checkTurtleOutOfScreen() {
     if (this.turtle.y > this.sys.game.config.height) {
+      if (this.backgroundMusic) {
+        this.backgroundMusic.stop(); 
+      }
+      if (!gameConfig.isSoundMuted) {
+        this.deathSound.play();
+      }
       this.scene.stop("ui");
-      this.deathSound.play();
       this.scene.start("perdiste", {
         level: this.level,
       });
     }
-  }
+  } 
 }

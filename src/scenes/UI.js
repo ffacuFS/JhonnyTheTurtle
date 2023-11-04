@@ -2,19 +2,6 @@ import Phaser from "phaser";
 import events from "./EventCenter";
 import GameOver from "./GameOver";
 
-// Manejador de eventos centralizados para comunicacion de componentes
-
-// Importacion
-// import events from './EventCenter'
-
-// Emisor de mensaje de difusion
-// Recibe el nombre del mensaje y los valores de parametro
-// events.emit('health-changed', this.health)
-
-// Receptor de mensaje, por ejemplo escena de UI
-// Recibe el nombre del mensaje y una funcion callback a ejecutar
-// events.on('health-changed', this.handleHealthChanged, this)
-
 export default class UI extends Phaser.Scene {
   constructor() {
     super("ui");
@@ -64,12 +51,6 @@ export default class UI extends Phaser.Scene {
       })
       .setOrigin(0.5, 0);
 
-    /*events.on("actualizarDatos", (data) => {
-      this.healthText.setText(`Vidas: ${data.health}`);
-      this.levelText.setText(`Level: ${data.level}`);
-    });*/
-    // Crear botón de pausa
-
     events.on("actualizarDatos", this.actualizarDatos, this);
 
     this.pauseButton = this.add.image(1800, 80, "pause").setInteractive();
@@ -110,10 +91,7 @@ export default class UI extends Phaser.Scene {
     this.shellText.setText(` ${data.shell}`);
   }
   showPauseMenu() {
-    // Desactivar la escena principal mientras el menú de pausa está activo
     this.scene.pause("game");
-
-    // Crear el menú de pausa
     this.pauseMenu = this.add.container(960, 540);
     const radius = 20;
     const background = this.add
@@ -150,7 +128,11 @@ export default class UI extends Phaser.Scene {
     // Agregar eventos a los botones del menú de pausa
     continueButton.on("pointerup", this.hidePauseMenu, this);
     restartButton.on("pointerup", this.restartGame, this);
-    menuButton.on("pointerup", this.returnToMenu, this);
+    menuButton.on("pointerup", function() {
+      this.returnToMenu();
+      events.emit("stopBackgroundMusic");
+    }, this);    
+  
 
     // Agregar elementos al contenedor del menú de pausa
     this.pauseMenu.add([background, continueButton, restartButton, menuButton]);
