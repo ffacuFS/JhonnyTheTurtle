@@ -8,7 +8,7 @@ export default class Win extends Phaser.Scene {
   }
 
   create() {
-    const restartButton = this.add.text(400, 300, "GANADOR", {
+    const restartButton = this.add.text(400, 300, "Ganaste", {
       fontFamily: "Arial",
       fontSize: 24,
       color: "#ffffff",

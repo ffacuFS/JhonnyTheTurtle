@@ -20,7 +20,7 @@ export default class Score extends Phaser.Scene {
     });
 
     this.add
-      .text(960, 100, "Top 10 Scores", {
+      .text(960, 100, "Mejores 10 jugadores", {
         fontSize: 48,
       })
       .setOrigin(0.5);
