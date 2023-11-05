@@ -95,7 +95,7 @@ export default class Menu extends Phaser.Scene {
       this.scene.start("score");
     });
 
-    /*this.optionsText = this.add
+    this.optionsText = this.add
       .text(1200, 850, getPhrase(this.options), {
         fontSize: "100px",
         fontFamily: "DM Serif Display",
@@ -110,18 +110,27 @@ export default class Menu extends Phaser.Scene {
     });
     this.optionsText.on("pointerdown", () => {
       this.scene.start("score");
-    });*/
+    });
 
     if (gameConfig.isSoundMuted) {
       this.sound.stopAll();
     }
   }
 
+  update() {
+    if (this.wasChangedLanguage === FETCHED) {
+      this.wasChangedLanguage = READY;
+      this.optionsText.setText(getPhrase(this.options))
+    }
+  }
+
+  updateWasChangedLanguage = () => {
+    this.wasChangedLanguage = FETCHED;
+  };
+
   async getTranslations(language) {
     this.language = language;
-    await getTranslations(language, () => {
-      gameConfig.isSoundMuted = true; 
-      this.updateWasChangedLanguage();
-    });
+    this.wasChangedLanguage = FETCHING;
+    await getTranslations(language, this.updateWasChangedLanguage);
   }
 }

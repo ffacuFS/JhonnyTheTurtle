@@ -1,12 +1,28 @@
 import Phaser from "phaser";
 import events from "./EventCenter";
 import GameOver from "./GameOver";
+import { EN_US, ES_AR } from "../enums/lengua";
+import {
+  getLanguageConfig,
+  getPhrase,
+  getTranslations,
+} from "../services/translations";
+import keys from "../enums/keys";
+import { FETCHED, FETCHING, READY, TODO } from "../enums/status";
 
 export default class UI extends Phaser.Scene {
   constructor() {
     super("ui");
     this.timer;
     this.elapsedTime = 0;
+    const {Level,Continue,Restart,Time,User,MainMenu}= keys.ui;
+    this.updateString =Level,Restart,Continue,User,MainMenu,Time;
+    this.levelApi = Level;
+    this.timeApi = Time;
+    this.restartApi = Restart;
+    this.continueApi= Continue;
+    this.userApi = User;
+    this.mainMenuApi = MainMenu;
   }
   init(data) {
     this.level = data.level || 1;
@@ -15,13 +31,13 @@ export default class UI extends Phaser.Scene {
     this.health = data.health || 5;
   }
   create() {
-    const radius = 20;
-    const background = this.add
-      .graphics()
-      .fillStyle(0x878787, 0.8)
-      .fillRoundedRect(0,0, 1920, 140, radius);
     const user = this.firebase.getUser();
-    this.add.text(10, 10, `Usuario ${user.displayName || user.uid}`, {
+    this.userText = this.add.text(10,10,getPhrase(this.userApi), {
+      fontSize: "25px",
+      fontFamily: "DM Serif Display",
+      fill: "#ffd557",
+    });
+    this.add.text(80, 10, `:${user.displayName || user.uid}`, {
       fontSize: "25px",
       fontFamily: "DM Serif Display",
       fill: "#ffd557",
@@ -48,8 +64,14 @@ export default class UI extends Phaser.Scene {
       fill: "#ffd557",
     });
 
-    this.levelText = this.add
-      .text(960, 10, `Nivel ${this.level}`, {
+    this.levelText = this.add.text(920,10,getPhrase(this.levelApi), {
+      fontSize: "80px",
+      fontFamily: "DM Serif Display",
+      fill: "#ffd557",
+    })
+    .setOrigin(0.5, 0);
+    this.levelNumb = this.add
+      .text(1040, 10, ` ${this.level}`, {
         fontSize: "80px",
         fontFamily: "DM Serif Display",
         fill: "#ffd557",
@@ -67,8 +89,14 @@ export default class UI extends Phaser.Scene {
       callbackScope: this,
       loop: true, // para que se repita
     });
-    this.timerText = this.add
-      .text(960, 100, "Tiempo: 0s", {
+    this.timerText = this.add.text(880,100,getPhrase(this.timeApi), {
+      fontSize: "40px",
+      fill: "#ffffff",
+      fontFamily: "DM Serif Display",
+    })
+    .setOrigin(0.5);
+    this.timerNumb = this.add
+      .text(1000, 100, " :0m 0s", {
         fontSize: "40px",
         fill: "#ffffff",
         fontFamily: "DM Serif Display",
@@ -81,8 +109,8 @@ export default class UI extends Phaser.Scene {
     this.elapsedTime += 1;
     const minutes = Math.floor(this.elapsedTime / 60);
     const seconds = this.elapsedTime % 60;
-    this.timerText.setText(`Tiempo: ${this.elapsedTime}s`);
-    this.timerText.setText(`Tiempo: ${minutes}m ${seconds}s`); // Puedes realizar acciones adicionales aquí, como actualizar la interfaz de usuario con el tiempo transcurrido.
+    this.timerNumb.setText(`  :${this.elapsedTime}s`);
+    this.timerNumb.setText(` :${minutes}m ${seconds}s`); 
   }
 
   actualizarDatos(data) {
@@ -90,7 +118,7 @@ export default class UI extends Phaser.Scene {
     this.health = data.health;
     this.fruits = data.fruits;
     this.shell = data.shell;
-    this.levelText.setText(`Nivel ${data.level}`);
+    this.levelNumb.setText(` ${data.level}`);
     this.healthText.setText(` ${data.health}`);
     this.fruitsText.setText(` ${data.fruits}`);
     this.shellText.setText(` ${data.shell}`);
@@ -105,24 +133,24 @@ export default class UI extends Phaser.Scene {
       .fillRoundedRect(-400, -300, 800, 600, radius);
     background.setDepth(0);
 
-    const continueButton = this.add
-      .text(0, -50, "Continuar", {
+    this.continueButtonText = this.add
+      .text(0, -50, getPhrase(this.continueApi), {
         fontSize: "40px",
         fill: "#000000",
         fontFamily: "DM Serif Display",
       })
       .setOrigin(0.5)
       .setInteractive();
-    const restartButton = this.add
-      .text(0, 50, "Reiniciar", {
+    this.restartButtonText = this.add
+      .text(0, 50, getPhrase(this.restartApi), {
         fontSize: "40px",
         fill: "#000000",
         fontFamily: "DM Serif Display",
       })
       .setOrigin(0.5)
       .setInteractive();
-    const menuButton = this.add
-      .text(0, 150, "Menú Principal", {
+    this.menuButtonText = this.add
+      .text(0, 150, getPhrase(this.mainMenuApi), {
         fontSize: "40px",
         fill: "#000000",
         fontFamily: "DM Serif Display",
@@ -131,16 +159,16 @@ export default class UI extends Phaser.Scene {
       .setInteractive();
 
     // Agregar eventos a los botones del menú de pausa
-    continueButton.on("pointerup", this.hidePauseMenu, this);
-    restartButton.on("pointerup", this.restartGame, this);
-    menuButton.on("pointerup", function() {
+    this.continueButtonText.on("pointerup", this.hidePauseMenu, this);
+    this.restartButtonText.on("pointerup", this.restartGame, this);
+    this.menuButtonText.on("pointerup", function() {
       this.returnToMenu();
       events.emit("stopBackgroundMusic");
     }, this);    
   
 
     // Agregar elementos al contenedor del menú de pausa
-    this.pauseMenu.add([background, continueButton, restartButton, menuButton]);
+    this.pauseMenu.add([background, this.continueButtonText, this.restartButtonText, this.menuButtonText]);
   }
 
   hidePauseMenu() {
@@ -171,5 +199,27 @@ export default class UI extends Phaser.Scene {
     // Volver al menú principal
     this.scene.stop("game");
     this.scene.start("menu");
+  }
+
+  update() {
+    if (this.wasChangedLanguage === FETCHED) {
+      this.wasChangedLanguage = READY;
+      this.levelText.setText(getPhrase(this.levelApi));
+      this.timerText.setText(getPhrase(this.timeApi));
+      this.userText.setText(getPhrase(this.userApi));
+      this.continueButtonText.setText(getPhrase(this.continueApi));
+      this.restartButtonText.setText(getPhrase(this.restartApi));
+      this.menuButtonText.setText(getPhrase(this.mainMenuApi));
+    }
+  }
+
+  updateWasChangedLanguage = () => {
+    this.wasChangedLanguage = FETCHED;
+  };
+
+  async getTranslations(language) {
+    this.language = language;
+    this.wasChangedLanguage = FETCHING;
+    await getTranslations(language, this.updateWasChangedLanguage);
   }
 }

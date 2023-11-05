@@ -1,6 +1,13 @@
 import Phaser from "phaser";
 import events from "./EventCenter";
-
+import { EN_US, ES_AR } from "../enums/lengua";
+import {
+  getLanguageConfig,
+  getPhrase,
+  getTranslations,
+} from "../services/translations";
+import keys from "../enums/keys";
+import { FETCHED, FETCHING, READY, TODO } from "../enums/status";
 // Manejador de eventos centralizados para comunicacion de componentes
 
 // Importacion
@@ -18,10 +25,14 @@ export default class SelectLevel extends Phaser.Scene {
   constructor() {
     super("selectlevel");
     this.nivelesDesbloqueados = 1;
+    const {LevelSelection} = keys.selecLevel;
+    this.updateString = LevelSelection;
+    this.levelSelectionApi = LevelSelection;
   }
 
-  preload() { }
-
+  init({ language }) {
+    this.language = language;
+  }
   create() {
     this.add.image(0, 0, "menulevelBG").setOrigin(0, 0);
     this.back = this.add.image(75, 75, "back").setInteractive();
@@ -36,7 +47,7 @@ export default class SelectLevel extends Phaser.Scene {
       this.scene.start("menu");
     });
     this.levelText = this.add
-      .text(this.sys.game.config.width / 2, 100, "Selección de Nivel", {
+      .text(this.sys.game.config.width / 2, 100, getPhrase(this.levelSelectionApi), {
         fontSize: "100px",
         fontFamily: "DM Serif Display",
         fill: "#ffd557",
@@ -102,7 +113,7 @@ export default class SelectLevel extends Phaser.Scene {
     });
     this.level3.on("pointerdown", () => {
       if (this.nivelesDesbloqueados >= 3) {
-        this.scene.start("game", { level: 1 });
+        this.scene.start("game", { level: 3 });
         this.updateLevelText(3);
         console.log("todavia no");
       }
@@ -116,5 +127,22 @@ export default class SelectLevel extends Phaser.Scene {
   }
   desbloquearNuevoNivel() {
     this.nivelesDesbloqueados++;
+  }
+
+  update() {
+    if (this.wasChangedLanguage === FETCHED) {
+      this.wasChangedLanguage = READY;
+      this.levelText.setText(getPhrase(this.levelSelectionApi));
+    }
+  }
+
+  updateWasChangedLanguage = () => {
+    this.wasChangedLanguage = FETCHED;
+  };
+
+  async getTranslations(language) {
+    this.language = language;
+    this.wasChangedLanguage = FETCHING;
+    await getTranslations(language, this.updateWasChangedLanguage);
   }
 }
