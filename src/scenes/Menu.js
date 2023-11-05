@@ -83,8 +83,19 @@ export default class Menu extends Phaser.Scene {
       this.backgroundMusic.stop();
       this.scene.start("selectlevel");
     });
+    this.scoreButton=this.add.image(1450,950, "trophy").setInteractive();
+    this.scoreButton.on("pointerover",()=> {
+      this.scoreButton.setScale(1.08);
+    });
+    this.scoreButton.on("pointerout", () => {
+      this.scoreButton.setScale(1);
+    });
+    this.scoreButton.on("pointerdown", () => {
+      this.backgroundMusic.stop();
+      this.scene.start("score");
+    });
 
-    this.optionsText = this.add
+    /*this.optionsText = this.add
       .text(1200, 850, getPhrase(this.options), {
         fontSize: "100px",
         fontFamily: "DM Serif Display",
@@ -99,7 +110,7 @@ export default class Menu extends Phaser.Scene {
     });
     this.optionsText.on("pointerdown", () => {
       this.scene.start("score");
-    });
+    });*/
 
     if (gameConfig.isSoundMuted) {
       this.sound.stopAll();
