@@ -7,6 +7,7 @@ export default class Score extends Phaser.Scene {
     super("score");
   }
   create() {
+    this.add.image(0, 0, "menulevelBG").setOrigin(0, 0);
     this.back = this.add.image(75, 75, "back").setInteractive();
     this.back.on("pointerover", () => {
       this.back.setScale(1.08);

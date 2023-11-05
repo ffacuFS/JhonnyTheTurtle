@@ -22,9 +22,9 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 77.2,
       frameHeight: 131,
     });
-    this.load.spritesheet("turtleJump", "./assets/sprites/turtle-jump1.png", {
-      frameWidth: 133.5,
-      frameHeight: 162,
+    this.load.spritesheet("turtleJump", "./assets/sprites/turtle-jump_1.png", {
+      frameWidth: 133.95,
+      frameHeight: 169,
     });
     this.load.spritesheet("turtleR", "./assets/sprites/turtlered.png", {
       frameWidth: 114.6,
@@ -34,9 +34,9 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 147.8,
       frameHeight: 147,
     });
-    this.load.spritesheet("turtleJumpR", "./assets/sprites/turtle-jump-red.png", {
-      frameWidth: 133.5,
-      frameHeight: 162,
+    this.load.spritesheet("turtleJumpR", "./assets/sprites/turtle-jump-red_1.png", {
+      frameWidth: 133.95,
+      frameHeight: 169,
     });
     this.load.spritesheet("turtleD", "./assets/sprites/turtleyellow.png", {
       frameWidth: 114.6,
@@ -70,7 +70,7 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 132.27,
       frameHeight: 157,
     })
-    this.load.image("arena", "../assets/atlas/plataformas.png");
+    this.load.image("arena", "../assets/atlas/plataformas1.png");
     this.load.image("laboratorio", "../assets/atlas/laboratorio.png");
     this.load.image("menulevelBG", "../assets/atlas/menulevel-01.png");
     this.load.image("backgroundMenu", "../assets/atlas/newGame-01.png");
@@ -116,6 +116,12 @@ export default class Preload extends Phaser.Scene {
 
   create() {
     // agregar un texto "Login" en la parte superior de la pantalla
+    this.add.image(0, 0, "menulevelBG").setOrigin(0, 0);
+    const radius = 20;
+    const background = this.add
+      .graphics()
+      .fillStyle(0x878787, 0.7)
+      .fillRoundedRect(400, 50, 1100, 600, radius);
     this.add
       .text(960, 100, "Login", {
         fontSize: "70px",
@@ -124,9 +130,11 @@ export default class Preload extends Phaser.Scene {
       })
       .setOrigin(0.5);
     // agregar un texto Ingresar con Email y contraseña que al hacer clic me levante un popup js para ingresar los datos
-    /*  this.add
-     .text(400, 200, "Ingresar con Email y contraseña", {
-       fontSize: 24,
+    this.mail= this.add
+     .text(960, 200, "Ingresar con Email y contraseña", {
+      fontSize: "70px",
+      fontFamily: "DM Serif Display",
+      fill: "#ffd557",
      })
      .setOrigin(0.5)
      .setInteractive()
@@ -156,38 +164,20 @@ export default class Preload extends Phaser.Scene {
                });
            }
          });
-     });*/
-
-    // Agregar un texto "Ingresas de forma Anonima" que al hacer clic me levante un popup js para ingresar los datos
-    this.invitado = this.add
-      .text(960, 300, "Jugar como invitado", {
-        fontSize: "70px",
-        fontFamily: "DM Serif Display",
-        fill: "#ffd557",
-      })
-      .setOrigin(0.5)
-      .setInteractive()
-      .on("pointerdown", () => {
-        this.firebase
-          .signInAnonymously()
-          .then(() => {
-            this.scene.start("menu");
-          })
-          .catch((error) => {
-            console.log("🚀 ~ file: Login.js:74 ~ .catch ~ error", error);
-          });
-      });
-    this.invitado.on("pointerover", () => {
-      this.invitado.setStyle({ fill: "#ffa615", fontSize: "73px" });
+     });
+     this.mail.on("pointerover", () => {
+      this.mail.setStyle({ fill: "#ffa615", fontSize: "73px" });
     });
-    this.invitado.on("pointerout", () => {
-      this.invitado.setStyle({ fill: "#ffd557", fontSize: "70px" });
+    this.mail.on("pointerout", () => {
+      this.mail.setStyle({ fill: "#ffd557", fontSize: "70px" });
     });
 
     // agregar un texto centrado "Ingresar con Google" que al hacer clic me levante un popup js para ingresar los datos
-    this.add
-      .text(400, 400, "Ingresar con Google", {
-        fontSize: 24,
+  this.google =  this.add
+      .text(960, 300, "Ingresar con Google", {
+        fontSize: "70px",
+        fontFamily: "DM Serif Display",
+        fill: "#ffd557",
       })
       .setOrigin(0.5)
       .setInteractive()
@@ -201,24 +191,39 @@ export default class Preload extends Phaser.Scene {
             console.log("🚀 ~ file: Login.js:74 ~ .catch ~ error", error);
           });
       });
-
-    // agregar un texto "Ingresar con GitHub" que al hacer clic me levante un popup js para ingresar los datos
-    this.add
-      .text(400, 500, "Ingresar con GitHub", {
-        fontSize: 24,
-      })
-      .setOrigin(0.5)
-      .setInteractive()
-      .on("pointerdown", () => {
-        this.firebase
-          .signInWithGithub()
-          .then(() => {
-            this.scene.start("menu");
-          })
-          .catch((error) => {
-            console.log("🚀 ~ file: Login.js:74 ~ .catch ~ error", error);
-          });
+      this.google.on("pointerover", () => {
+        this.google.setStyle({ fill: "#ffa615", fontSize: "73px" });
       });
+      this.google.on("pointerout", () => {
+        this.google.setStyle({ fill: "#ffd557", fontSize: "70px" });
+      });
+
+ // Agregar un texto "Ingresas de forma Anonima" que al hacer clic me levante un popup js para ingresar los datos
+ this.invitado = this.add
+ .text(960, 400, "Jugar como invitado", {
+   fontSize: "70px",
+   fontFamily: "DM Serif Display",
+   fill: "#ffd557",
+ })
+ .setOrigin(0.5)
+ .setInteractive()
+ .on("pointerdown", () => {
+   this.firebase
+     .signInAnonymously()
+     .then(() => {
+       this.scene.start("menu");
+     })
+     .catch((error) => {
+       console.log("🚀 ~ file: Login.js:74 ~ .catch ~ error", error);
+     });
+ });
+this.invitado.on("pointerover", () => {
+ this.invitado.setStyle({ fill: "#ffa615", fontSize: "73px" });
+});
+this.invitado.on("pointerout", () => {
+ this.invitado.setStyle({ fill: "#ffd557", fontSize: "70px" });
+});
+
     //Animación tortuga
     this.anims.create({
       key: "left",
@@ -249,8 +254,8 @@ export default class Preload extends Phaser.Scene {
     this.anims.create({
       key: "jump",
       frames: this.anims.generateFrameNumbers("turtleJump", {
-        start: 10,
-        end: 19,
+        start: 11,
+        end: 21,
       }),
       frameRate: 10,
       repeat: 0,
@@ -293,8 +298,8 @@ export default class Preload extends Phaser.Scene {
     this.anims.create({
       key: "jumpR",
       frames: this.anims.generateFrameNumbers("turtleJumpR", {
-        start: 10,
-        end: 19,
+        start: 11,
+        end: 21,
       }),
       frameRate: 10,
       repeat: 0,
