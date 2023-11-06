@@ -160,7 +160,10 @@ export default class UI extends Phaser.Scene {
 
     // Agregar eventos a los botones del menú de pausa
     this.continueButtonText.on("pointerup", this.hidePauseMenu, this);
-    this.restartButtonText.on("pointerup", this.restartGame, this);
+    this.restartButtonText.on("pointerup", function() {
+      events.emit("stopBackgroundMusic");
+      this.restartGame();
+    }, this);
     this.menuButtonText.on("pointerup", function() {
       this.returnToMenu();
       events.emit("stopBackgroundMusic");

@@ -35,14 +35,11 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
     if (this.scene.shell === 1 || this.scene.shell === 2) {
       if (!this.isInmune) {
         this.isInmune = true;
-        console.log("es inmune");
         this.scene.time.addEvent({
           delay: this.inmunityDurationR,
           callback: () => {
             this.isInmune = false;
-            console.log("ya no es inmune");
             this.scene.shell -= 1;
-            console.log("resta caparazón");
           },
           callbackScope: this,
           loop: false,
@@ -64,14 +61,11 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
     } else if (this.scene.shell > 2) {
       if (!this.isInmune) {
         this.isInmune = true;
-        console.log("es inmune");
         this.scene.time.addEvent({
           delay: this.inmunityDurationD,
           callback: () => {
             this.isInmune = false;
-            console.log("ya no es inmune");
             this.scene.shell -= 3;
-            console.log("resta 3 caparazones");
           },
           callbackScope: this,
           loop: false,
@@ -115,18 +109,20 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
 // Verificar si la tecla "Up" está presionada y el personaje puede saltar.
 if (this.keySpace.isDown && this.canJump) {
   if (this.body.onFloor()) {
-    let jumpAnimationKey;
-    if (this.scene.shell === 1 || this.scene.shell === 2) {
-      jumpAnimationKey = "jumpR"; // Si tiene 1 o 2 caparazones
-    } else if (this.scene.shell > 2) {
-      jumpAnimationKey = "jumpD"; // Si tiene más de 2 caparazones
-    } else {
-      jumpAnimationKey = "jump"; // Si no tiene caparazones
-    }
-    this.anims.play(jumpAnimationKey, true);
+    this.anims.play("jump", true);
     this.body.setVelocityY(-480);
     this.canJump = false;
   }
+  //else if (this.body.onFloor() && this.scene.shell === 1 || this.scene.shell === 2) {
+    //this.anims.play("jumpR", true);
+    //this.body.setVelocityY(-480);
+    //this.canJump = false;
+  //}
+  //else if (this.body.onFloor() && this.scene.shell > 2) {
+    //this.anims.play("jumpD", true);
+    //this.body.setVelocityY(-480);
+    //this.canJump = false;
+  //}
 } else if (!this.keySpace.isDown && !this.canJump) {
   this.canJump = true;
 }

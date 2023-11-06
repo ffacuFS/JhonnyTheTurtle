@@ -47,8 +47,8 @@ export default class Preload extends Phaser.Scene {
       frameHeight: 147,
     });
     this.load.spritesheet("turtleJumpD", "./assets/sprites/turtle-jump-yellow.png", {
-      frameWidth: 133.5,
-      frameHeight: 162,
+      frameWidth: 133.95,
+      frameHeight: 169,
     });
     this.load.spritesheet("boss", "../assets/sprites/boss.png", {
       frameWidth: 170.5,
