@@ -103,7 +103,7 @@ export default class Menu extends Phaser.Scene {
   update() {
     if (this.wasChangedLanguage === FETCHED) {
       this.wasChangedLanguage = READY;
-      this.optionsText.setText(getPhrase(this.options))
+    
     }
   }
 

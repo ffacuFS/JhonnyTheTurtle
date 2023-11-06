@@ -27,9 +27,12 @@ export default class SelectLevel extends Phaser.Scene {
   constructor() {
     super("selectlevel");
     this.nivelesDesbloqueados = 1;
-    const {LevelSelection} = keys.selecLevel;
-    this.updateString = LevelSelection;
+    const {LevelSelection,TurtleBay,GalapagosForest,ScientLaboratoy} = keys.selecLevel;
+    this.updateString = LevelSelection,TurtleBay,GalapagosForest,ScientLaboratoy;
     this.levelSelectionApi = LevelSelection;
+    this.turtleBayApi = TurtleBay;
+    this.galapagosForestApi = GalapagosForest;
+    this.scientLabApi = ScientLaboratoy;
   }
 
   init({ language }) {
@@ -62,19 +65,19 @@ export default class SelectLevel extends Phaser.Scene {
       .setOrigin(0.5, 0.5);
 
     // Crear botones para seleccionar niveles
-    this.level1 = this.add.text(570, 300, "Nivel 1", {
+    this.level1 = this.add.text(570, 300,  getPhrase(this.turtleBayApi), {
       fontSize: "70px",
       fontFamily: "DM Serif Display",
       fill: "#ffd557",
     });
 
-    this.level2 = this.add.text(570, 400, "Nivel 2", {
+    this.level2 = this.add.text(570, 400,  getPhrase(this.galapagosForestApi), {
       fontSize: "70px",
       fontFamily: "DM Serif Display",
       fill: "#ffd557",
     });
 
-    this.level3 = this.add.text(570, 500, "Nivel 3", {
+    this.level3 = this.add.text(570, 500,  getPhrase(this.scientLabApi), {
       fontSize: "70px",
       fontFamily: "DM Serif Display",
       fill: "#ffd557",
@@ -144,6 +147,9 @@ export default class SelectLevel extends Phaser.Scene {
     if (this.wasChangedLanguage === FETCHED) {
       this.wasChangedLanguage = READY;
       this.levelText.setText(getPhrase(this.levelSelectionApi));
+      this.level1.setText(getPhrase(this.turtleBayApi));
+      this.level2.setText(getPhrase(this.galapagosForestApi));
+      this.level3.setText(getPhrase(this.scientLabApi));
     }
   }
 
