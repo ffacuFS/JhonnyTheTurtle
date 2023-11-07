@@ -108,8 +108,7 @@ export default class Preload extends Phaser.Scene {
     this.load.audio("prueba2", "../assets/sounds/prueba2.mp3");
     this.load.audio("prueba3", "../assets/sounds/prueba3.mp3");
 
-
-
+    this.load.video("cinematica1", "../assets/sounds/cinematica_inicial.mp4")
 
     this.load.tilemapTiledJSON("level1", "../assets/tilemaps/lv1.json");
     this.load.tilemapTiledJSON("level2", "../assets/tilemaps/lv2.json");
@@ -127,7 +126,7 @@ export default class Preload extends Phaser.Scene {
     this.add
       .text(960, 100, "Login", {
         fontSize: "70px",
-        fontFamily: "DM Serif Display",
+        fontFamily: 'Poppins, sans-serif',
         fill: "#ffd557",
       })
       .setOrigin(0.5);

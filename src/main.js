@@ -9,6 +9,7 @@ import Win from "./scenes/Win";
 import FirebasePlugin from "./plugins/FirebasePlugin";
 import Score from "./scenes/Score";
 
+
 const config = {
   type: Phaser.AUTO,
   width: 1920,
@@ -32,7 +33,7 @@ const config = {
       debug: true,
     },
   },
-  scene: [Preload, Menu, Game, UI, SelectLevel, GameOver, Win, Score],
+  scene: [Preload, Menu, Game, UI, SelectLevel, GameOver, Win, Score, ],
   plugins: {
     global: [
       {

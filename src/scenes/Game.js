@@ -192,7 +192,7 @@ export default class Game extends Phaser.Scene {
       const trampa = this.trampas.create(obj.x, obj.y, "trap");
       trampa.setImmovable(true);
       trampa.body.setSize(120, 10);
-      trampa.body.setOffset(106, 75)
+      trampa.body.setOffset(15, 75);
       trampa.anims.play("trapA");
       this.physics.add.collider(trampa, platLayer);
       this.physics.add.collider(

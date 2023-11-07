@@ -22,6 +22,8 @@ import { FETCHED, FETCHING, READY, TODO } from "../enums/status";
 // events.on('health-changed', this.handleHealthChanged, this)
 
 export default class SelectLevel extends Phaser.Scene {
+  nivelesDesbloqueados;
+
   constructor() {
     super("selectlevel");
     this.nivelesDesbloqueados = 1;
@@ -46,6 +48,10 @@ export default class SelectLevel extends Phaser.Scene {
     this.back.on("pointerdown", () => {
       this.scene.start("menu");
     });
+
+    const cinematicaScene = this.add.video(960, 540, "cinematica1").setInteractive().setDepth(1);
+    cinematicaScene.visible = false;
+
     this.levelText = this.add
       .text(this.sys.game.config.width / 2, 100, getPhrase(this.levelSelectionApi), {
         fontSize: "100px",
@@ -83,9 +89,14 @@ export default class SelectLevel extends Phaser.Scene {
     });
     this.level1.on("pointerdown", () => {
       if (this.nivelesDesbloqueados >= 1) {
-        this.scene.start("game", { level: 1 });
+        cinematicaScene.visible = true;
+        cinematicaScene.play();
+        cinematicaScene.on('complete', () => {
+        this.scene.start("game");
         this.updateLevelText(1);
-      }
+      });
+       
+      } 
     });
 
     this.level2.setInteractive();
