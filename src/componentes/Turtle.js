@@ -17,7 +17,7 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
     scene.add.existing(this);
     scene.physics.add.existing(this);
     this.velocity = velocity;
-
+    this.body.setImmovable(true);
     this.cursors = scene.input.keyboard.createCursorKeys();
     this.canJump = true;
     this.keyA = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -106,27 +106,26 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
       }
     }
 
-// Verificar si la tecla "Up" está presionada y el personaje puede saltar.
-if (this.keySpace.isDown && this.canJump) {
-  if (this.body.onFloor()) {
-    this.anims.play("jump", true);
-    this.body.setVelocityY(-480);
-    this.canJump = false;
-  }
-  //else if (this.body.onFloor() && this.scene.shell === 1 || this.scene.shell === 2) {
-    //this.anims.play("jumpR", true);
-    //this.body.setVelocityY(-480);
-    //this.canJump = false;
-  //}
-  //else if (this.body.onFloor() && this.scene.shell > 2) {
-    //this.anims.play("jumpD", true);
-    //this.body.setVelocityY(-480);
-    //this.canJump = false;
-  //}
-} else if (!this.keySpace.isDown && !this.canJump) {
-  this.canJump = true;
-}
-
+    // Verificar si la tecla "Up" está presionada y el personaje puede saltar.
+    if (this.keySpace.isDown && this.canJump) {
+      if (this.body.onFloor()) {
+        this.anims.play("jump", true);
+        this.body.setVelocityY(-480);
+        this.canJump = false;
+      }
+      //else if (this.body.onFloor() && this.scene.shell === 1 || this.scene.shell === 2) {
+      //this.anims.play("jumpR", true);
+      //this.body.setVelocityY(-480);
+      //this.canJump = false;
+      //}
+      //else if (this.body.onFloor() && this.scene.shell > 2) {
+      //this.anims.play("jumpD", true);
+      //this.body.setVelocityY(-480);
+      //this.canJump = false;
+      //}
+    } else if (!this.keySpace.isDown && !this.canJump) {
+      this.canJump = true;
+    }
   }
   restVida() {
     if (!this.isInmune) {

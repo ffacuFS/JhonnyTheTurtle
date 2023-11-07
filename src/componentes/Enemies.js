@@ -10,7 +10,7 @@ export default class Enemies extends Phaser.Physics.Arcade.Sprite {
       this.anims.play("owlAnim"); // Puedes definir la animación correspondiente al búho
     } else if (enemyType === "robot") {
       this.setTexture("robot"); // Usa la textura del robot para "enemy3"
-      this.anims.play("robotAnim");      //this.anims.play('robotAnim'); // Puedes definir la animación correspondiente al robot
+      this.anims.play("robotAnim"); //this.anims.play('robotAnim'); // Puedes definir la animación correspondiente al robot
     }
 
     scene.add.existing(this);
@@ -18,8 +18,8 @@ export default class Enemies extends Phaser.Physics.Arcade.Sprite {
     this.velocityEnemigo = velocity;
     this.setCollideWorldBounds(true);
     this.setupTween();
-    this.body.allowGravity = false;
-    this.setImmovable(false);
+    //.body.allowGravity = false;
+    this.body.setImmovable(true);
   }
 
   setupTween() {
