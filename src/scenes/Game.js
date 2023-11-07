@@ -96,6 +96,29 @@ export default class Game extends Phaser.Scene {
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.physics.world.setBoundsCollision(true, true, true, false);
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+    if (this.level === 1) {
+    const flechasObject = map.findObject("Objetos", (obj) => obj.name === "mover");
+    const flechasImage = this.add.image(flechasObject.x, flechasObject.y, "flechas"); // Crea una imagen en lugar de un sprite.
+    const texto = this.add.text(flechasObject.x +50, flechasObject.y -20, "Moverse", {
+      fontFamily: 'DM Serif Display',
+      fontSize: 40,
+      color: '#ffd557'
+    });    
+    const saltarObject = map.findObject("Objetos", (obj) => obj.name === "saltar");
+    const saltarImage = this.add.image(saltarObject.x, saltarObject.y, "barra"); // Crea una imagen con la textura "barra".
+    const textoSaltar = this.add.text(saltarObject.x +100, saltarObject.y -20, "Saltar", {
+      fontFamily: 'DM Serif Display',
+      fontSize: 40,
+      color: '#ffd557'
+    });
+    const atacarObject = map.findObject("Objetos", (obj) => obj.name === "atacar");
+    const atacarImage = this.add.image(atacarObject.x, atacarObject.y, "tecla"); // Crea una imagen con la textura "tecla".
+    const textoAtacar = this.add.text(atacarObject.x +25, atacarObject.y -20, "Atacar", {
+      fontFamily: 'DM Serif Display',
+      fontSize: 40,
+      color: '#ffd557'
+    });  
+  }
 
     this.scene.launch("ui", {
       level: this.level,

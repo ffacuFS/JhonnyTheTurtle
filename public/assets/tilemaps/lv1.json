@@ -364,6 +364,42 @@
                  "width":0,
                  "x":5948.48484848485,
                  "y":84.8484848484848
+                }, 
+                {
+                 "height":0,
+                 "id":44,
+                 "name":"mover",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":98.8484848484848,
+                 "y":290.909090909091
+                }, 
+                {
+                 "height":0,
+                 "id":45,
+                 "name":"saltar",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":151.848484848485,
+                 "y":411.212121212121
+                }, 
+                {
+                 "height":0,
+                 "id":46,
+                 "name":"atacar",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":84.8484848484848,
+                 "y":532.424242424242
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -372,7 +408,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":44,
+ "nextobjectid":48,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",
