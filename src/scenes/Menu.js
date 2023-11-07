@@ -95,23 +95,6 @@ export default class Menu extends Phaser.Scene {
       this.scene.start("score");
     });
 
-    this.optionsText = this.add
-      .text(1200, 850, getPhrase(this.options), {
-        fontSize: "100px",
-        fontFamily: "DM Serif Display",
-        fill: "#A85214",
-      })
-      .setInteractive();
-    this.optionsText.on("pointerover", () => {
-      this.optionsText.setStyle({ fill: "#ffa615", fontSize: "105px" });
-    });
-    this.optionsText.on("pointerout", () => {
-      this.optionsText.setStyle({ fill: "#A85214", fontSize: "100px" });
-    });
-    this.optionsText.on("pointerdown", () => {
-      this.scene.start("score");
-    });
-
     if (gameConfig.isSoundMuted) {
       this.sound.stopAll();
     }
