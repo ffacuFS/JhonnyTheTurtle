@@ -43,6 +43,7 @@ export default class Game extends Phaser.Scene {
     this.health = data.health || 5;
     this.velocityEnemigo = data.velocityEnemigo || 2;
     this.velocityBoss = data.velocityBoss || 200;
+    this.score = data.score || 0;
   }
 
   create() {
@@ -303,6 +304,13 @@ export default class Game extends Phaser.Scene {
       null,
       this
     );
+    //timer
+    this.timerEvent = this.time.addEvent({
+      delay: 1000, // 1000 milisegundos = 1 segundo
+      callback: () => (this.score += 1),
+      callbackScope: this,
+      loop: true, // para que se repita
+    });
   }
 
   update() {
@@ -316,6 +324,8 @@ export default class Game extends Phaser.Scene {
       this.turtle.setAlpha(1);
     }
     this.checkTurtleOutOfScreen();
+
+    console.log("this.timer: " + this.score);
   }
 
   turtleBossCollision(turtle, boss) {
@@ -339,6 +349,8 @@ export default class Game extends Phaser.Scene {
     }
   }
   hitEnemies(turtle, enemy) {
+    turtle.body.setVelocityX(0);
+    enemy.body.setVelocityX(0);
     if (turtle.isAttack) {
       enemy.destroy();
       if (!gameConfig.isSoundMuted) {
@@ -358,7 +370,9 @@ export default class Game extends Phaser.Scene {
     if (this.health <= 0) {
       this.backgroundMusic.stop();
       this.scene.stop("ui");
-      this.scene.start("perdiste");
+      this.scene.start("perdiste", {
+        score: this.score,
+      });
     }
   }
   hitBox(turtle, box) {
@@ -470,10 +484,13 @@ export default class Game extends Phaser.Scene {
         fruits: this.fruits,
         health: this.health,
         velocityEnemigo: this.velocityEnemigo,
+        score: this.score,
       });
     } else {
       this.scene.stop("ui");
-      this.scene.start("victoria");
+      this.scene.start("victoria", {
+        score: this.score,
+      });
     }
   }
   checkTurtleOutOfScreen() {
@@ -487,6 +504,7 @@ export default class Game extends Phaser.Scene {
       this.scene.stop("ui");
       this.scene.start("perdiste", {
         level: this.level,
+        score: this.score,
       });
     }
   }

@@ -16,24 +16,37 @@ export default class Win extends Phaser.Scene {
     const { Winner } = keys.victoria;
     this.updateString = Winner;
     this.winnerApi = Winner;
-
   }
-  init (language){
+  init({ language, score }) {
     this.language = language;
+    this.score = score || 0;
+    console.log(this.score);
   }
   create() {
-    this.restartButtonText = this.add.text(400, 300, getPhrase(this.winnerApi), {
-      fontFamily: "Arial",
-      fontSize: 24,
-      color: "#ffffff",
-    });
+    this.restartButtonText = this.add.text(
+      400,
+      300,
+      getPhrase(this.winnerApi),
+      {
+        fontFamily: "Arial",
+        fontSize: 24,
+        color: "#ffffff",
+      }
+    );
 
     // Configura el botón para que sea interactivo
     this.restartButtonText.setInteractive();
 
     // Agrega un evento para manejar el clic en el botón
     this.restartButtonText.on("pointerdown", () => {
-      this.scene.start("menu"); 
+      this.scene.start("menu");
+    });
+
+    //insertar datos
+    const user = this.firebase.getUser();
+    console.log("datos guardados", user, this.score);
+    this.firebase.saveGameData(user.uid, {
+      score: this.score,
     });
   }
   update() {

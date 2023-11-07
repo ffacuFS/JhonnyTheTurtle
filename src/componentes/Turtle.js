@@ -32,7 +32,7 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
 
   actualizar() {
     this.isAttack = false;
-    if (this.scene.shell === 1 || this.scene.shell === 2) {
+    if (this.scene.shell === 2) {
       if (!this.isInmune) {
         this.isInmune = true;
         this.scene.time.addEvent({
@@ -113,16 +113,6 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
         this.body.setVelocityY(-480);
         this.canJump = false;
       }
-      //else if (this.body.onFloor() && this.scene.shell === 1 || this.scene.shell === 2) {
-      //this.anims.play("jumpR", true);
-      //this.body.setVelocityY(-480);
-      //this.canJump = false;
-      //}
-      //else if (this.body.onFloor() && this.scene.shell > 2) {
-      //this.anims.play("jumpD", true);
-      //this.body.setVelocityY(-480);
-      //this.canJump = false;
-      //}
     } else if (!this.keySpace.isDown && !this.canJump) {
       this.canJump = true;
     }

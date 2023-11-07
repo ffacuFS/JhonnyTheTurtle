@@ -15,8 +15,12 @@ export default class SelectLevel extends Phaser.Scene {
   constructor() {
     super("selectlevel");
     this.nivelesDesbloqueados = 1;
-    const {LevelSelection,TurtleBay,GalapagosForest,ScientLaboratoy} = keys.selecLevel;
-    this.updateString = LevelSelection,TurtleBay,GalapagosForest,ScientLaboratoy;
+    const { LevelSelection, TurtleBay, GalapagosForest, ScientLaboratoy } =
+      keys.selecLevel;
+    (this.updateString = LevelSelection),
+      TurtleBay,
+      GalapagosForest,
+      ScientLaboratoy;
     this.levelSelectionApi = LevelSelection;
     this.turtleBayApi = TurtleBay;
     this.galapagosForestApi = GalapagosForest;
@@ -40,32 +44,40 @@ export default class SelectLevel extends Phaser.Scene {
       this.scene.start("menu");
     });
 
-    const cinematicaScene = this.add.video(960, 540, "cinematica1").setInteractive().setDepth(1);
+    const cinematicaScene = this.add
+      .video(960, 540, "cinematica1")
+      .setInteractive()
+      .setDepth(1);
     cinematicaScene.visible = false;
 
     this.levelText = this.add
-      .text(this.sys.game.config.width / 2, 100, getPhrase(this.levelSelectionApi), {
-        fontSize: "100px",
-        fontFamily: "DM Serif Display",
-        fill: "#ffd557",
-        stroke: "ffa615",
-      })
+      .text(
+        this.sys.game.config.width / 2,
+        100,
+        getPhrase(this.levelSelectionApi),
+        {
+          fontSize: "100px",
+          fontFamily: "DM Serif Display",
+          fill: "#ffd557",
+          stroke: "ffa615",
+        }
+      )
       .setOrigin(0.5, 0.5);
 
     // Crear botones para seleccionar niveles
-    this.level1 = this.add.text(570, 300,  getPhrase(this.turtleBayApi), {
+    this.level1 = this.add.text(570, 300, getPhrase(this.turtleBayApi), {
       fontSize: "70px",
       fontFamily: "DM Serif Display",
       fill: "#ffd557",
     });
 
-    this.level2 = this.add.text(570, 400,  getPhrase(this.galapagosForestApi), {
+    this.level2 = this.add.text(570, 400, getPhrase(this.galapagosForestApi), {
       fontSize: "70px",
       fontFamily: "DM Serif Display",
       fill: "#ffd557",
     });
 
-    this.level3 = this.add.text(570, 500,  getPhrase(this.scientLabApi), {
+    this.level3 = this.add.text(570, 500, getPhrase(this.scientLabApi), {
       fontSize: "70px",
       fontFamily: "DM Serif Display",
       fill: "#ffd557",
@@ -82,12 +94,11 @@ export default class SelectLevel extends Phaser.Scene {
       if (this.nivelesDesbloqueados >= 1) {
         cinematicaScene.visible = true;
         cinematicaScene.play();
-        cinematicaScene.on('complete', () => {
-        this.scene.start("game");
-        this.updateLevelText(1);
-      });
-       
-      } 
+        cinematicaScene.on("complete", () => {
+          this.scene.start("game");
+          this.updateLevelText(1);
+        });
+      }
     });
 
     this.level2.setInteractive();
