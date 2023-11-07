@@ -3,7 +3,7 @@ import Turtle from "../componentes/Turtle";
 import Enemies from "../componentes/Enemies";
 import events from "./EventCenter";
 import Boss from "../componentes/Boss";
-import gameConfig from "../enums/config"; 
+import gameConfig from "../enums/config";
 
 export default class Game extends Phaser.Scene {
   level;
@@ -87,8 +87,14 @@ export default class Game extends Phaser.Scene {
     const objectsLayer = map.getObjectLayer("Objetos");
     const player = map.findObject("Objetos", (obj) => obj.name === "personaje");
     const exitObject = map.findObject("Objetos", (obj) => obj.name === "exit");
-    this.physics.world.setBounds(0, 0, this.game.config.width, this.game.config.height);
-    this.exit = this.physics.add.sprite(exitObject.x, exitObject.y, "exit")
+    this.physics.world.setBounds(
+      0,
+      0,
+      this.game.config.width,
+      this.game.config.height
+    );
+    this.exit = this.physics.add
+      .sprite(exitObject.x, exitObject.y, "exit")
       .setScale(0.2);
     this.exit.setImmovable(true);
     this.physics.world.enable(this.exit);
@@ -97,28 +103,64 @@ export default class Game extends Phaser.Scene {
     this.physics.world.setBoundsCollision(true, true, true, false);
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     if (this.level === 1) {
-    const flechasObject = map.findObject("Objetos", (obj) => obj.name === "mover");
-    const flechasImage = this.add.image(flechasObject.x, flechasObject.y, "flechas"); // Crea una imagen en lugar de un sprite.
-    const texto = this.add.text(flechasObject.x +50, flechasObject.y -20, "Moverse", {
-      fontFamily: 'DM Serif Display',
-      fontSize: 40,
-      color: '#ffd557'
-    });    
-    const saltarObject = map.findObject("Objetos", (obj) => obj.name === "saltar");
-    const saltarImage = this.add.image(saltarObject.x, saltarObject.y, "barra"); // Crea una imagen con la textura "barra".
-    const textoSaltar = this.add.text(saltarObject.x +100, saltarObject.y -20, "Saltar", {
-      fontFamily: 'DM Serif Display',
-      fontSize: 40,
-      color: '#ffd557'
-    });
-    const atacarObject = map.findObject("Objetos", (obj) => obj.name === "atacar");
-    const atacarImage = this.add.image(atacarObject.x, atacarObject.y, "tecla"); // Crea una imagen con la textura "tecla".
-    const textoAtacar = this.add.text(atacarObject.x +25, atacarObject.y -20, "Atacar", {
-      fontFamily: 'DM Serif Display',
-      fontSize: 40,
-      color: '#ffd557'
-    });  
-  }
+      const flechasObject = map.findObject(
+        "Objetos",
+        (obj) => obj.name === "mover"
+      );
+      const flechasImage = this.add.image(
+        flechasObject.x,
+        flechasObject.y,
+        "flechas"
+      ); // Crea una imagen en lugar de un sprite.
+      const texto = this.add.text(
+        flechasObject.x + 50,
+        flechasObject.y - 20,
+        "Moverse",
+        {
+          fontFamily: "DM Serif Display",
+          fontSize: 40,
+          color: "#ffd557",
+        }
+      );
+      const saltarObject = map.findObject(
+        "Objetos",
+        (obj) => obj.name === "saltar"
+      );
+      const saltarImage = this.add.image(
+        saltarObject.x,
+        saltarObject.y,
+        "barra"
+      ); // Crea una imagen con la textura "barra".
+      const textoSaltar = this.add.text(
+        saltarObject.x + 100,
+        saltarObject.y - 20,
+        "Saltar",
+        {
+          fontFamily: "DM Serif Display",
+          fontSize: 40,
+          color: "#ffd557",
+        }
+      );
+      const atacarObject = map.findObject(
+        "Objetos",
+        (obj) => obj.name === "atacar"
+      );
+      const atacarImage = this.add.image(
+        atacarObject.x,
+        atacarObject.y,
+        "tecla"
+      ); // Crea una imagen con la textura "tecla".
+      const textoAtacar = this.add.text(
+        atacarObject.x + 25,
+        atacarObject.y - 20,
+        "Atacar",
+        {
+          fontFamily: "DM Serif Display",
+          fontSize: 40,
+          color: "#ffd557",
+        }
+      );
+    }
 
     this.scene.launch("ui", {
       level: this.level,
@@ -132,7 +174,7 @@ export default class Game extends Phaser.Scene {
     this.physics.add.collider(this.turtle, platLayer);
     this.physics.world.gravity.y = 500;
     this.physics.add.collider(this.turtle, this.exit, () => {
-      this.backgroundMusic.stop(); 
+      this.backgroundMusic.stop();
       this.nextLevel();
       events.emit("desbloquearNuevoNivel");
     });
@@ -151,7 +193,7 @@ export default class Game extends Phaser.Scene {
           this.enemies.add(enemy);
           break;
         }
-        case "enemy2": {
+        /*case "enemy2": {
           const enemy2 = new Enemies(
             this,
             obj.x,
@@ -161,7 +203,7 @@ export default class Game extends Phaser.Scene {
           );
           this.enemies.add(enemy2);
           break;
-        }
+        }*/
         case "enemy3": {
           const enemy3 = new Enemies(
             this,
@@ -181,7 +223,7 @@ export default class Game extends Phaser.Scene {
             obj.y,
             "boss",
             this.velocityBoss,
-            1
+            3
           );
           this.boss.setTurtle(this.turtle);
           this.time.addEvent({
@@ -189,7 +231,7 @@ export default class Game extends Phaser.Scene {
             callback: () => {
               this.boss.shootAtPlayer(this.turtle);
               if (!gameConfig.isSoundMuted) {
-              this.disparoSound.play();
+                this.disparoSound.play();
               }
             },
             loop: true,
@@ -278,7 +320,7 @@ export default class Game extends Phaser.Scene {
 
   turtleBossCollision(turtle, boss) {
     if (!gameConfig.isSoundMuted) {
-    this.deathSound.play();
+      this.deathSound.play();
     }
     if (turtle.isAttack) {
       boss.health -= 1;
@@ -300,7 +342,7 @@ export default class Game extends Phaser.Scene {
     if (turtle.isAttack) {
       enemy.destroy();
       if (!gameConfig.isSoundMuted) {
-      this.attackSound.play();
+        this.attackSound.play();
       }
     } else {
       turtle.anims.play("turtleHurt1");
@@ -309,12 +351,12 @@ export default class Game extends Phaser.Scene {
   }
   restarVida() {
     if (!gameConfig.isSoundMuted) {
-    this.damageSound.play();
+      this.damageSound.play();
     }
     this.turtle.restVida();
     this.cameras.main.shake(100, 0.02);
     if (this.health <= 0) {
-      this.backgroundMusic.stop(); 
+      this.backgroundMusic.stop();
       this.scene.stop("ui");
       this.scene.start("perdiste");
     }
@@ -328,7 +370,7 @@ export default class Game extends Phaser.Scene {
         this.spawnObject(box.x, box.y, "shell");
       }
       if (!gameConfig.isSoundMuted) {
-      this.soundBox.play();
+        this.soundBox.play();
       }
       box.destroy();
     }
@@ -364,7 +406,7 @@ export default class Game extends Phaser.Scene {
         break;
       case "fruit":
         if (!gameConfig.isSoundMuted) {
-        this.frutaSound.play();
+          this.frutaSound.play();
         }
         this.fruits += 1;
         this.fruitRecolect += 1;
@@ -412,7 +454,7 @@ export default class Game extends Phaser.Scene {
     if (this.level < this.maxLevel) {
       const nextLevelSound = this.sound.add("nextLevel");
       if (!gameConfig.isSoundMuted) {
-      nextLevelSound.play();
+        nextLevelSound.play();
       }
       this.level += 1;
       this.enemiesDefeated = 0;
@@ -437,7 +479,7 @@ export default class Game extends Phaser.Scene {
   checkTurtleOutOfScreen() {
     if (this.turtle.y > this.sys.game.config.height) {
       if (this.backgroundMusic) {
-        this.backgroundMusic.stop(); 
+        this.backgroundMusic.stop();
       }
       if (!gameConfig.isSoundMuted) {
         this.deathSound.play();
@@ -447,5 +489,5 @@ export default class Game extends Phaser.Scene {
         level: this.level,
       });
     }
-  } 
+  }
 }

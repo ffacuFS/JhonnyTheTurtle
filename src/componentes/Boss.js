@@ -14,6 +14,7 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
     this.velocityBoss = velocity;
     this.health = health || 3;
     this.anims.play("bossAnim");
+    this.body.setImmovable(true);
   }
 
   setTurtle(turtle) {

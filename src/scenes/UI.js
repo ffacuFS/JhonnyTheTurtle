@@ -15,12 +15,12 @@ export default class UI extends Phaser.Scene {
     super("ui");
     this.timer;
     this.elapsedTime = 0;
-    const {Level,Continue,Restart,Time,User,MainMenu}= keys.ui;
-    this.updateString =Level,Restart,Continue,User,MainMenu,Time;
+    const { Level, Continue, Restart, Time, User, MainMenu } = keys.ui;
+    (this.updateString = Level), Restart, Continue, User, MainMenu, Time;
     this.levelApi = Level;
     this.timeApi = Time;
     this.restartApi = Restart;
-    this.continueApi= Continue;
+    this.continueApi = Continue;
     this.userApi = User;
     this.mainMenuApi = MainMenu;
   }
@@ -32,12 +32,12 @@ export default class UI extends Phaser.Scene {
   }
   create() {
     const user = this.firebase.getUser();
-    this.userText = this.add.text(10,10,getPhrase(this.userApi), {
+    this.userText = this.add.text(10, 10, getPhrase(this.userApi), {
       fontSize: "25px",
       fontFamily: "DM Serif Display",
       fill: "#ffd557",
     });
-    this.add.text(80, 10, `:${user.displayName || user.uid}`, {
+    this.add.text(100, 10, `:${user.displayName || user.uid}`, {
       fontSize: "25px",
       fontFamily: "DM Serif Display",
       fill: "#ffd557",
@@ -64,12 +64,13 @@ export default class UI extends Phaser.Scene {
       fill: "#ffd557",
     });
 
-    this.levelText = this.add.text(920,10,getPhrase(this.levelApi), {
-      fontSize: "80px",
-      fontFamily: "DM Serif Display",
-      fill: "#ffd557",
-    })
-    .setOrigin(0.5, 0);
+    this.levelText = this.add
+      .text(920, 10, getPhrase(this.levelApi), {
+        fontSize: "80px",
+        fontFamily: "DM Serif Display",
+        fill: "#ffd557",
+      })
+      .setOrigin(0.5, 0);
     this.levelNumb = this.add
       .text(1040, 10, ` ${this.level}`, {
         fontSize: "80px",
@@ -89,12 +90,13 @@ export default class UI extends Phaser.Scene {
       callbackScope: this,
       loop: true, // para que se repita
     });
-    this.timerText = this.add.text(880,100,getPhrase(this.timeApi), {
-      fontSize: "40px",
-      fill: "#ffffff",
-      fontFamily: "DM Serif Display",
-    })
-    .setOrigin(0.5);
+    this.timerText = this.add
+      .text(870, 100, getPhrase(this.timeApi), {
+        fontSize: "40px",
+        fill: "#ffffff",
+        fontFamily: "DM Serif Display",
+      })
+      .setOrigin(0.5);
     this.timerNumb = this.add
       .text(1000, 100, " :0m 0s", {
         fontSize: "40px",
@@ -110,7 +112,7 @@ export default class UI extends Phaser.Scene {
     const minutes = Math.floor(this.elapsedTime / 60);
     const seconds = this.elapsedTime % 60;
     this.timerNumb.setText(`  :${this.elapsedTime}s`);
-    this.timerNumb.setText(` :${minutes}m ${seconds}s`); 
+    this.timerNumb.setText(` :${minutes}m ${seconds}s`);
   }
 
   actualizarDatos(data) {
@@ -160,18 +162,30 @@ export default class UI extends Phaser.Scene {
 
     // Agregar eventos a los botones del menú de pausa
     this.continueButtonText.on("pointerup", this.hidePauseMenu, this);
-    this.restartButtonText.on("pointerup", function() {
-      events.emit("stopBackgroundMusic");
-      this.restartGame();
-    }, this);
-    this.menuButtonText.on("pointerup", function() {
-      this.returnToMenu();
-      events.emit("stopBackgroundMusic");
-    }, this);    
-  
+    this.restartButtonText.on(
+      "pointerup",
+      function () {
+        events.emit("stopBackgroundMusic");
+        this.restartGame();
+      },
+      this
+    );
+    this.menuButtonText.on(
+      "pointerup",
+      function () {
+        this.returnToMenu();
+        events.emit("stopBackgroundMusic");
+      },
+      this
+    );
 
     // Agregar elementos al contenedor del menú de pausa
-    this.pauseMenu.add([background, this.continueButtonText, this.restartButtonText, this.menuButtonText]);
+    this.pauseMenu.add([
+      background,
+      this.continueButtonText,
+      this.restartButtonText,
+      this.menuButtonText,
+    ]);
   }
 
   hidePauseMenu() {
