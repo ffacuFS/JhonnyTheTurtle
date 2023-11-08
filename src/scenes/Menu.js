@@ -7,28 +7,15 @@ import {
 } from "../services/translations";
 import keys from "../enums/keys";
 import { FETCHED, FETCHING, READY, TODO } from "../enums/status";
+import Score from "./Score";
 import events from "./EventCenter";
-
-// Manejador de eventos centralizados para comunicacion de componentes
-
-// Importacion
-// import events from './EventCenter'
-
-// Emisor de mensaje de difusion
-// Recibe el nombre del mensaje y los valores de parametro
-// events.emit('health-changed', this.health)
-
-// Receptor de mensaje, por ejemplo escena de UI
-// Recibe el nombre del mensaje y una funcion callback a ejecutar
-// events.on('health-changed', this.handleHealthChanged, this)
+import gameConfig from "../enums/config";
 
 export default class Menu extends Phaser.Scene {
-  wasChangedLanguage = TODO;
-
   constructor() {
     super("menu");
     const { options } = keys.menu;
-    this.updateString = options;
+    this.updateString = options;    
     this.options = options;
   }
 
@@ -40,12 +27,25 @@ export default class Menu extends Phaser.Scene {
   preload() {}
 
   create() {
+    this.backgroundMusic = this.sound.add("prueba");
+    this.backgroundMusic.play();
+
     this.add.image(0, 0, "backgroundMenu").setOrigin(0, 0);
+
     const buttonMusic = this.add.image(1800, 90, "music").setInteractive();
     buttonMusic.on("pointerover", () => {
       buttonMusic.setScale(1.08);
     });
-   
+
+    buttonMusic.on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+      if (gameConfig.isSoundMuted) {
+        this.backgroundMusic.play();
+        gameConfig.isSoundMuted = false;
+      } else {
+        this.sound.stopAll();
+        gameConfig.isSoundMuted = true;
+      }
+    });
 
     const buttonEnglish = this.add.image(1600, 90, "US-flag").setInteractive();
     buttonEnglish.on("pointerover", () => {
@@ -70,6 +70,7 @@ export default class Menu extends Phaser.Scene {
     buttonSpanish.on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
       this.getTranslations(ES_AR);
     });
+
     this.playButton = this.add.image(1450, 700, "play").setInteractive();
     this.playButton.on("pointerover", () => {
       this.playButton.setScale(1.08);
@@ -79,29 +80,29 @@ export default class Menu extends Phaser.Scene {
     });
 
     this.playButton.on("pointerdown", () => {
+      this.backgroundMusic.stop();
       this.scene.start("selectlevel");
     });
-
-    this.optionsText = this.add
-      .text(1200, 850, getPhrase(this.options), {
-        fontSize: "100px",
-        fontFamily: "DM Serif Display",
-        fill: "#A85214",
-      })
-      .setInteractive();
-    this.optionsText.on("pointerover", () => {
-      this.optionsText.setStyle({ fill: "#ffa615", fontSize: "105px" });
+    this.scoreButton=this.add.image(1450,950, "trophy").setInteractive();
+    this.scoreButton.on("pointerover",()=> {
+      this.scoreButton.setScale(1.08);
     });
-    this.optionsText.on("pointerout", () => {
-      this.optionsText.setStyle({ fill: "#A85214", fontSize: "100px" });
+    this.scoreButton.on("pointerout", () => {
+      this.scoreButton.setScale(1);
+    });
+    this.scoreButton.on("pointerdown", () => {
+      this.backgroundMusic.stop();
+      this.scene.start("score");
     });
 
+    if (gameConfig.isSoundMuted) {
+      this.sound.stopAll();
+    }
   }
 
   update() {
     if (this.wasChangedLanguage === FETCHED) {
       this.wasChangedLanguage = READY;
-      this.optionsText.setText(getPhrase(this.options));
     }
   }
 

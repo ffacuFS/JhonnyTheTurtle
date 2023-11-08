@@ -1,49 +1,81 @@
 import Phaser from "phaser";
 import events from "./EventCenter";
-import UI from "./UI";
+import { EN_US, ES_AR } from "../enums/lengua";
+import {
+  getLanguageConfig,
+  getPhrase,
+  getTranslations,
+} from "../services/translations";
+import keys from "../enums/keys";
+import { FETCHED, FETCHING, READY, TODO } from "../enums/status";
 
 export default class GameOver extends Phaser.Scene {
   constructor() {
     super("perdiste");
+    const { Youlost, Playagain } = keys.perdiste;
+    (this.updateString = Youlost), Playagain;
+    this.youLostApi = Youlost;
+    this.playAgainApi = Playagain;
   }
 
-  init(data) {
+  init(data, language) {
     this.level = data.level;
     this.health = data.health || 5;
-
+    this.score = data.score || 0;
     this.fruits = data.fruits || 0;
     this.shell = data.shell || 0;
+    this.language = language;
   }
 
   create() {
-    const gameOverAnim =this.add.sprite(860, 400, "gameOver");
-    gameOverAnim.anims.play ("gameOVerA");
-    console.log("anim creada")
-    const restartButton = this.add.text(700, 900, "Volver a Jugar", {
-      fontSize: "100px",
-      fontFamily: "DM Serif Display",
-      fill: "#ffd557",
-      stroke: "ffa615",
-    });
-    
+    const gameOverAnim = this.add.sprite(890, 500, "perdiste");
+    this.restartButtonText = this.add.text(
+      750,
+      900,
+      "Volver al Menú",
+      {
+        fontSize: "100px",
+        fontFamily: "DM Serif Display",
+        fill: "#ffd557",
+        stroke: "ffa615",
+      }
+    );
 
     // Configura el botón para que sea interactivo
-    restartButton.setInteractive();
+    this.restartButtonText.setInteractive();
 
     // Agrega un evento para manejar el clic en el botón
-    restartButton.on("pointerdown", () => {
+    this.restartButtonText.on("pointerdown", () => {
       this.scene.start("game", {
         level: this.level,
         health: this.health,
         fruits: this.fruits,
         shell: this.shell,
-    });
+        score: this.score,
+      });
       this.scene.launch("ui", {
         level: this.level,
         health: this.health,
         fruits: this.fruits,
         shell: this.shell,
+      });
     });
-    });
+  }
+
+  update() {
+    if (this.wasChangedLanguage === FETCHED) {
+      this.wasChangedLanguage = READY;
+      this.restartButtonText.setText(getPhrase(this.playAgainApi));
+    }
+  }
+
+  updateWasChangedLanguage = () => {
+    this.wasChangedLanguage = FETCHED;
+  };
+
+  async getTranslations(language) {
+    this.language = language;
+    this.wasChangedLanguage = FETCHING;
+    await getTranslations(language, this.updateWasChangedLanguage);
   }
 }

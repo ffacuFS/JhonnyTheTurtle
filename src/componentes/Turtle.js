@@ -17,10 +17,9 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
     scene.add.existing(this);
     scene.physics.add.existing(this);
     this.velocity = velocity;
-
+    this.body.setImmovable(true);
     this.cursors = scene.input.keyboard.createCursorKeys();
     this.canJump = true;
-
     this.keyA = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     this.keySpace = scene.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
@@ -33,33 +32,25 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
 
   actualizar() {
     this.isAttack = false;
-    if (this.scene.shell === 1 || this.scene.shell === 2) {
+    if (this.scene.shell === 2) {
       if (!this.isInmune) {
         this.isInmune = true;
-        console.log("es inmune");
         this.scene.time.addEvent({
           delay: this.inmunityDurationR,
           callback: () => {
             this.isInmune = false;
-            console.log("ya no es inmune");
-            this.scene.shell -= 1; 
-            console.log("resta caparazón");
+            this.scene.shell -= 1;
           },
           callbackScope: this,
           loop: false,
         });
       }
-      if (this.cursors.left.isDown && this.keyA.isDown) {
-        this.body.setVelocityX(-400);
+      if (this.keyA.isDown) {
         this.anims.play("attackR", true);
         this.isAttack = true;
       } else if (this.cursors.left.isDown) {
         this.body.setVelocityX(-400);
         this.anims.play("leftR", true);
-      } else if (this.cursors.right.isDown && this.keyA.isDown) {
-        this.body.setVelocityX(400);
-        this.anims.play("attackR", true);
-        this.isAttack = true;
       } else if (this.cursors.right.isDown) {
         this.body.setVelocityX(400);
         this.anims.play("rightR", true);
@@ -70,30 +61,22 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
     } else if (this.scene.shell > 2) {
       if (!this.isInmune) {
         this.isInmune = true;
-        console.log("es inmune");
         this.scene.time.addEvent({
           delay: this.inmunityDurationD,
           callback: () => {
             this.isInmune = false;
-            console.log("ya no es inmune");
-            this.scene.shell -= 3; 
-            console.log("resta 3 caparazones");
+            this.scene.shell -= 3;
           },
           callbackScope: this,
           loop: false,
         });
       }
-      if (this.cursors.left.isDown && this.keyA.isDown) {
-        this.body.setVelocityX(-400);
+      if (this.keyA.isDown) {
         this.anims.play("attackD", true);
         this.isAttack = true;
       } else if (this.cursors.left.isDown) {
         this.body.setVelocityX(-400);
         this.anims.play("leftD", true);
-      } else if (this.cursors.right.isDown && this.keyA.isDown) {
-        this.body.setVelocityX(400);
-        this.anims.play("attackD", true);
-        this.isAttack = true;
       } else if (this.cursors.right.isDown) {
         this.body.setVelocityX(400);
         this.anims.play("rightD", true);
@@ -102,31 +85,31 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
         this.anims.play("turnD", true);
       }
     } else {
-      if (this.cursors.left.isDown && this.keyA.isDown) {
-        this.body.setVelocityX(-400);
+      if (this.keyA.isDown) {
         this.anims.play("attack", true);
         this.isAttack = true;
       } else if (this.cursors.left.isDown) {
         this.body.setVelocityX(-400);
-        this.anims.play("left", true);
-      } else if (this.cursors.right.isDown && this.keyA.isDown) {
-        this.body.setVelocityX(400);
-        this.anims.play("attack", true);
-        this.isAttack = true;
+        if (this.body.onFloor()) {
+          this.anims.play("left", true);
+        }
       } else if (this.cursors.right.isDown) {
         this.body.setVelocityX(400);
-        this.anims.play("right", true);
+        if (this.body.onFloor()) {
+          this.anims.play("right", true);
+        }
       } else {
         this.body.setVelocityX(0);
-        this.anims.play("turn", true);
+        if (this.body.onFloor()) {
+          this.anims.play("turn", true);
+        }
       }
     }
-    
 
     // Verificar si la tecla "Up" está presionada y el personaje puede saltar.
     if (this.keySpace.isDown && this.canJump) {
       if (this.body.onFloor()) {
-        this.anims.play("jumpD", true);
+        this.anims.play("jump", true);
         this.body.setVelocityY(-480);
         this.canJump = false;
       }
