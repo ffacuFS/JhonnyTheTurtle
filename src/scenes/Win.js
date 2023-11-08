@@ -26,11 +26,11 @@ export default class Win extends Phaser.Scene {
    const videoFinal = this.add.video(960, 540, "cinematica2");
     videoFinal.play();
     this.restartButtonText = this.add.text(
-      960,
-      900,
+      1600,
+      1000,
       "Volver al menú",
       {
-        fontSize: "100px",
+        fontSize: "80px",
           fontFamily: "DM Serif Display",
           fill: "#ffd557",
           stroke: "ffa615",
