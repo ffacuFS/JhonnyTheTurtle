@@ -111,6 +111,8 @@ export default class Preload extends Phaser.Scene {
     this.load.audio("prueba3", "../assets/sounds/prueba3.mp3");
 
     this.load.video("cinematica1", "../assets/sounds/cinematica_inicial.mp4")
+    this.load.video("cinematica2", "../assets/sounds/fin.mp4")
+
 
     this.load.tilemapTiledJSON("level1", "../assets/tilemaps/lv1.json");
     this.load.tilemapTiledJSON("level2", "../assets/tilemaps/lv2.json");

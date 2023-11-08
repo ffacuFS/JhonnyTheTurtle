@@ -31,6 +31,7 @@ export default class SelectLevel extends Phaser.Scene {
     this.language = language;
   }
   create() {
+    
     this.add.image(0, 0, "menulevelBG").setOrigin(0, 0);
     this.back = this.add.image(75, 75, "back").setInteractive();
     this.back.on("pointerover", () => {
@@ -65,25 +66,25 @@ export default class SelectLevel extends Phaser.Scene {
       .setOrigin(0.5, 0.5);
 
     // Crear botones para seleccionar niveles
-    this.level1 = this.add.text(570, 300, getPhrase(this.turtleBayApi), {
+    this.level1 = this.add.text(960, 300, getPhrase(this.turtleBayApi), {
       fontSize: "70px",
       fontFamily: "DM Serif Display",
       fill: "#ffd557",
     });
 
-    this.level2 = this.add.text(570, 400, getPhrase(this.galapagosForestApi), {
+    this.level2 = this.add.text(960, 400, getPhrase(this.galapagosForestApi), {
       fontSize: "70px",
       fontFamily: "DM Serif Display",
       fill: "#ffd557",
     });
 
-    this.level3 = this.add.text(570, 500, getPhrase(this.scientLabApi), {
+    this.level3 = this.add.text(960, 500, getPhrase(this.scientLabApi), {
       fontSize: "70px",
       fontFamily: "DM Serif Display",
       fill: "#ffd557",
     });
 
-    this.level1.setInteractive();
+    this.level1.setInteractive().setOrigin(0.5);
     this.level1.on("pointerover", () => {
       this.level1.setStyle({ fill: "#ffa615", fontSize: "73px" });
     });
@@ -101,7 +102,7 @@ export default class SelectLevel extends Phaser.Scene {
       }
     });
 
-    this.level2.setInteractive();
+    this.level2.setInteractive().setOrigin(0.5);;
     this.level2.on("pointerover", () => {
       this.level2.setStyle({ fill: "#ffa615", fontSize: "73px" });
     });
@@ -117,7 +118,7 @@ export default class SelectLevel extends Phaser.Scene {
       }
     });
 
-    this.level3.setInteractive();
+    this.level3.setInteractive().setOrigin(0.5);
     this.level3.on("pointerover", () => {
       this.level3.setStyle({ fill: "#ffa615", fontSize: "73px" });
     });

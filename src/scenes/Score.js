@@ -36,7 +36,10 @@ export default class Score extends Phaser.Scene {
     });
 
     this.scoreApiText = this.add.text(960, 100, getPhrase(this.scoreApi), {
-        fontSize: 48,
+      fontSize: "100px",
+      fontFamily: "DM Serif Display",
+      fill: "#ffd557",
+      stroke: "ffa615",
       })
       .setOrigin(0.5);
 

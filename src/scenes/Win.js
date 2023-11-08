@@ -23,21 +23,27 @@ export default class Win extends Phaser.Scene {
     console.log(this.score);
   }
   create() {
+   const videoFinal = this.add.video(960, 540, "cinematica2");
+    videoFinal.play();
     this.restartButtonText = this.add.text(
-      400,
-      300,
-      getPhrase(this.winnerApi),
+      960,
+      900,
+      "Volver al menú",
       {
-        fontFamily: "Arial",
-        fontSize: 24,
-        color: "#ffffff",
+        fontSize: "100px",
+          fontFamily: "DM Serif Display",
+          fill: "#ffd557",
+          stroke: "ffa615",
       }
     );
-
-    // Configura el botón para que sea interactivo
+    this.restartButtonText.setOrigin(0.5);
     this.restartButtonText.setInteractive();
-
-    // Agrega un evento para manejar el clic en el botón
+    this.restartButtonText.on("pointerover", () => {
+      this.restartButtonText.setScale(1.08);
+    });
+    this.restartButtonText.on("pointerout", () => {
+      this.restartButtonText.setScale(1);
+    });
     this.restartButtonText.on("pointerdown", () => {
       this.scene.start("menu");
     });

@@ -15,7 +15,7 @@ export default class Menu extends Phaser.Scene {
   constructor() {
     super("menu");
     const { options } = keys.menu;
-    this.updateString = options;
+    this.updateString = options;    
     this.options = options;
   }
 
@@ -103,7 +103,6 @@ export default class Menu extends Phaser.Scene {
   update() {
     if (this.wasChangedLanguage === FETCHED) {
       this.wasChangedLanguage = READY;
-    
     }
   }
 
