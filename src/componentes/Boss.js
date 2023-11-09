@@ -3,6 +3,7 @@ import events from "../scenes/EventCenter";
 import Turtle from "./Turtle";
 
 export default class Boss extends Phaser.Physics.Arcade.Sprite {
+  bossHealthText;
   constructor(scene, x, y, texture, velocity, health) {
     super(scene, x, y, texture, velocity);
     this.setTexture("boss");
@@ -15,6 +16,13 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
     this.health = health || 3;
     this.anims.play("bossAnim");
     this.body.setImmovable(true);
+
+    this.bossHealthText = scene.add.text(this.x, this.y - 50, `Boss Health: ${health}`, {
+      fontSize: "34px",
+      fontFamily: "DM Serif Display",
+      fill: "#ff0000",
+    });
+    this.bossHealthText.setOrigin(0.5);
   }
 
   setTurtle(turtle) {

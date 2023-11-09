@@ -32,7 +32,7 @@ export default class GameOver extends Phaser.Scene {
     this.restartButtonText = this.add.text(
       750,
       900,
-      "Volver al Menú",
+      getPhrase(this.playAgainApi),
       {
         fontSize: "100px",
         fontFamily: "DM Serif Display",

@@ -326,6 +326,11 @@ export default class Game extends Phaser.Scene {
     this.checkTurtleOutOfScreen();
 
     console.log("this.timer: " + this.score);
+
+    if (this.boss && this.boss.bossHealthText) {
+      this.boss.bossHealthText.setPosition(this.boss.x, this.boss.y - 50); // Ajusta la posición según tu diseño
+      this.boss.bossHealthText.setText(`Boss Health: ${this.boss.health}`);
+    }
   }
 
   turtleBossCollision(turtle, boss) {
@@ -333,7 +338,7 @@ export default class Game extends Phaser.Scene {
       this.deathSound.play();
     }
     if (turtle.isAttack) {
-      boss.health -= 1;
+      this.boss.health -= 1;
       if (this.boss.health <= 0) {
         this.boss.destroy();
       }
@@ -348,6 +353,7 @@ export default class Game extends Phaser.Scene {
       );
     }
   }
+  
   hitEnemies(turtle, enemy) {
     turtle.body.setVelocityX(0);
     enemy.body.setVelocityX(0);
