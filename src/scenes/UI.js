@@ -124,7 +124,7 @@ export default class UI extends Phaser.Scene {
     this.healthText.setText(` ${data.health}`);
     this.fruitsText.setText(` ${data.fruits}`);
     this.shellText.setText(` ${data.shell}`);
-    this.boss.bossHealthText.setText(`Boss Health: ${this.boss.health}`);
+   // this.boss.bossHealthText.setText(`Boss Health: ${this.boss.health}`);
   }
   showPauseMenu() {
     this.scene.pause("game");

@@ -42,8 +42,7 @@ export default class Score extends Phaser.Scene {
       stroke: "ffa615",
       })
       .setOrigin(0.5);
-
-    // agregar los 10 mejores highscore
+//mostrar los 10 mejores puntajes
     this.firebase.getHighScores().then((scores) => {
       let scrollY = 200;
       scores.forEach((doc) => {
