@@ -37,9 +37,8 @@ export default class Score extends Phaser.Scene {
 
     this.scoreApiText = this.add.text(960, 100, getPhrase(this.scoreApi), {
       fontSize: "100px",
-      fontFamily: "DM Serif Display",
-      fill: "#ffd557",
-      stroke: "ffa615",
+      fontFamily: "Quicksand",
+      fill: "#000000",
       })
       .setOrigin(0.5);
 //mostrar los 10 mejores puntajes
@@ -47,9 +46,11 @@ export default class Score extends Phaser.Scene {
       let scrollY = 200;
       scores.forEach((doc) => {
         this.add
-          .text(400, scrollY, `${doc.name} - ${doc.score}`, {
-            fontSize: 24,
-          })
+          .text(960, scrollY, `${doc.name} - ${doc.score}`, {
+            fontSize: "30px",
+      fontFamily: "Quicksand",
+      fill: "#000000",
+               })
           .setOrigin(0.5);
         scrollY += 30;
       });
