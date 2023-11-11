@@ -35,47 +35,47 @@ export default class UI extends Phaser.Scene {
     this.userText = this.add.text(10, 10, getPhrase(this.userApi), {
       fontSize: "25px",
       fontFamily: "DM Serif Display",
-      fill: "#ffd557",
+      fill: "#000000",
     });
     this.add.text(100, 10, `:${user.displayName || user.uid}`, {
       fontSize: "25px",
       fontFamily: "DM Serif Display",
-      fill: "#ffd557",
+      fill: "#000000",
     });
 
     this.healthIcon = this.add.image(50, 90, "healthUI");
     this.healthText = this.add.text(70, 80, ` ${this.health}`, {
       fontSize: "50px",
       fontFamily: "DM Serif Display",
-      fill: "#ffd557",
+      fill: "#000000",
     });
 
     this.shellIcon = this.add.image(310, 100, "shellUI");
     this.shellText = this.add.text(330, 80, ` ${this.shell}`, {
       fontSize: "50px",
       fontFamily: "DM Serif Display",
-      fill: "#ffd557",
+      fill: "#000000",
     });
 
     this.fruitIcon = this.add.image(180, 100, "fruitUI");
     this.fruitsText = this.add.text(200, 80, ` ${this.fruits}`, {
       fontSize: "50px",
       fontFamily: "DM Serif Display",
-      fill: "#ffd557",
+      fill: "#000000",
     });
 
     this.levelText = this.add
       .text(920, 10, getPhrase(this.levelApi), {
         fontSize: "80px",
         fontFamily: "DM Serif Display",
-        fill: "#ffd557",
+        fill: "#000000",
       })
       .setOrigin(0.5, 0);
     this.levelNumb = this.add
       .text(1040, 10, ` ${this.level}`, {
         fontSize: "80px",
         fontFamily: "DM Serif Display",
-        fill: "#ffd557",
+        fill: "#000000",
       })
       .setOrigin(0.5, 0);
 
@@ -93,14 +93,14 @@ export default class UI extends Phaser.Scene {
     this.timerText = this.add
       .text(870, 100, getPhrase(this.timeApi), {
         fontSize: "40px",
-        fill: "#ffffff",
+        fill: "#000000",
         fontFamily: "DM Serif Display",
       })
       .setOrigin(0.5);
     this.timerNumb = this.add
       .text(1000, 100, " :0m 0s", {
         fontSize: "40px",
-        fill: "#ffffff",
+        fill: "#000000",
         fontFamily: "DM Serif Display",
       })
       .setOrigin(0.5);
@@ -124,6 +124,7 @@ export default class UI extends Phaser.Scene {
     this.healthText.setText(` ${data.health}`);
     this.fruitsText.setText(` ${data.fruits}`);
     this.shellText.setText(` ${data.shell}`);
+   // this.boss.bossHealthText.setText(`Boss Health: ${this.boss.health}`);
   }
   showPauseMenu() {
     this.scene.pause("game");
