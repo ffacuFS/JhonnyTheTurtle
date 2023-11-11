@@ -130,16 +130,16 @@ export default class Preload extends Phaser.Scene {
     this.add
       .text(960, 100, "Login", {
         fontSize: "70px",
-        fontFamily: 'Poppins, sans-serif',
-        fill: "#ffd557",
+        fontFamily: 'Quicksand',
+        fill: "#000000",
       })
       .setOrigin(0.5);
     // agregar un texto Ingresar con Email y contraseña que al hacer clic me levante un popup js para ingresar los datos
     this.mail= this.add
      .text(960, 200, "Ingresar con Email y contraseña", {
       fontSize: "70px",
-      fontFamily: "DM Serif Display",
-      fill: "#ffd557",
+      fontFamily: "Quicksand",
+      fill: "#000000",
      })
      .setOrigin(0.5)
      .setInteractive()
@@ -171,18 +171,18 @@ export default class Preload extends Phaser.Scene {
          });
      });
      this.mail.on("pointerover", () => {
-      this.mail.setStyle({ fill: "#ffa615", fontSize: "73px" });
+      this.mail.setStyle({ fill: "#000000", fontSize: "73px" });
     });
     this.mail.on("pointerout", () => {
-      this.mail.setStyle({ fill: "#ffd557", fontSize: "70px" });
+      this.mail.setStyle({ fill: "#000000", fontSize: "70px" });
     });
 
     // agregar un texto centrado "Ingresar con Google" que al hacer clic me levante un popup js para ingresar los datos
   this.google =  this.add
       .text(960, 300, "Ingresar con Google", {
         fontSize: "70px",
-        fontFamily: "DM Serif Display",
-        fill: "#ffd557",
+        fontFamily: "Quicksand",
+        fill: "#000000",
       })
       .setOrigin(0.5)
       .setInteractive()
@@ -197,18 +197,18 @@ export default class Preload extends Phaser.Scene {
           });
       });
       this.google.on("pointerover", () => {
-        this.google.setStyle({ fill: "#ffa615", fontSize: "73px" });
+        this.google.setStyle({ fill: "#000000", fontSize: "73px" });
       });
       this.google.on("pointerout", () => {
-        this.google.setStyle({ fill: "#ffd557", fontSize: "70px" });
+        this.google.setStyle({ fill: "#000000", fontSize: "70px" });
       });
 
  // Agregar un texto "Ingresas de forma Anonima" que al hacer clic me levante un popup js para ingresar los datos
  this.invitado = this.add
  .text(960, 400, "Jugar como invitado", {
    fontSize: "70px",
-   fontFamily: "DM Serif Display",
-   fill: "#ffd557",
+   fontFamily: "Quicksand",
+   fill: "#000000",
  })
  .setOrigin(0.5)
  .setInteractive()
@@ -223,10 +223,10 @@ export default class Preload extends Phaser.Scene {
      });
  });
 this.invitado.on("pointerover", () => {
- this.invitado.setStyle({ fill: "#ffa615", fontSize: "73px" });
+ this.invitado.setStyle({ fill: "#000000", fontSize: "73px" });
 });
 this.invitado.on("pointerout", () => {
- this.invitado.setStyle({ fill: "#ffd557", fontSize: "70px" });
+ this.invitado.setStyle({ fill: "#000000", fontSize: "70px" });
 });
 
     //Animación tortuga

@@ -8,6 +8,18 @@ import {
 } from "../services/translations";
 import keys from "../enums/keys";
 import { FETCHED, FETCHING, READY, TODO } from "../enums/status";
+// Manejador de eventos centralizados para comunicacion de componentes
+
+// Importacion
+// import events from './EventCenter'
+
+// Emisor de mensaje de difusion
+// Recibe el nombre del mensaje y los valores de parametro
+// events.emit('health-changed', this.health)
+
+// Receptor de mensaje, por ejemplo escena de UI
+// Recibe el nombre del mensaje y una funcion callback a ejecutar
+// events.on('health-changed', this.handleHealthChanged, this)
 
 export default class SelectLevel extends Phaser.Scene {
   nivelesDesbloqueados;
@@ -15,12 +27,8 @@ export default class SelectLevel extends Phaser.Scene {
   constructor() {
     super("selectlevel");
     this.nivelesDesbloqueados = 1;
-    const { LevelSelection, TurtleBay, GalapagosForest, ScientLaboratoy } =
-      keys.selecLevel;
-    (this.updateString = LevelSelection),
-      TurtleBay,
-      GalapagosForest,
-      ScientLaboratoy;
+    const {LevelSelection,TurtleBay,GalapagosForest,ScientLaboratoy} = keys.selecLevel;
+    this.updateString = LevelSelection,TurtleBay,GalapagosForest,ScientLaboratoy;
     this.levelSelectionApi = LevelSelection;
     this.turtleBayApi = TurtleBay;
     this.galapagosForestApi = GalapagosForest;
@@ -31,7 +39,6 @@ export default class SelectLevel extends Phaser.Scene {
     this.language = language;
   }
   create() {
-    
     this.add.image(0, 0, "menulevelBG").setOrigin(0, 0);
     this.back = this.add.image(75, 75, "back").setInteractive();
     this.back.on("pointerover", () => {
@@ -45,69 +52,67 @@ export default class SelectLevel extends Phaser.Scene {
       this.scene.start("menu");
     });
 
-    const cinematicaScene = this.add
-      .video(960, 540, "cinematica1")
-      .setInteractive()
-      .setDepth(1);
+    const cinematicaScene = this.add.video(960, 540, "cinematica1").setInteractive().setDepth(1);
     cinematicaScene.visible = false;
-
     this.levelText = this.add
-      .text(
-        this.sys.game.config.width / 2,
-        100,
-        getPhrase(this.levelSelectionApi),
-        {
-          fontSize: "100px",
-          fontFamily: "DM Serif Display",
-          fill: "#ffd557",
-          stroke: "ffa615",
-        }
-      )
+      .text(this.sys.game.config.width / 2, 100, getPhrase(this.levelSelectionApi), {
+        fontSize: "100px",
+        fontFamily: "Quicksand",
+        fill: "#000000",
+      })
       .setOrigin(0.5, 0.5);
 
     // Crear botones para seleccionar niveles
-    this.level1 = this.add.text(960, 300, getPhrase(this.turtleBayApi), {
+   
+    this.level1 = this.add.text(570, 300,  getPhrase(this.turtleBayApi), {
       fontSize: "70px",
-      fontFamily: "DM Serif Display",
-      fill: "#ffd557",
+      fontFamily: "Quicksand",
+      fill: "#000000",
     });
 
-    this.level2 = this.add.text(960, 400, getPhrase(this.galapagosForestApi), {
+    this.level2 = this.add.text(570, 400,  getPhrase(this.galapagosForestApi), {
       fontSize: "70px",
-      fontFamily: "DM Serif Display",
-      fill: "#ffd557",
+      fontFamily: "Quicksand",
+      fill: "#000000",
     });
 
-    this.level3 = this.add.text(960, 500, getPhrase(this.scientLabApi), {
+    this.level3 = this.add.text(570, 500,  getPhrase(this.scientLabApi), {
       fontSize: "70px",
-      fontFamily: "DM Serif Display",
-      fill: "#ffd557",
+      fontFamily: "Quicksand",
+      fill: "#000000",
     });
 
-    this.level1.setInteractive().setOrigin(0.5);
+    this.level1.setInteractive();
     this.level1.on("pointerover", () => {
-      this.level1.setStyle({ fill: "#ffa615", fontSize: "73px" });
+      this.level1.setStyle({ fill: "#000000", fontSize: "73px" });
     });
     this.level1.on("pointerout", () => {
-      this.level1.setStyle({ fill: "#ffd557", fontSize: "70px" });
+      this.level1.setStyle({ fill: "#000000", fontSize: "70px" });
     });
     this.level1.on("pointerdown", () => {
       if (this.nivelesDesbloqueados >= 1) {
         cinematicaScene.visible = true;
         cinematicaScene.play();
+
+        cinematicaScene.on("pointerdown", () => {
+          cinematicaScene.stop(); 
+          this.scene.start("game",);
+          this.updateLevelText(1);
+        });
+
         cinematicaScene.on("complete", () => {
-          this.scene.start("game");
+          this.scene.start("game"),  { level: 3 };
           this.updateLevelText(1);
         });
       }
     });
 
-    this.level2.setInteractive().setOrigin(0.5);;
+    this.level2.setInteractive();
     this.level2.on("pointerover", () => {
-      this.level2.setStyle({ fill: "#ffa615", fontSize: "73px" });
+      this.level2.setStyle({ fill: "#000000", fontSize: "73px" });
     });
     this.level2.on("pointerout", () => {
-      this.level2.setStyle({ fill: "#ffd557", fontSize: "70px" });
+      this.level2.setStyle({ fill: "#000000", fontSize: "70px" });
     });
 
     this.level2.on("pointerdown", () => {
@@ -118,12 +123,12 @@ export default class SelectLevel extends Phaser.Scene {
       }
     });
 
-    this.level3.setInteractive().setOrigin(0.5);
+    this.level3.setInteractive();
     this.level3.on("pointerover", () => {
-      this.level3.setStyle({ fill: "#ffa615", fontSize: "73px" });
+      this.level3.setStyle({ fill: "#000000", fontSize: "73px" });
     });
     this.level3.on("pointerout", () => {
-      this.level3.setStyle({ fill: "#ffd557", fontSize: "70px" });
+      this.level3.setStyle({ fill: "#000000", fontSize: "70px" });
     });
     this.level3.on("pointerdown", () => {
       if (this.nivelesDesbloqueados >= 3) {
