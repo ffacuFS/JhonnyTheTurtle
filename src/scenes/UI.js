@@ -128,6 +128,7 @@ export default class UI extends Phaser.Scene {
   }
   showPauseMenu() {
     this.scene.pause("game");
+    this.timer.paused = true;
     this.pauseMenu = this.add.container(960, 540);
     const radius = 20;
     const background = this.add
@@ -195,9 +196,11 @@ export default class UI extends Phaser.Scene {
 
     // Reactivar la escena principal
     this.scene.resume("game");
+    this.timer.paused = false;
   }
 
   restartGame() {
+    this.resetTimer();
     // Reiniciar la escena principal
     this.scene.stop("game");
 
@@ -208,10 +211,14 @@ export default class UI extends Phaser.Scene {
       shell: 0,
       health: 5,
     });
-
     // Ocultar el menú de pausa
     this.hidePauseMenu();
   }
+
+  resetTimer() {
+    this.elapsedTime = 0;
+    this.timerNumb.setText(" :0m 0s"); // Ajusta esto según tu formato de visualización
+  }  
 
   returnToMenu() {
     // Volver al menú principal
