@@ -60,27 +60,27 @@ export default class SelectLevel extends Phaser.Scene {
         fontFamily: "Quicksand",
         fill: "#000000",
       })
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5);
 
     // Crear botones para seleccionar niveles
    
-    this.level1 = this.add.text(570, 300,  getPhrase(this.turtleBayApi), {
+    this.level1 = this.add.text(960, 300,  getPhrase(this.turtleBayApi), {
       fontSize: "70px",
       fontFamily: "Quicksand",
       fill: "#000000",
-    });
+    }).setOrigin(0.5);
 
-    this.level2 = this.add.text(570, 400,  getPhrase(this.galapagosForestApi), {
+    this.level2 = this.add.text(960, 400,  getPhrase(this.galapagosForestApi), {
       fontSize: "70px",
       fontFamily: "Quicksand",
       fill: "#000000",
-    });
+    }).setOrigin(0.5);
 
-    this.level3 = this.add.text(570, 500,  getPhrase(this.scientLabApi), {
+    this.level3 = this.add.text(960, 500,  getPhrase(this.scientLabApi), {
       fontSize: "70px",
       fontFamily: "Quicksand",
       fill: "#000000",
-    });
+    }).setOrigin(0.5);
 
     this.level1.setInteractive();
     this.level1.on("pointerover", () => {

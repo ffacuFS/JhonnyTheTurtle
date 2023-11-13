@@ -48,18 +48,21 @@ export default class Game extends Phaser.Scene {
 
   create() {
     if (this.level === 1) {
-      this.backgroundMusic = this.sound.add("prueba1");
+      this.backgroundMusic = this.sound.add("level1");
       if (!gameConfig.isSoundMuted) {
+        this.backgroundMusic.loop = true;
         this.backgroundMusic.play();
       }
     } else if (this.level === 2) {
       this.backgroundMusic = this.sound.add("prueba2");
       if (!gameConfig.isSoundMuted) {
+        this.backgroundMusic.loop = true;
         this.backgroundMusic.play();
       }
     } else if (this.level === 3) {
       this.backgroundMusic = this.sound.add("prueba3");
       if (!gameConfig.isSoundMuted) {
+        this.backgroundMusic.loop = true;
         this.backgroundMusic.play();
       }
     }
