@@ -328,7 +328,7 @@ export default class Game extends Phaser.Scene {
     console.log("this.timer: " + this.score);
 
     if (this.boss && this.boss.bossHealthText) {
-      this.boss.bossHealthText.setPosition(this.boss.x, this.boss.y - 50); // Ajusta la posición según tu diseño
+      this.boss.bossHealthText.setPosition(this.boss.x, this.boss.y - 50);
       this.boss.bossHealthText.setText(`Boss Health: ${this.boss.health}`);
     }
     const user = this.firebase.getUser()

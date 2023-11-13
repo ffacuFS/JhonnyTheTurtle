@@ -96,7 +96,7 @@ export default class SelectLevel extends Phaser.Scene {
 
         cinematicaScene.on("pointerdown", () => {
           cinematicaScene.stop(); 
-          this.scene.start("game",);
+          this.scene.start("game", { level: 1 });
           this.updateLevelText(1);
         });
 
