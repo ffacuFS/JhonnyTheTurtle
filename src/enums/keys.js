@@ -3,7 +3,7 @@ const menu = {
   
 };
 const selecLevel = {
-  LevelSelection: "Seleccion de Nivel",
+  LevelSelection: "Selección de Nivel",
   TurtleBay:"Bahía Tortuga",
   GalapagosForest:"Bosque Galápagos",
   ScientLaboratoy:"Laboratorio del científico",
@@ -13,7 +13,7 @@ const ui = {
   Level: "Nivel",
   Time: "Tiempo",
   Restart: "Reiniciar",
-  MainMenu: "Menu Principal",
+  MainMenu: "Menú Principal",
   Continue: "Continuar",
 }
 const lose = {

@@ -45,18 +45,21 @@ export default class Game extends Phaser.Scene {
 
   create() {
     if (this.level === 1) {
-      this.backgroundMusic = this.sound.add("prueba1");
+      this.backgroundMusic = this.sound.add("level1");
       if (!gameConfig.isSoundMuted) {
+        this.backgroundMusic.loop = true;
         this.backgroundMusic.play();
       }
     } else if (this.level === 2) {
       this.backgroundMusic = this.sound.add("prueba2");
       if (!gameConfig.isSoundMuted) {
+        this.backgroundMusic.loop = true;
         this.backgroundMusic.play();
       }
     } else if (this.level === 3) {
       this.backgroundMusic = this.sound.add("prueba3");
       if (!gameConfig.isSoundMuted) {
+        this.backgroundMusic.loop = true;
         this.backgroundMusic.play();
       }
     }
@@ -321,7 +324,11 @@ export default class Game extends Phaser.Scene {
     console.log("this.timer: " + this.score);
 
     if (this.boss && this.boss.bossHealthText) {
+<<<<<<< HEAD
       this.boss.bossHealthText.setPosition(this.boss.x, this.boss.y - 50); 
+=======
+      this.boss.bossHealthText.setPosition(this.boss.x, this.boss.y - 50);
+>>>>>>> 250abbdab2ce51e0f11485ec8c7ba1aaafadca86
       this.boss.bossHealthText.setText(`Boss Health: ${this.boss.health}`);
     }
     const user = this.firebase.getUser()
