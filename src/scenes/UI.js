@@ -79,11 +79,10 @@ export default class UI extends Phaser.Scene {
       })
       .setOrigin(0.5, 0);
 
-    events.on("actualizarDatos", this.actualizarDatos, this);
+    events.on("updateData", this.updateData, this);
 
     this.pauseButton = this.add.image(1800, 80, "pause").setInteractive();
     this.pauseButton.on("pointerup", this.showPauseMenu, this);
-    //timer
     this.timer = this.time.addEvent({
       delay: 1000, // 1000 milisegundos = 1 segundo
       callback: this.updateTimer,
@@ -107,7 +106,6 @@ export default class UI extends Phaser.Scene {
   }
 
   updateTimer() {
-    // Función que se llama cada segundo
     this.elapsedTime += 1;
     const minutes = Math.floor(this.elapsedTime / 60);
     const seconds = this.elapsedTime % 60;
@@ -115,7 +113,7 @@ export default class UI extends Phaser.Scene {
     this.timerNumb.setText(` :${minutes}m ${seconds}s`);
   }
 
-  actualizarDatos(data) {
+  updateData(data) {
     this.level = data.level;
     this.health = data.health;
     this.fruits = data.fruits;
@@ -124,7 +122,6 @@ export default class UI extends Phaser.Scene {
     this.healthText.setText(` ${data.health}`);
     this.fruitsText.setText(` ${data.fruits}`);
     this.shellText.setText(` ${data.shell}`);
-   // this.boss.bossHealthText.setText(`Boss Health: ${this.boss.health}`);
   }
   showPauseMenu() {
     this.scene.pause("game");
@@ -161,7 +158,6 @@ export default class UI extends Phaser.Scene {
       .setOrigin(0.5)
       .setInteractive();
 
-    // Agregar eventos a los botones del menú de pausa
     this.continueButtonText.on("pointerup", this.hidePauseMenu, this);
     this.restartButtonText.on(
       "pointerup",
@@ -180,7 +176,6 @@ export default class UI extends Phaser.Scene {
       this
     );
 
-    // Agregar elementos al contenedor del menú de pausa
     this.pauseMenu.add([
       background,
       this.continueButtonText,
@@ -190,31 +185,22 @@ export default class UI extends Phaser.Scene {
   }
 
   hidePauseMenu() {
-    // Destruir el menú de pausa
     this.pauseMenu.destroy();
-
-    // Reactivar la escena principal
     this.scene.resume("game");
   }
 
   restartGame() {
-    // Reiniciar la escena principal
     this.scene.stop("game");
-
-    // Reiniciar la escena principal
     this.scene.launch("game", {
       level: this.level,
       fruits: 0,
       shell: 0,
       health: 5,
     });
-
-    // Ocultar el menú de pausa
     this.hidePauseMenu();
   }
 
   returnToMenu() {
-    // Volver al menú principal
     this.scene.stop("game");
     this.scene.start("menu");
   }

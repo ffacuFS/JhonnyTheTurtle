@@ -15,8 +15,8 @@ export default class Game extends Phaser.Scene {
   boss;
   objects;
   obstacles;
-  inmunity;
-  isInmune = false;
+  immunity;
+  isImmune = false;
   platLayer;
   brokenBoxes = [];
   lifeText;
@@ -25,14 +25,11 @@ export default class Game extends Phaser.Scene {
     super("game");
     this.enemiesDefeated = 0;
     this.maxLevel = 3;
-
     this.shellsRecolect = 0;
-    this.tiempoInmunidad = 0;
-    this.duracionInmunidad = 10000;
-    this.isInmune = false;
-    this.llaveRecolectada = false;
+    this.immunitytime = 0;
+    this.durationOfImmunity = 10000;
+    this.isImmune = false;
     this.exit = null;
-
     this.fruitRecolect = 0;
   }
 
@@ -68,14 +65,12 @@ export default class Game extends Phaser.Scene {
         this.backgroundMusic.stop();
       }
     });
-    //creacion de sonidos
     this.attackSound = this.sound.add("attack");
     this.deathSound = this.sound.add("death");
     this.damageSound = this.sound.add("damage");
     this.soundBox = this.sound.add("brokenBox");
-    this.frutaSound = this.sound.add("frutaSound");
-    this.disparoSound = this.sound.add("disparoSound");
-    //creacion mapa y capas
+    this.fruitSound = this.sound.add("fruitSound");
+    this.shootSound = this.sound.add("shootSound");
     const mapKey = `level${this.level}`;
     const map = this.make.tilemap({ key: mapKey });
     const capaBackground = map.addTilesetImage("background", "backgrounds");
@@ -104,18 +99,18 @@ export default class Game extends Phaser.Scene {
     this.physics.world.setBoundsCollision(true, true, true, false);
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     if (this.level === 1) {
-      const flechasObject = map.findObject(
+      const arrowsObject = map.findObject(
         "Objetos",
         (obj) => obj.name === "mover"
       );
-      const flechasImage = this.add.image(
-        flechasObject.x,
-        flechasObject.y,
-        "flechas"
-      ); // Crea una imagen en lugar de un sprite.
-      const texto = this.add.text(
-        flechasObject.x + 50,
-        flechasObject.y - 20,
+      const arrowsImage = this.add.image(
+        arrowsObject.x,
+        arrowsObject.y,
+        "arrows"
+      ); 
+      const moveText = this.add.text(
+        arrowsObject.x + 50,
+        arrowsObject.y - 20,
         "Moverse",
         {
           fontFamily: "DM Serif Display",
@@ -123,18 +118,18 @@ export default class Game extends Phaser.Scene {
           color: "#ffd557",
         }
       );
-      const saltarObject = map.findObject(
+      const jumpObject = map.findObject(
         "Objetos",
         (obj) => obj.name === "saltar"
       );
-      const saltarImage = this.add.image(
-        saltarObject.x,
-        saltarObject.y,
-        "barra"
-      ); // Crea una imagen con la textura "barra".
-      const textoSaltar = this.add.text(
-        saltarObject.x + 100,
-        saltarObject.y - 20,
+      const jumpImage = this.add.image(
+        jumpObject.x,
+        jumpObject.y,
+        "space"
+      ); 
+      const jumpText = this.add.text(
+        jumpObject.x + 100,
+        jumpObject.y - 20,
         "Saltar",
         {
           fontFamily: "DM Serif Display",
@@ -142,18 +137,18 @@ export default class Game extends Phaser.Scene {
           color: "#ffd557",
         }
       );
-      const atacarObject = map.findObject(
+      const attackObject = map.findObject(
         "Objetos",
         (obj) => obj.name === "atacar"
       );
-      const atacarImage = this.add.image(
-        atacarObject.x,
-        atacarObject.y,
-        "tecla"
-      ); // Crea una imagen con la textura "tecla".
-      const textoAtacar = this.add.text(
-        atacarObject.x + 25,
-        atacarObject.y - 20,
+      const attackImage = this.add.image(
+        attackObject.x,
+        attackObject.y,
+        "keyA"
+      ); 
+      const attackText = this.add.text(
+        attackObject.x + 25,
+        attackObject.y - 20,
         "Atacar",
         {
           fontFamily: "DM Serif Display",
@@ -177,7 +172,7 @@ export default class Game extends Phaser.Scene {
     this.physics.add.collider(this.turtle, this.exit, () => {
       this.backgroundMusic.stop();
       this.nextLevel();
-      events.emit("desbloquearNuevoNivel");
+      events.emit("unlockNewLevel");
     });
     this.enemies = this.physics.add.group();
     objectsLayer.objects.forEach((obj) => {
@@ -232,7 +227,7 @@ export default class Game extends Phaser.Scene {
             callback: () => {
               this.boss.shootAtPlayer(this.turtle);
               if (!gameConfig.isSoundMuted) {
-                this.disparoSound.play();
+                this.shootSound.play();
               }
             },
             loop: true,
@@ -264,7 +259,7 @@ export default class Game extends Phaser.Scene {
       this.physics.add.collider(
         this.turtle,
         trampa,
-        this.restarVida,
+        this.restLife,
         null,
         this
       );
@@ -286,7 +281,7 @@ export default class Game extends Phaser.Scene {
         this
       );
     });
-    this.events.on("bossDisparo", (datos) => {
+    this.events.on("bossShot", (datos) => {
       const { bala } = datos;
     });
     this.lifeText = this.add.text(this.turtle.x, this.turtle.y, "+1", {
@@ -304,12 +299,11 @@ export default class Game extends Phaser.Scene {
       null,
       this
     );
-    //timer
     this.timerEvent = this.time.addEvent({
-      delay: 1000, // 1000 milisegundos = 1 segundo
+      delay: 1000, 
       callback: () => (this.score += 1),
       callbackScope: this,
-      loop: true, // para que se repita
+      loop: true, 
     });
   }
 
@@ -318,17 +312,16 @@ export default class Game extends Phaser.Scene {
     this.enemies.getChildren().forEach((enemy) => {
       enemy.update();
     });
-    if (this.isInmune) {
+    if (this.isImmune) {
       this.turtle.setAlpha(0.5);
     } else {
       this.turtle.setAlpha(1);
     }
     this.checkTurtleOutOfScreen();
-
     console.log("this.timer: " + this.score);
 
     if (this.boss && this.boss.bossHealthText) {
-      this.boss.bossHealthText.setPosition(this.boss.x, this.boss.y - 50); // Ajusta la posición según tu diseño
+      this.boss.bossHealthText.setPosition(this.boss.x, this.boss.y - 50); 
       this.boss.bossHealthText.setText(`Boss Health: ${this.boss.health}`);
     }
     const user = this.firebase.getUser()
@@ -342,10 +335,8 @@ export default class Game extends Phaser.Scene {
         this.firebase
           .addHighScore(user.displayName || user.uid, this.score)
           .then(() => {
-       //     this.scene.start("score");
           });
       } else {
-       // this.scene.start("score");
       }
     });
   }
@@ -361,7 +352,7 @@ export default class Game extends Phaser.Scene {
       }
       this.turtle.body.checkCollision.none = true;
       this.time.delayedCall(
-        1000, // Puedes ajustar el tiempo de desactivación de la colisión
+        1000, 
         () => {
           this.turtle.body.checkCollision.none = false;
         },
@@ -369,7 +360,6 @@ export default class Game extends Phaser.Scene {
         this
       );
     }
-
   }
   
   hitEnemies(turtle, enemy) {
@@ -382,19 +372,19 @@ export default class Game extends Phaser.Scene {
       }
     } else {
       turtle.anims.play("turtleHurt1");
-      this.restarVida();
+      this.restLife();
     }
   }
-  restarVida() {
+  restLife() {
     if (!gameConfig.isSoundMuted) {
       this.damageSound.play();
     }
-    this.turtle.restVida();
+    this.turtle.restLifee();
     this.cameras.main.shake(100, 0.02);
     if (this.health <= 0) {
       this.backgroundMusic.stop();
       this.scene.stop("ui");
-      this.scene.start("perdiste", {
+      this.scene.start("lose", {
         score: this.score,
       });
     }
@@ -440,11 +430,10 @@ export default class Game extends Phaser.Scene {
     switch (object.data.values.tipo) {
       case "shell":
         this.shell += 1;
-        console.log("junto caparazón");
         break;
       case "fruit":
         if (!gameConfig.isSoundMuted) {
-          this.frutaSound.play();
+          this.fruitSound.play();
         }
         this.fruits += 1;
         this.fruitRecolect += 1;
@@ -456,7 +445,7 @@ export default class Game extends Phaser.Scene {
         break;
     }
     object.destroy();
-    events.emit("actualizarDatos", {
+    events.emit("updateData", {
       fruits: this.fruits,
       level: this.level,
       shell: this.shell,
@@ -466,7 +455,7 @@ export default class Game extends Phaser.Scene {
 
   moreHealth() {
     this.health += 1;
-    events.emit("actualizarDatos", {
+    events.emit("updateData", {
       fruits: this.fruits,
       level: this.level,
       shell: this.shell,
@@ -476,7 +465,7 @@ export default class Game extends Phaser.Scene {
     this.lifeText.setPosition(this.turtle.x, this.turtle.y - 50);
     this.lifeText.setVisible(true);
     this.time.delayedCall(
-      1000, // Duración en milisegundos para mostrar el texto
+      1000, 
       () => {
         this.lifeText.setVisible(false);
       },
@@ -486,7 +475,7 @@ export default class Game extends Phaser.Scene {
   }
 
   activarInmunidad() {
-    this.tiempoInmunidad = this.duracionInmunidad;
+    this.immunitytime= this.durationOfImmunity;
   }
   nextLevel() {
     if (this.level < this.maxLevel) {
@@ -496,7 +485,7 @@ export default class Game extends Phaser.Scene {
       }
       this.level += 1;
       this.enemiesDefeated = 0;
-      events.emit("actualizarDatos", {
+      events.emit("updateData", {
         level: this.level,
         shell: this.shell,
         fruits: this.fruits,
@@ -512,7 +501,7 @@ export default class Game extends Phaser.Scene {
       });
     } else {
       this.scene.stop("ui");
-      this.scene.start("victoria", {
+      this.scene.start("victory", {
         score: this.score,
       });
     }
@@ -526,7 +515,7 @@ export default class Game extends Phaser.Scene {
         this.deathSound.play();
       }
       this.scene.stop("ui");
-      this.scene.start("perdiste", {
+      this.scene.start("lose", {
         level: this.level,
         score: this.score,
       });

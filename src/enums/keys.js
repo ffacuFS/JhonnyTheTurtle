@@ -16,11 +16,11 @@ const ui = {
   MainMenu: "Menu Principal",
   Continue: "Continuar",
 }
-const perdiste = {
+const lose = {
   Youlost: "Perdiste",
   Playagain: "Volver a jugar",
 }
-const victoria = {
+const victory = {
   Winner: "Ganaste"
 }
 const score = {
@@ -28,5 +28,5 @@ const score = {
 } 
 
 export default {
-  menu, selecLevel, ui,victoria,perdiste ,score
+  menu, selecLevel, ui,victory,lose ,score
 };

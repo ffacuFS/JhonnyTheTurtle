@@ -11,8 +11,8 @@ import { FETCHED, FETCHING, READY, TODO } from "../enums/status";
 
 export default class GameOver extends Phaser.Scene {
   constructor() {
-    super("perdiste");
-    const { Youlost, Playagain } = keys.perdiste;
+    super("lose");
+    const { Youlost, Playagain } = keys.lose;
     (this.updateString = Youlost), Playagain;
     this.youLostApi = Youlost;
     this.playAgainApi = Playagain;
@@ -28,7 +28,7 @@ export default class GameOver extends Phaser.Scene {
   }
 
   create() {
-    const gameOverAnim = this.add.sprite(890, 500, "perdiste");
+    const gameOverAnim = this.add.sprite(890, 500, "lose");
     this.restartButtonText = this.add.text(
       750,
       900,
@@ -41,10 +41,7 @@ export default class GameOver extends Phaser.Scene {
       }
     );
 
-    // Configura el botón para que sea interactivo
     this.restartButtonText.setInteractive();
-
-    // Agrega un evento para manejar el clic en el botón
     this.restartButtonText.on("pointerdown", () => {
       this.scene.start("game", {
         level: this.level,

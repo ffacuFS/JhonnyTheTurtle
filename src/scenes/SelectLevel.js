@@ -8,25 +8,12 @@ import {
 } from "../services/translations";
 import keys from "../enums/keys";
 import { FETCHED, FETCHING, READY, TODO } from "../enums/status";
-// Manejador de eventos centralizados para comunicacion de componentes
-
-// Importacion
-// import events from './EventCenter'
-
-// Emisor de mensaje de difusion
-// Recibe el nombre del mensaje y los valores de parametro
-// events.emit('health-changed', this.health)
-
-// Receptor de mensaje, por ejemplo escena de UI
-// Recibe el nombre del mensaje y una funcion callback a ejecutar
-// events.on('health-changed', this.handleHealthChanged, this)
-
 export default class SelectLevel extends Phaser.Scene {
-  nivelesDesbloqueados;
+  unlockedLevels;
 
   constructor() {
     super("selectlevel");
-    this.nivelesDesbloqueados = 1;
+    this.unlockedLevels = 1;
     const {LevelSelection,TurtleBay,GalapagosForest,ScientLaboratoy} = keys.selecLevel;
     this.updateString = LevelSelection,TurtleBay,GalapagosForest,ScientLaboratoy;
     this.levelSelectionApi = LevelSelection;
@@ -91,7 +78,7 @@ export default class SelectLevel extends Phaser.Scene {
       this.level1.setStyle({ fill: "#ffd557", fontSize: "70px" });
     });
     this.level1.on("pointerdown", () => {
-      if (this.nivelesDesbloqueados >= 1) {
+      if (this.unlockedLevels >= 1) {
         cinematicaScene.visible = true;
         cinematicaScene.play();
 
@@ -117,10 +104,9 @@ export default class SelectLevel extends Phaser.Scene {
     });
 
     this.level2.on("pointerdown", () => {
-      if (this.nivelesDesbloqueados >= 2) {
+      if (this.unlockedLevels >= 2) {
         this.scene.start("game", { level: 2 });
         this.updateLevelText(2);
-        console.log("todavia no");
       }
     });
 
@@ -132,21 +118,20 @@ export default class SelectLevel extends Phaser.Scene {
       this.level3.setStyle({ fill: "#ffd557", fontSize: "70px" });
     });
     this.level3.on("pointerdown", () => {
-      if (this.nivelesDesbloqueados >= 3) {
+      if (this.unlockedLevels >= 3) {
         this.scene.start("game", { level: 3 });
         this.updateLevelText(3);
-        console.log("todavia no");
       }
     });
 
-    events.on("desbloquearNuevoNivel", this.desbloquearNuevoNivel, this);
+    events.on("unlockNewLevel", this.unlockNewLevel, this);
   }
 
   updateLevelText(selectedLevel) {
     this.levelText.setText(`Nivel seleccionado: ${selectedLevel}`);
   }
-  desbloquearNuevoNivel() {
-    this.nivelesDesbloqueados++;
+  unlockNewLevel() {
+    this.unlockedLevels++;
   }
 
   update() {
