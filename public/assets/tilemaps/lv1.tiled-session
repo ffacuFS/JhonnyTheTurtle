@@ -109,24 +109,24 @@
             "expandedObjectLayers": [
                 2
             ],
-            "scale": 0.25,
+            "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 6134,
-                "y": 998
+                "x": -162.66666666666669,
+                "y": 592.6666666666667
             }
         },
         "lv3.json#background": {
-            "scaleInDock": 1
+            "scaleInDock": 0.33
         },
         "lv3.json#laboratorio": {
-            "scaleInDock": 1
+            "scaleInDock": 0.33
         },
         "lv3.json#laboratory": {
             "scaleInDock": 1
         },
         "lv3.json#plataforma": {
-            "scaleInDock": 1
+            "scaleInDock": 0.33
         },
         "lv3.json#tortuga-bay": {
             "scaleInDock": 1

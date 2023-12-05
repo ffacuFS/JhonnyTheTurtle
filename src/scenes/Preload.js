@@ -8,7 +8,6 @@ export default class Preload extends Phaser.Scene {
     super("preload");
   }
   preload() {
-    //traduccion
     this.language = getLanguageConfig();
     this.load.spritesheet("turtle", "./assets/sprites/turtle1.png", {
       frameWidth: 114.6,
@@ -91,36 +90,34 @@ export default class Preload extends Phaser.Scene {
     this.load.image("shell", "../assets/sprites/shell.png");
     this.load.image("bala", "../assets/sprites/bala.png");
     this.load.image("pausa", "../assets/sprites/pausa.png");
-    this.load.image("perdiste", "../assets/sprites/perdida_1.png");
+    this.load.image("lose", "../assets/sprites/perdida_1.png");
     this.load.image("trophy", "../assets/atlas/trophy.png");
-    this.load.image("flechas", "../assets/atlas/flechas.png");
-    this.load.image("tecla", "../assets/atlas/teclaa.png");
-    this.load.image("barra", "../assets/atlas/barra.png");
-
+    this.load.image("arrows", "../assets/atlas/flechas.png");
+    this.load.image("keyA", "../assets/atlas/teclaa.png");
+    this.load.image("space", "../assets/atlas/barra.png");
     this.load.audio("brokenBox", "../assets/sounds/Caja-Rota.mp3");
     this.load.audio("damage", "../assets/sounds/damage.mp3");
     this.load.audio("death", "../assets/sounds/Muerte.mp3");
     this.load.audio("nextLevel", "../assets/sounds/wao.mp3");
     this.load.audio("attack", "../assets/sounds/attack.mp3");
-    this.load.audio("frutaSound", "../assets/sounds/fruta.mp3");
-    this.load.audio("disparoSound", "../assets/sounds/Disparojefe.mp3");
-
+    this.load.audio("fruitSound", "../assets/sounds/fruta.mp3");
+    this.load.audio("shootSound", "../assets/sounds/Disparojefe.mp3");
     this.load.audio("prueba", "../assets/sounds/prueba.mp3");
-    this.load.audio("prueba1", "../assets/sounds/prueba1.mp3");
     this.load.audio("prueba2", "../assets/sounds/prueba2.mp3");
     this.load.audio("prueba3", "../assets/sounds/prueba3.mp3");
+<<<<<<< HEAD
+=======
+    this.load.audio("level1", "../assets/sounds/level1.wav");
 
+>>>>>>> 250abbdab2ce51e0f11485ec8c7ba1aaafadca86
     this.load.video("cinematica1", "../assets/sounds/cinematica_inicial.mp4")
     this.load.video("cinematica2", "../assets/sounds/fin.mp4")
-
-
     this.load.tilemapTiledJSON("level1", "../assets/tilemaps/lv1.json");
     this.load.tilemapTiledJSON("level2", "../assets/tilemaps/lv2.json");
     this.load.tilemapTiledJSON("level3", "../assets/tilemaps/lv3.json");
   }
 
   create() {
-    // agregar un texto "Login" en la parte superior de la pantalla
     this.add.image(0, 0, "menulevelBG").setOrigin(0, 0);
     const radius = 20;
     const background = this.add
@@ -134,7 +131,6 @@ export default class Preload extends Phaser.Scene {
         fill: "#000000",
       })
       .setOrigin(0.5);
-    // agregar un texto Ingresar con Email y contraseña que al hacer clic me levante un popup js para ingresar los datos
     this.mail= this.add
      .text(960, 200, "Ingresar con Email y contraseña", {
       fontSize: "70px",
@@ -177,7 +173,6 @@ export default class Preload extends Phaser.Scene {
       this.mail.setStyle({ fill: "#000000", fontSize: "70px" });
     });
 
-    // agregar un texto centrado "Ingresar con Google" que al hacer clic me levante un popup js para ingresar los datos
   this.google =  this.add
       .text(960, 300, "Ingresar con Google", {
         fontSize: "70px",
@@ -203,7 +198,6 @@ export default class Preload extends Phaser.Scene {
         this.google.setStyle({ fill: "#000000", fontSize: "70px" });
       });
 
- // Agregar un texto "Ingresas de forma Anonima" que al hacer clic me levante un popup js para ingresar los datos
  this.invitado = this.add
  .text(960, 400, "Jugar como invitado", {
    fontSize: "70px",
@@ -345,9 +339,6 @@ this.invitado.on("pointerout", () => {
       repeat: 0,
     });
 
-
-
-
     this.anims.create({
       key: "gameOver",
       frames: this.anims.generateFrameNumbers("gameOVerA", {
@@ -394,7 +385,6 @@ this.invitado.on("pointerout", () => {
       frameRate: 5,
       repeat: -1,
     });
-    //animacion objetos
     this.anims.create({
       key: "trapA",
       frames: this.anims.generateFrameNumbers("trap", {

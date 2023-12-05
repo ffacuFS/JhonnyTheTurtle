@@ -16,7 +16,6 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
     this.health = health || 3;
     this.anims.play("bossAnim");
     this.body.setImmovable(true);
-
     this.bossHealthText = scene.add.text(this.x, this.y - 50, `Boss Health: ${health}`, {
       fontSize: "34px",
       fontFamily: "DM Serif Display",
@@ -31,17 +30,12 @@ export default class Boss extends Phaser.Physics.Arcade.Sprite {
 
   shootAtPlayer(turtle) {
     if (this.scene && this.scene.physics) {
-      // Lógica para crear y disparar un proyectil al jugador
-      // Usa this.scene.physics.add.sprite para crear el proyectil y configúralo para moverse hacia el jugador
       const projectile = this.scene.physics.add.sprite(this.x, this.y, "bala");
       projectile.body.allowGravity = false;
       this.scene.physics.moveToObject(projectile, turtle, 300);
-
       this.scene.physics.add.overlap(projectile, turtle, () => {
         this.scene.damageSound.play();
-        // Restar vida a la Turtle
-        this.scene.restarVida();
-        // Destruir el proyectil al impactar
+        this.scene.restLife();
         projectile.destroy();
       });
     }

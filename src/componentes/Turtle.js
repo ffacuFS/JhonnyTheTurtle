@@ -6,7 +6,7 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
   keyA;
   canJump;
   keySpace;
-  isInmune;
+  isImmune;
   scene;
   isAttack;
 
@@ -24,21 +24,21 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
     this.keySpace = scene.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
-    this.isInmune = false;
-    this.inmunityDurationR = 5000;
-    this.inmunityDurationD = 10000;
+    this.isImmune = false;
+    this.immunityDurationR = 5000;
+    this.immunityDurationD = 10000;
     this.body.setCollideWorldBounds(true);
   }
 
   actualizar() {
     this.isAttack = false;
     if (this.scene.shell === 2) {
-      if (!this.isInmune) {
-        this.isInmune = true;
+      if (!this.isImmune) {
+        this.isImmune = true;
         this.scene.time.addEvent({
-          delay: this.inmunityDurationR,
+          delay: this.immunityDurationR,
           callback: () => {
-            this.isInmune = false;
+            this.isImmune = false;
             this.scene.shell -= 1;
           },
           callbackScope: this,
@@ -59,12 +59,12 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
         this.anims.play("turnR", true);
       }
     } else if (this.scene.shell > 2) {
-      if (!this.isInmune) {
-        this.isInmune = true;
+      if (!this.isImmune) {
+        this.isImmune = true;
         this.scene.time.addEvent({
-          delay: this.inmunityDurationD,
+          delay: this.immunityDurationD,
           callback: () => {
-            this.isInmune = false;
+            this.isImmune = false;
             this.scene.shell -= 3;
           },
           callbackScope: this,
@@ -117,12 +117,12 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
       this.canJump = true;
     }
   }
-  restVida() {
-    if (!this.isInmune) {
+  restLifee() {
+    if (!this.isImmune) {
       this.scene.health -= 1;
-      this.isInmune = true;
+      this.isImmune = true;
 
-      events.emit("actualizarDatos", {
+      events.emit("updateData", {
         health: this.scene.health,
         level: this.scene.level,
         shell: this.scene.shell,
@@ -132,7 +132,7 @@ export default class Turtle extends Phaser.GameObjects.Sprite {
       this.scene.time.addEvent({
         delay: 2000,
         callback: () => {
-          this.isInmune = false;
+          this.isImmune = false;
         },
         callbackScope: this,
         loop: false,

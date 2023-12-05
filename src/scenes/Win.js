@@ -12,8 +12,8 @@ import { FETCHED, FETCHING, READY, TODO } from "../enums/status";
 
 export default class Win extends Phaser.Scene {
   constructor() {
-    super("victoria");
-    const { Winner } = keys.victoria;
+    super("victory");
+    const { Winner } = keys.victory;
     this.updateString = Winner;
     this.winnerApi = Winner;
   }

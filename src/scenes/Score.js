@@ -41,7 +41,6 @@ export default class Score extends Phaser.Scene {
       fill: "#000000",
       })
       .setOrigin(0.5);
-//mostrar los 10 mejores puntajes
     this.firebase.getHighScores().then((scores) => {
       let scrollY = 200;
       scores.forEach((doc) => {

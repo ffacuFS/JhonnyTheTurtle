@@ -79,11 +79,10 @@ export default class UI extends Phaser.Scene {
       })
       .setOrigin(0.5, 0);
 
-    events.on("actualizarDatos", this.actualizarDatos, this);
+    events.on("updateData", this.updateData, this);
 
     this.pauseButton = this.add.image(1800, 80, "pause").setInteractive();
     this.pauseButton.on("pointerup", this.showPauseMenu, this);
-    //timer
     this.timer = this.time.addEvent({
       delay: 1000, // 1000 milisegundos = 1 segundo
       callback: this.updateTimer,
@@ -107,7 +106,6 @@ export default class UI extends Phaser.Scene {
   }
 
   updateTimer() {
-    // Función que se llama cada segundo
     this.elapsedTime += 1;
     const minutes = Math.floor(this.elapsedTime / 60);
     const seconds = this.elapsedTime % 60;
@@ -115,7 +113,7 @@ export default class UI extends Phaser.Scene {
     this.timerNumb.setText(` :${minutes}m ${seconds}s`);
   }
 
-  actualizarDatos(data) {
+  updateData(data) {
     this.level = data.level;
     this.health = data.health;
     this.fruits = data.fruits;
@@ -124,10 +122,10 @@ export default class UI extends Phaser.Scene {
     this.healthText.setText(` ${data.health}`);
     this.fruitsText.setText(` ${data.fruits}`);
     this.shellText.setText(` ${data.shell}`);
-   // this.boss.bossHealthText.setText(`Boss Health: ${this.boss.health}`);
   }
   showPauseMenu() {
     this.scene.pause("game");
+    this.timer.paused = true;
     this.pauseMenu = this.add.container(960, 540);
     const radius = 20;
     const background = this.add
@@ -161,7 +159,6 @@ export default class UI extends Phaser.Scene {
       .setOrigin(0.5)
       .setInteractive();
 
-    // Agregar eventos a los botones del menú de pausa
     this.continueButtonText.on("pointerup", this.hidePauseMenu, this);
     this.restartButtonText.on(
       "pointerup",
@@ -180,7 +177,6 @@ export default class UI extends Phaser.Scene {
       this
     );
 
-    // Agregar elementos al contenedor del menú de pausa
     this.pauseMenu.add([
       background,
       this.continueButtonText,
@@ -190,31 +186,37 @@ export default class UI extends Phaser.Scene {
   }
 
   hidePauseMenu() {
-    // Destruir el menú de pausa
     this.pauseMenu.destroy();
-
-    // Reactivar la escena principal
     this.scene.resume("game");
+    this.timer.paused = false;
   }
 
   restartGame() {
+<<<<<<< HEAD
+=======
+    this.resetTimer();
     // Reiniciar la escena principal
+>>>>>>> 250abbdab2ce51e0f11485ec8c7ba1aaafadca86
     this.scene.stop("game");
-
-    // Reiniciar la escena principal
     this.scene.launch("game", {
       level: this.level,
       fruits: 0,
       shell: 0,
       health: 5,
     });
-
+<<<<<<< HEAD
+=======
     // Ocultar el menú de pausa
+>>>>>>> 250abbdab2ce51e0f11485ec8c7ba1aaafadca86
     this.hidePauseMenu();
   }
 
+  resetTimer() {
+    this.elapsedTime = 0;
+    this.timerNumb.setText(" :0m 0s"); // Ajusta esto según tu formato de visualización
+  }  
+
   returnToMenu() {
-    // Volver al menú principal
     this.scene.stop("game");
     this.scene.start("menu");
   }

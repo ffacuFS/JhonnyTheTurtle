@@ -29,14 +29,11 @@ export default class Menu extends Phaser.Scene {
   create() {
     this.backgroundMusic = this.sound.add("prueba");
     this.backgroundMusic.play();
-
     this.add.image(0, 0, "backgroundMenu").setOrigin(0, 0);
-
     const buttonMusic = this.add.image(1800, 90, "music").setInteractive();
     buttonMusic.on("pointerover", () => {
       buttonMusic.setScale(1.08);
     });
-
     buttonMusic.on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
       if (gameConfig.isSoundMuted) {
         this.backgroundMusic.play();
@@ -46,7 +43,6 @@ export default class Menu extends Phaser.Scene {
         gameConfig.isSoundMuted = true;
       }
     });
-
     const buttonEnglish = this.add.image(1600, 90, "US-flag").setInteractive();
     buttonEnglish.on("pointerover", () => {
       buttonEnglish.setScale(1.08);
@@ -54,11 +50,9 @@ export default class Menu extends Phaser.Scene {
     buttonEnglish.on("pointerout", () => {
       buttonEnglish.setScale(1);
     });
-
     buttonEnglish.on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
       this.getTranslations(EN_US);
     });
-
     const buttonSpanish = this.add.image(1500, 90, "AR-flag").setInteractive();
     buttonSpanish.on("pointerover", () => {
       buttonSpanish.setScale(1.08);
@@ -66,11 +60,9 @@ export default class Menu extends Phaser.Scene {
     buttonSpanish.on("pointerout", () => {
       buttonSpanish.setScale(1);
     });
-
     buttonSpanish.on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
       this.getTranslations(ES_AR);
     });
-
     this.playButton = this.add.image(1450, 700, "play").setInteractive();
     this.playButton.on("pointerover", () => {
       this.playButton.setScale(1.08);
@@ -78,7 +70,6 @@ export default class Menu extends Phaser.Scene {
     this.playButton.on("pointerout", () => {
       this.playButton.setScale(1);
     });
-
     this.playButton.on("pointerdown", () => {
       this.backgroundMusic.stop();
       this.scene.start("selectlevel");
